@@ -1,0 +1,148 @@
+function compare_accuracy_plot2D() 
+  figure;
+  XX = X(:, 1); 
+  YY = X(:, 2);
+  ZZ = y;
+  if (scalePlots)
+    XX = mu_X(1) + XX * sigma_X(1);
+    YY = mu_X(2) + YY * sigma_X(2);
+    ZZ = mu_y + ZZ * sigma_y;
+  endif
+  plot3 (XX, YY, ZZ, "gx");
+  hold on;
+  XX = big_X(:, 1);
+  YY = big_X(:, 2);
+  ZZ = big_y;
+  if (scalePlots)
+    XX = mu_X(1) + XX * sigma_X(1);
+    YY = mu_X(2) + YY * sigma_X(2);
+    ZZ = mu_y + ZZ * sigma_y;
+  endif
+  plot3 (XX, YY, ZZ, "bd");
+  XX = Xcv(:, 1);
+  YY = Xcv(:, 2);
+  ZZ = ycv;
+  if (scalePlots)
+    XX = mu_X(1) + XX * sigma_X(1);
+    YY = mu_X(2) + YY * sigma_X(2);
+    ZZ = mu_y + ZZ * sigma_y;
+  endif
+  plot3 (XX, YY, ZZ, "rx");
+  w = SVs{1}' * coefficients{1};
+  func = @(x, y) w(1) .* x + w(2) .* y + b{1};
+  Ms = max ([X; big_X]);
+  ms = min ([X; big_X]);
+  x = linspace (ms(1), Ms(1), plot_subdivisions);
+  yy = linspace (ms(2), Ms(2), plot_subdivisions);
+  [XX, YY] = meshgrid (x, yy);
+  ZZ = func (XX, YY);
+  if (scalePlots)
+    XX = mu_X(1) + XX * sigma_X(1);
+    YY = mu_X(2) + YY * sigma_X(2);
+    ZZ = mu_y + ZZ * sigma_y;
+  endif
+  surf (XX, YY, ZZ);
+  axis auto;
+  title ("Linear kernels");
+  grid on;
+  
+  figure;
+  XX = X_nCores(:, 1);
+  YY = X_nCores(:, 2);
+  ZZ = y_nCores;
+  if (scalePlots)
+    XX = mu_X_nCores(1) + XX * sigma_X_nCores(1);
+    YY = mu_X_nCores(2) + YY * sigma_X_nCores(2);
+    ZZ = mu_y + ZZ * sigma_y;
+  endif
+  plot3 (XX, YY, ZZ, "gx");
+  hold on;
+  XX = big_X_nCores(:, 1);
+  YY = big_X_nCores(:, 2);
+  ZZ = big_y_nCores;
+  if (scalePlots)
+    XX = mu_X_nCores(1) + XX * sigma_X_nCores(1);
+    YY = mu_X_nCores(2) + YY * sigma_X_nCores(2);
+    ZZ = mu_y + ZZ * sigma_y;
+  endif
+  plot3 (XX, YY, ZZ, "bd");
+  XX = Xcv_nCores(:, 1);
+  YY = Xcv_nCores(:, 2);
+  ZZ = ycv_nCores;
+  if (scalePlots)
+    XX = mu_X_nCores(1) + XX * sigma_X_nCores(1);
+    YY = mu_X_nCores(2) + YY * sigma_X_nCores(2);
+    ZZ = mu_y + ZZ * sigma_y;
+  endif
+  plot3 (XX, YY, ZZ, "rx");
+  w = SVs{2}' * coefficients{2};
+  func = @(x, y) w(1) .* x + w(2) .* y + b{2};
+  Ms = max ([X_nCores; big_X_nCores]);
+  ms = min ([X_nCores; big_X_nCores]);
+  x = linspace (ms(1), Ms(1), plot_subdivisions);
+  yy = linspace (ms(2), Ms(2), plot_subdivisions);
+  [XX, YY] = meshgrid (x, yy);
+  ZZ = func (XX, YY);
+  if (scalePlots)
+    XX = mu_X_nCores(1) + XX * sigma_X_nCores(1);
+    YY = mu_X_nCores(2) + YY * sigma_X_nCores(2);
+    ZZ = mu_y + ZZ * sigma_y;
+  endif
+  surf (XX, YY, ZZ);
+  axis auto;
+  title ('Linear kernels, nCores^{- 1}');
+  grid on;
+  
+  figure;
+  XX = X(:, 1);
+  YY = X(:, 2);
+  ZZ = y;
+  if (scalePlots)
+    XX = mu_X(1) + XX * sigma_X(1);
+    YY = mu_X(2) + YY * sigma_X(2);
+    ZZ = mu_y + ZZ * sigma_y;
+  endif
+  plot3 (XX, YY, ZZ, "gx");
+  hold on;
+  XX = big_X(:, 1);
+  YY = big_X(:, 2);
+  ZZ = big_y;
+  if (scalePlots)
+    XX = mu_X(1) + XX * sigma_X(1);
+    YY = mu_X(2) + YY * sigma_X(2);
+    ZZ = mu_y + ZZ * sigma_y;
+  endif
+  plot3 (XX, YY, ZZ, "bd");
+  XX = Xcv(:, 1);
+  YY = Xcv(:, 2);
+  ZZ = ycv;
+  if (scalePlots)
+    XX = mu_X(1) + XX * sigma_X(1);
+    YY = mu_X(2) + YY * sigma_X(2);
+    ZZ = mu_y + ZZ * sigma_y;
+  endif
+  plot3 (XX, YY, ZZ, "rx");
+  Ms = max ([X; big_X]);
+  ms = min ([X; big_X]);
+  x = linspace (ms(1), Ms(1), plot_subdivisions);
+  yy = linspace (ms(2), Ms(2), plot_subdivisions);
+  [XX, YY] = meshgrid (x, yy);
+  [nr, nc] = size (XX);
+  ZZ = zeros (nr, nc);
+  for (r = 1:nr)
+    for (c = 1:nc)
+      point = [XX(r, c), YY(r, c)];
+      ZZ(r, c) = coefficients{4}' * exp (sumsq (bsxfun (@minus, SVs{4}, point), 2) / 2);
+    endfor
+  endfor
+  if (scalePlots)
+    XX = mu_X(1) + XX * sigma_X(1);
+    YY = mu_X(2) + YY * sigma_X(2);
+    ZZ = mu_y + ZZ * sigma_y;
+  endif
+  surf (XX, YY, ZZ);
+  axis auto;
+  title ("RBF kernels");
+  grid on;
+
+end;
