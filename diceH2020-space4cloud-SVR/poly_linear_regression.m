@@ -11,8 +11,9 @@ test_frac = 0.2;
 %% Prende i dati e li mischia
 data = get_all_data(base_dir, query);
 
-M = size(data, 2) - 1;   % numero di features
+
 N = size(data, 1);   % numero di campioni
+M = size(data, 2) - 1;   % numero di features
 
 
 POTENZE = [1];
@@ -53,13 +54,16 @@ X = scaled(:, 2:end);
 
 
 
-
+X = [ones(N, 1), X];
 
 [theta, Bint, R, Rint, result] = regress(y, X);
 
 theta
 result
 
+intercetta = theta(1);
+theta = theta(2:end);
+X = X(:, 2:end);
 
 predictions_scaled = X*theta;
 
@@ -81,40 +85,26 @@ y_unscaled = mu_y + sigma_y * y;
 predictions_unscaled = mu_y + sigma_y * predictions_scaled;
 
 
-% X_unscaled_without_feat = zeros(size(data(:, 2:end)));
-% for i=1:M
-% 	X_unscaled_without_feat(:, i) = X_unscaled(:, (i-1)*P+1)
-% end
-
-
-
 for i = 1:M
 	figure;
 	
-	stem(X_unscaled(:, (i-1)*P+1), y_unscaled);
+	stem(data(:, i+1), data(:, 1));
 	hold on;
-	x = linspace(min(X_unscaled(:,(i-1)*P+1)), max(X_unscaled(:, (i-1)*P+1)), 1000);
+	x = linspace(min(data(:,i+1)), max(data(:, i+1)), 1000);
 
-	y_values = zeros(size(x));
+	x_scaled = (x - mu_X(i)) / sigma_X(i);
+
+	y_values = ones(size(x)) * intercetta;
 	
 	for pow =1:P
-		y_values = y_values + theta_unscaled((i-1)*P+pow) * x.^POTENZE(pow);
+		y_values = y_values + theta((i-1)*P+pow) * x_scaled.^POTENZE(pow);
 	end
+
+	y_values = mu_y + sigma_y * y_values;
 	
 	plot(x, y_values, 'r');	
 	
 	hold off;
 	pause
 end
-
-
-
-% figure();
-% stem(X_unscaled(:, 5), y_unscaled);
-% hold on;
-% x = linspace(0, 1000, 1000);
-% y_values = theta_unscaled(5) * x;
-% plot(x, y_values, 'r');
-% hold off;
-
 
