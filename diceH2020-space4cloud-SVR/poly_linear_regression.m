@@ -16,7 +16,7 @@ N = size(data, 1);   % numero di campioni
 M = size(data, 2) - 1;   % numero di features
 
 
-POTENZE = [1];
+POTENZE = [1, 2];
 P = size(POTENZE, 2);
 
 
@@ -62,24 +62,19 @@ theta
 result
 
 intercetta = theta(1);
-theta = theta(2:end);
-X = X(:, 2:end);
 
 predictions_scaled = X*theta;
 
+
+%% Togliamo l'intercetta
+
+theta = theta(2:end);
+X = X(:, 2:end);
+
+
+
 display("Ecco alcuni guess:\n    guess - valore reale");
 display([predictions_scaled(1:10), y(1:10)]);
-
-
-theta_unscaled = (mu_X + sigma_X .* theta')';
-
-
-X_unscaled = zeros(size(X));
-for i=1:(M*P)
-	X_unscaled(:, i) = mu_X(i) .+ X(:,i) .* sigma_X(i);
-end
-
-y_unscaled = mu_y + sigma_y * y;
 
 
 predictions_unscaled = mu_y + sigma_y * predictions_scaled;
@@ -92,13 +87,15 @@ for i = 1:M
 	hold on;
 	x = linspace(min(data(:,i+1)), max(data(:, i+1)), 1000);
 
-	x_scaled = (x - mu_X(i)) / sigma_X(i);
-
 	y_values = ones(size(x)) * intercetta;
-	
+	x_scaled = zeros(N, 1);
+
 	for pow =1:P
-		y_values = y_values + theta((i-1)*P+pow) * x_scaled.^POTENZE(pow);
+		%% Rinormalizza feature per feature
+		x_scaled = (x.^POTENZE(pow) - mu_X((i-1)*P+pow)) / sigma_X((i-1)*P+pow);
+		y_values = y_values + theta((i-1)*P+pow) * x_scaled;
 	end
+
 
 	y_values = mu_y + sigma_y * y_values;
 	
