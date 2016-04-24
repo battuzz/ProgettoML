@@ -12,12 +12,12 @@ close all hidden;
 BASE_DIR = '/home/peter/MachineLearning/dati/';
 
 %% List of all directories with train data
-TRAIN_DATA_LOCATION = {'Query R/R1/Core/60','Query R/R1/Core/72','Query R/R1/Core/90','Query R/R1/Core/100','Query R/R1/Core/120'};
+TRAIN_DATA_LOCATION = {'Query R/R2/Core/60','Query R/R2/Core/72','Query R/R2/Core/90','Query R/R2/Core/100','Query R/R2/Core/80'};
 % TRAIN_DATA_LOCATION = {'Core/60', 'Core/80', 'Core/100', 'Core/120', 'Core/72'};
 %TRAIN_DATA_LOCATION = {'Core/60'};
 
 %% List of all directories with test data (leave {} if test data equals train data)
-TEST_DATA_LOCATION = {'Query R/R1/Core/80'};
+TEST_DATA_LOCATION = {'Query R/R2/Core/120'};
 %TEST_DATA_LOCATION = {};
 
 %% CHANGE THESE IF TEST == TRAIN
@@ -48,7 +48,7 @@ CLEAR_OUTLIERS = true;
 % 13 -> N Core
 CHOOSE_FEATURES = true;
 
-FEATURES = [1:10, 12, 13]; 			% All the features except Users
+FEATURES = [1:8, 12, 13]; 			% All the features except Users and Bandwidth
 % FEATURES = [1, 2, 7, 12, 13];
 
 FEATURES_DESCRIPTIONS = {			% These will be used to describe the plot axis
@@ -74,7 +74,7 @@ FEATURES_DESCRIPTIONS = {			% These will be used to describe the plot axis
 MODELS_CHOSEN = [1, 2, 3];
 COLORS = {'g', 'b', 'c'};
 
-LINEAR_REGRESSION = false;
+LINEAR_REGRESSION = true;
 
 rand('seed', 24);
 SHUFFLE_DATA = true;
@@ -228,7 +228,7 @@ if ismember(1, MODELS_CHOSEN)
 	sum_rel = 0;
 	for i = 1:N_test
 		sum_abs += abs(y_test(i) - predictions(i, end));
-		sum_rel += abs(y_test(i) - predictions(i, end) / predictions(i, end));
+		sum_rel += abs((y_test(i) - predictions(i, end)) / predictions(i, end));
 	end
 	mean_abs = sum_abs / N_test;
 	mean_rel = sum_rel / N_test;
@@ -263,7 +263,7 @@ if ismember(2, MODELS_CHOSEN)
 	sum_rel = 0;
 	for i = 1:N_test
 		sum_abs += abs(y_test(i) - predictions(i, end));
-		sum_rel += abs(y_test(i) - predictions(i, end) / predictions(i, end));
+		sum_rel += abs((y_test(i) - predictions(i, end)) / predictions(i, end));
 	end
 	mean_abs = sum_abs / N_test;
 	mean_rel = sum_rel / N_test;
@@ -298,7 +298,7 @@ if ismember(3, MODELS_CHOSEN)
 	sum_rel = 0;
 	for i = 1:N_test
 		sum_abs += abs(y_test(i) - predictions(i, end));
-		sum_rel += abs(y_test(i) - predictions(i, end) / predictions(i, end));
+		sum_rel += abs((y_test(i) - predictions(i, end)) / predictions(i, end));
 	end
 	mean_abs = sum_abs / N_test;
 	mean_rel = sum_rel / N_test;
@@ -349,7 +349,7 @@ if LINEAR_REGRESSION
 		sum_residual += (y_test(i) - predictions(i, end))^2;
 		sum_total += (y_test(i) - y_mean)^2;
 		sum_abs += abs(y_test(i) - predictions(i, end));
-		sum_rel += abs(y_test(i) - predictions(i, end) / predictions(i, end));
+		sum_rel += abs((y_test(i) - predictions(i, end)) / predictions(i, end));
 	end
 
 	lin_RMSE = sqrt(sum_residual / N_test);	%% Root Mean Squared Error
