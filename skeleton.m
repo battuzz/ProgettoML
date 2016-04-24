@@ -1,19 +1,23 @@
 %% Skeleton
 
+%%% TODO
+%% - Rescaling features to have meaningful plots
+%% - Automatic feature selection (with penalties?)
+
+
 clear all;
 clc;
 close all hidden;
 
-
 BASE_DIR = '/home/peter/MachineLearning/dati/';
 
 %% List of all directories with train data
-TRAIN_DATA_LOCATION = {'Query R/R1','Query R/R2','Query R/R5','Query R/R4'};
+TRAIN_DATA_LOCATION = {'Query R/R1/Core/60','Query R/R1/Core/72','Query R/R1/Core/90','Query R/R1/Core/100','Query R/R1/Core/120'};
 % TRAIN_DATA_LOCATION = {'Core/60', 'Core/80', 'Core/100', 'Core/120', 'Core/72'};
 %TRAIN_DATA_LOCATION = {'Core/60'};
 
 %% List of all directories with test data (leave {} if test data equals train data)
-TEST_DATA_LOCATION = {'Query R/R3'};
+TEST_DATA_LOCATION = {'Query R/R1/Core/80'};
 %TEST_DATA_LOCATION = {};
 
 %% CHANGE THESE IF TEST == TRAIN
@@ -27,7 +31,6 @@ TRAIN_FRAC_W_TEST = 0.7;
 NON_LINEAR_FEATURES = false;
 NORMALIZE_FEATURE = true;
 CLEAR_OUTLIERS = true;
-
 
 %% FEATURE DESCRIPTION:
 % 1 -> N map
@@ -46,7 +49,8 @@ CLEAR_OUTLIERS = true;
 CHOOSE_FEATURES = true;
 
 FEATURES = [1:10, 12, 13]; 			% All the features except Users
-% FEATURES = [1, 2, 3, 4, 5]; 
+% FEATURES = [1, 2, 7, 12, 13];
+
 FEATURES_DESCRIPTIONS = {			% These will be used to describe the plot axis
 	'N map',
 	'N reduce',
@@ -63,7 +67,14 @@ FEATURES_DESCRIPTIONS = {			% These will be used to describe the plot axis
 	'N core'
 };
 
+%% Choose which SVR models to use
+% 1 -> Linear SVR
+% 2 -> Polynomial SVR
+% 3 -> RBF SVR
+MODELS_CHOSEN = [1, 2, 3];
+COLORS = {'g', 'b', 'c'};
 
+LINEAR_REGRESSION = false;
 
 rand('seed', 24);
 SHUFFLE_DATA = true;
@@ -72,18 +83,11 @@ C_range = linspace (0.1, 5, 20);
 E_range = linspace (0.1, 5, 20);
 
 
-% SVR_DESCRIPTIONS = {
-% 	'Linear SVR'
-% };
 
-
-
-
-
-% --------------------------------------------------------------------------------------------------------
-% |														 DO NOT MODIFY 									 |
-% |														 UNDER THIS BOX 								 |
-% --------------------------------------------------------------------------------------------------------
+% --------------------------------------------------------------------------------------------------
+% |									       DO NOT  MODIFY 								           |
+% |										   UNDER THIS BOX 								           |
+% --------------------------------------------------------------------------------------------------
 
 %% Retrieve the data
 
@@ -101,7 +105,6 @@ if not (isempty(TEST_DATA_LOCATION))
 		test_data = [test_data(:, 1) , test_data(:, 2:end)(:, FEATURES)];
 	end
 end
-
 
 
 M = size(train_data, 2) - 1;   		%% Number of features
@@ -143,8 +146,6 @@ if NORMALIZE_FEATURE
 end
 
 
-
-
 if SHUFFLE_DATA
 	r = randperm(N_train);
 	train_data = train_data(r, :);
@@ -170,11 +171,7 @@ else
 end
 
 
-
-
-
 %% Organize data
-
 
 y_tr = train_data(:, 1);
 X_tr = train_data(:, 2:end);
@@ -202,10 +199,8 @@ predictions = [];
 coefficients = {};
 SVs = {};
 b = {};
-
-
-
-
+SVR_DESCRIPTIONS = {};
+models = {};
 
 %% SVR
 
@@ -217,147 +212,213 @@ b = {};
 % -p --> epsilon
 % -c --> cost
 
-SVR_DESCRIPTIONS = {};
 
-% fprintf('Training white box model with linear SVR');
-% fflush(stdout);
-% %% White box model, nCores  LINEAR
-% SVR_DESCRIPTIONS{end + 1} = 'Linear SVR'
-% [C, eps] = model_selection (y_tr, X_tr, y_cv, X_cv, '-s 3 -t 0 -q -h 0', C_range, E_range);
-% options = ['-s 3 -t 0 -h 0 -p ', num2str(eps), ' -c ', num2str(C)];
-% model = svmtrain (y_tr, X_tr, options);
-% [predictions(:, end + 1), accuracy, ~] = svmpredict (y_test, X_test, model);
-% Cs(end + 1) = C;
-% Es(end + 1) = eps;
-% RMSEs(end + 1) = sqrt (accuracy(2));
-% coefficients{end + 1} = model.sv_coef;
-% SVs{end + 1} = model.SVs;
-% b{end + 1} = - model.rho;
-% SVR_DESCRIPTIONS{end + 1} = 'Linear SVR'
+%% White box model, nCores  LINEAR
+if ismember(1, MODELS_CHOSEN)
+	fprintf('\nTraining model with linear SVR\n');
+	fflush(stdout);
+	SVR_DESCRIPTIONS{end + 1} = 'Linear SVR';
 
+	[C, eps] = model_selection (y_tr, X_tr, y_cv, X_cv, '-s 3 -t 0 -q -h 0', C_range, E_range);
+	options = ['-s 3 -t 0 -h 0 -p ', num2str(eps), ' -c ', num2str(C)];
+	model = svmtrain (y_tr, X_tr, options);
 
-% fprintf('Training black box model with polynomial SVR');
-% fflush(stdout);
-% %% Black box model, Polynomial
-% SVR_DESCRIPTIONS{end + 1} = 'Polynomial SVR'
-% [C, eps] = model_selection (y_tr, X_tr, y_cv, X_cv, '-s 3 -t 1 -q -h 0', C_range, E_range);
-% options = ['-s 3 -t 1 -h 0 -p ', num2str(eps), ' -c ', num2str(C)];
-% model = svmtrain (y_tr, X_tr, options);
-% [predictions(:, end + 1), accuracy, ~] = svmpredict (y_test, X_test, model);
-% Cs(end + 1) = C;
-% Es(end + 1) = eps;
-% RMSEs(end + 1) = sqrt (accuracy(2));
-% coefficients{end + 1} = model.sv_coef;
-% SVs{end + 1} = model.SVs;
-% b{end + 1} = - model.rho;
+	[predictions(:, end + 1), accuracy, ~] = svmpredict (y_test, X_test, model, '-q');  %% quiet
+	sum_abs = 0;
+	sum_rel = 0;
+	for i = 1:N_test
+		sum_abs += abs(y_test(i) - predictions(i, end));
+		sum_rel += abs(y_test(i) - predictions(i, end) / predictions(i, end));
+	end
+	mean_abs = sum_abs / N_test;
+	mean_rel = sum_rel / N_test;
+	fprintf('\n Testing results:\n');
+	fprintf('   RMSE = %f\n', sqrt(accuracy(2)));
+	fprintf('   R^2 = %f\n', accuracy(3));
+	fprintf('   Mean abs error = %f\n', mean_abs);
+	fprintf('   Mean rel error = %f\n\n', mean_rel);
 
-
-fprintf('\n\nTraining black box model with RBF SVR\n');
-fflush(stdout);
-%% Black box model, RBF (Radial Basis Function)
-SVR_DESCRIPTIONS{end + 1} = 'Radial Basis Function SVR';
-[C, eps] = model_selection (y_tr, X_tr, y_cv, X_cv, '-s 3 -t 2 -q -h 0', C_range, E_range);
-options = ['-s 3 -t 2 -h 0 -p ', num2str(eps), ' -c ', num2str(C)];
-model = svmtrain (y_tr, X_tr, options);
-
-[predictions(:, end + 1), accuracy, ~] = svmpredict (y_test, X_test, model, '-q');  %% quiet
-fprintf('\n Testing results:\n');
-fprintf('   RMSE = %f\n', sqrt(accuracy(2)));
-fprintf('   R^2 = %f\n', accuracy(3));
-
-Cs(end + 1) = C;
-Es(end + 1) = eps;
-RMSEs(end + 1) = sqrt (accuracy(2));
-coefficients{end + 1} = model.sv_coef;
-SVs{end + 1} = model.SVs;
-b{end + 1} = - model.rho;
-
-
-%% LINEAR REGRESSION
-
-X_tr = [ones(N_train, 1) , X_tr]; %% Add the intercept
-
-
-[theta, ~, ~, ~, results] = regress(y_tr, X_tr);
-
-fprintf('\n\nLinear regression:\n');
-fprintf('\n theta: \n'); disp(theta');
-fprintf('\n Training results: \n');
-fprintf('   R^2 = %f\n', results(1));
-fprintf('   F = %f\n', results(2));
-fprintf('   p-value = %f\n', results(3));
-fprintf('   MSE = %f\n\n', results(4));
-
-predictions(:, end+1) = [ones(N_test, 1) X_test] * theta;
-
-% fprintf('predictions  real values\n');
-% disp([predictions(1:10,1) y_test(1:10)]);
-
-y_mean = mean(y_test);
-sumresidual = 0;
-sumtotal = 0;
-for i = 1:N_test
-	sumresidual += (y_test(i) - predictions(i, end))^2;
-	sumtotal += (y_test(i) - y_mean)^2;
+	models{end + 1} = model;
+	Cs(end + 1) = C;
+	Es(end + 1) = eps;
+	RMSEs(end + 1) = sqrt (accuracy(2));
+	coefficients{end + 1} = model.sv_coef;
+	SVs{end + 1} = model.SVs;
+	b{end + 1} = - model.rho;
 end
 
-linRMSE = sqrt(sumresidual/ (N_test - 1));	%% Root Mean Squared Error
-linR2 = 1 - (sumresidual / sumtotal);		%% R^2
 
-fprintf(' Testing results:\n');
-fprintf('   RMSE = %f\n', linRMSE);
-fprintf('   R^2 = %f\n\n', linR2);
-RMSEs(end + 1) = linRMSE; 
+%% Black box model, Polynomial
+if ismember(2, MODELS_CHOSEN)
+	fprintf('\nTraining model with polynomial SVR\n');
+	fflush(stdout);
+	SVR_DESCRIPTIONS{end + 1} = 'Polynomial SVR';
 
-b{end+1} = 0;
-coefficients{end + 1} = 0;
-SVs{end + 1} = 0;
-Cs(end + 1) = 0;
-Es(end + 1) = 0;
+	[C, eps] = model_selection (y_tr, X_tr, y_cv, X_cv, '-s 3 -t 1 -q -h 0', C_range, E_range);
+	options = ['-s 3 -t 1 -h 0 -p ', num2str(eps), ' -c ', num2str(C)];
+	model = svmtrain (y_tr, X_tr, options);
 
-% Removes the intercept
-X_tr = X_tr(:, 2:end);
+	[predictions(:, end + 1), accuracy, ~] = svmpredict (y_test, X_test, model, '-q');  %% quiet
+	sum_abs = 0;
+	sum_rel = 0;
+	for i = 1:N_test
+		sum_abs += abs(y_test(i) - predictions(i, end));
+		sum_rel += abs(y_test(i) - predictions(i, end) / predictions(i, end));
+	end
+	mean_abs = sum_abs / N_test;
+	mean_rel = sum_rel / N_test;
+	fprintf('\n Testing results:\n');
+	fprintf('   RMSE = %f\n', sqrt(accuracy(2)));
+	fprintf('   R^2 = %f\n', accuracy(3));
+	fprintf('   Mean abs error = %f\n', mean_abs);
+	fprintf('   Mean rel error = %f\n\n', mean_rel);
+
+	models{end + 1} = model;
+	Cs(end + 1) = C;
+	Es(end + 1) = eps;
+	RMSEs(end + 1) = sqrt (accuracy(2));
+	coefficients{end + 1} = model.sv_coef;
+	SVs{end + 1} = model.SVs;
+	b{end + 1} = - model.rho;
+end
+
+
+%% Black box model, RBF (Radial Basis Function)
+if ismember(3, MODELS_CHOSEN)
+	fprintf('\nTraining model with RBF SVR\n');
+	fflush(stdout);
+	SVR_DESCRIPTIONS{end + 1} = 'Radial Basis Function SVR';
+
+	[C, eps] = model_selection (y_tr, X_tr, y_cv, X_cv, '-s 3 -t 2 -q -h 0', C_range, E_range);
+	options = ['-s 3 -t 2 -h 0 -p ', num2str(eps), ' -c ', num2str(C)];
+	model = svmtrain (y_tr, X_tr, options);
+
+	[predictions(:, end + 1), accuracy, ~] = svmpredict (y_test, X_test, model, '-q');  %% quiet
+	sum_abs = 0;
+	sum_rel = 0;
+	for i = 1:N_test
+		sum_abs += abs(y_test(i) - predictions(i, end));
+		sum_rel += abs(y_test(i) - predictions(i, end) / predictions(i, end));
+	end
+	mean_abs = sum_abs / N_test;
+	mean_rel = sum_rel / N_test;
+	fprintf('\n Testing results:\n');
+	fprintf('   RMSE = %f\n', sqrt(accuracy(2)));
+	fprintf('   R^2 = %f\n', accuracy(3));
+	fprintf('   Mean abs error = %f\n', mean_abs);
+	fprintf('   Mean rel error = %f\n\n', mean_rel);
+
+	models{end + 1} = model;
+	Cs(end + 1) = C;
+	Es(end + 1) = eps;
+	RMSEs(end + 1) = sqrt (accuracy(2));
+	coefficients{end + 1} = model.sv_coef;
+	SVs{end + 1} = model.SVs;
+	b{end + 1} = - model.rho;
+end
+
+
+%% Linear Regression
+
+if LINEAR_REGRESSION
+	fprintf('\nLinear regression:\n');
+
+	X_tr = [ones(N_train, 1) , X_tr]; %% Add the intercept
+
+	[theta, ~, ~, ~, results] = regress(y_tr, X_tr);
+
+	%% Print training results
+	% fprintf('\n theta: \n'); disp(theta');
+	% fprintf('\n Training results: \n');
+	% fprintf('   R^2 = %f\n', results(1));
+	% fprintf('   F = %f\n', results(2));
+	% fprintf('   p-value = %f\n', results(3));
+	% fprintf('   MSE = %f\n', results(4));
+
+	predictions(:, end+1) = [ones(N_test, 1) X_test] * theta;
+
+	% fprintf('predictions  real values\n');
+	% disp([predictions(1:10,1) y_test(1:10)]);
+
+	y_mean = mean(y_test);
+	sum_residual = 0;
+	sum_total = 0;
+	sum_abs = 0;
+	sum_rel = 0;
+	for i = 1:N_test
+		sum_residual += (y_test(i) - predictions(i, end))^2;
+		sum_total += (y_test(i) - y_mean)^2;
+		sum_abs += abs(y_test(i) - predictions(i, end));
+		sum_rel += abs(y_test(i) - predictions(i, end) / predictions(i, end));
+	end
+
+	lin_RMSE = sqrt(sum_residual / N_test);	%% Root Mean Squared Error
+	lin_R2 = 1 - (sum_residual / sum_total);		%% R^2
+	lin_mean_abs = sum_abs / N_test;
+	lin_mean_rel = sum_rel / N_test;
+
+	fprintf('\n Testing results:\n');
+	fprintf('   RMSE = %f\n', lin_RMSE);
+	fprintf('   R^2 = %f\n', lin_R2);
+	fprintf('   Mean abs error = %f\n', lin_mean_abs);
+	fprintf('   Mean rel error = %f\n\n', lin_mean_rel);
+
+	RMSEs(end + 1) = lin_RMSE; 
+
+	b{end+1} = 0;
+	coefficients{end + 1} = 0;
+	SVs{end + 1} = 0;
+	Cs(end + 1) = 0;
+	Es(end + 1) = 0;
+
+	% Removes the intercept
+	X_tr = X_tr(:, 2:end);
+end
 
 
 %% PLOTTING SVR vs LR
 
-for svr_index = [1]
+for col = 1:M
 
-	for col = 1:M
-		figure;
-		hold on;
+	figure;
+	hold on;
 
-		% Scatters training and test data
-		scatter(X_tr(:, col), y_tr, 'r', 'x');
-		scatter(X_test(:, col), y_test, 'b');
+	% Scatters training and test data
+	scatter(X_tr(:, col), y_tr, 'r', 'x');
+	scatter(X_test(:, col), y_test, 'b');
 
-		% w = SVs{svr_index}' * coefficients{svr_index};
-		x = linspace(min(X_test(:, col)), max(X_test(:, col)));
-		xsvr = zeros(length(x), M);
-		xsvr(:, col) = x;
-		[ysvr, ~, ~] = svmpredict(zeros(length(x), 1), xsvr, model, '-q');	%% quiet
+	% w = SVs{svr_index}' * coefficients{svr_index};
+	x = linspace(min(X_test(:, col)), max(X_test(:, col)));
+	xsvr = zeros(length(x), M);
+	xsvr(:, col) = x;
 
-		% plot(x, w(col)*x + b{svr_index}, 'g');
-		plot(x, ysvr, 'g', 'linewidth', 1);
+	% plot(x, w(col)*x + b{svr_index}, 'g');
+	if LINEAR_REGRESSION
 		plot(x, x*theta(col+1), 'm', 'linewidth', 1);
-		
-		legend('Training set', 'Testing set', SVR_DESCRIPTIONS{svr_index}, 'Linear regression', 'location', 'southeast');
-
-		% Display SVR margins
-		% plot(x, w(col)*x + b{svr_index} + Es(svr_index), 'k');
-		% plot(x, w(col)*x + b{svr_index} - Es(svr_index), 'k');
-
-		% Labels the axes
-		xlabel(FEATURES_DESCRIPTIONS(col));
-		ylabel('Time');
-		title(cstrcat('Linear regression vs ', SVR_DESCRIPTIONS{svr_index})); 
-		
-		hold off;
-		% pause;
 	end
+
+	for index = 1:length(MODELS_CHOSEN)
+		[ysvr, ~, ~] = svmpredict(zeros(length(x), 1), xsvr, models{index}, '-q');	%% quiet
+		plot(x, ysvr, COLORS{index}, 'linewidth', 1);
+	end
+	
+	labels = {'Training set', 'Testing set'};
+	if LINEAR_REGRESSION
+		labels{end+1} = 'Linear regression';
+	end
+	labels(end+1:end+length(SVR_DESCRIPTIONS)) = SVR_DESCRIPTIONS;
+	legend(labels, 'location', 'northwest');
+
+	% Display SVR margins
+	% plot(x, w(col)*x + b{svr_index} + Es(svr_index), 'k');
+	% plot(x, w(col)*x + b{svr_index} - Es(svr_index), 'k');
+
+	% Labels the axes
+	xlabel(FEATURES_DESCRIPTIONS(col));
+	ylabel('Completion Time');
+	% title(cstrcat('Linear regression vs ', SVR_DESCRIPTIONS{svr_index})); 
+	
+	hold off;
+	% pause;
+
 end
-
-
-
-
-
