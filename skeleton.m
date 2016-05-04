@@ -13,15 +13,14 @@ addpath('./utility/');
 BASE_DIR = './dati/';
 
 %% List of all directories with train data
-TRAIN_DATA_LOCATION = {'Query R/R2/Core/60','Query R/R2/Core/72','Query R/R2/Core/90','Query R/R2/Core/100','Query R/R2/Core/80'};
+TRAIN_DATA_LOCATION = {'Query R/R2/Core/60','Query R/R2/Core/72','Query R/R2/Core/90','Query R/R2/Core/100','Query R/R2/Core/120'};
 % TRAIN_DATA_LOCATION = {'Core/60', 'Core/80', 'Core/100', 'Core/120', 'Core/72'};
-%TRAIN_DATA_LOCATION = {'Core/60'};
 
 %% List of all directories with test data (leave {} if test data equals train data)
-TEST_DATA_LOCATION = {'Query R/R2/Core/120'};
+TEST_DATA_LOCATION = {'Query R/R2/Core/80'};
 %TEST_DATA_LOCATION = {};
 
-SAVE_PLOTS = true;
+SAVE_PLOTS = false;
 OUTPUT_PLOTS_LOCATION = 'outputPlots/';
 OUTPUT_FORMATS = {	{'-deps', '.eps'},					% generates only one .eps file black and white
 					{'-depslatex', '.eps'},				% generates one .eps file containing only the plot and a .tex file that includes the plot and fill the legend with plain text
@@ -89,7 +88,6 @@ MODELS_CHOSEN = [1, 2, 3];
 COLORS = {'m', [1, 0.5, 0], 'c'};	% magenta, orange, cyan
 
 LINEAR_REGRESSION = true;
-
 
 TEST_ON_CORES = true;	% To add the "difference between means" metric
 
@@ -259,13 +257,13 @@ if ismember(1, MODELS_CHOSEN)
 	fprintf('   Mean rel error = %f\n', mean_rel);
 
 	y_mean = mean(y_test);
- 	pred_mean = mean(predictions(:, end));
- 	means(end + 1) = pred_mean;
- 	if TEST_ON_CORES
- 		diff_means = pred_mean - y_mean;
- 		fprintf('   Difference between means = %f\n', diff_means);
- 	end
- 	fprintf('\n');
+	pred_mean = mean(predictions(:, end));
+	means(end + 1) = pred_mean;
+	if TEST_ON_CORES
+		diff_means = pred_mean - y_mean;
+		fprintf('   Difference between means = %f\n', diff_means);
+	end
+	fprintf('\n');
 
 	models{end + 1} = model;
 	Cs(end + 1) = C;
@@ -303,13 +301,13 @@ if ismember(2, MODELS_CHOSEN)
 	fprintf('   Mean rel error = %f\n', mean_rel);
 
 	y_mean = mean(y_test);
- 	pred_mean = mean(predictions(:, end));
- 	means(end + 1) = pred_mean;
- 	if TEST_ON_CORES
- 		diff_means = pred_mean - y_mean;
- 		fprintf('   Difference between means = %f\n', diff_means);
- 	end
- 	fprintf('\n');
+	pred_mean = mean(predictions(:, end));
+	means(end + 1) = pred_mean;
+	if TEST_ON_CORES
+		diff_means = pred_mean - y_mean;
+		fprintf('   Difference between means = %f\n', diff_means);
+	end
+	fprintf('\n');
 
 	models{end + 1} = model;
 	Cs(end + 1) = C;
@@ -411,12 +409,12 @@ if LINEAR_REGRESSION
 	fprintf('   Mean rel error = %f\n', lin_mean_rel);
 
 	pred_mean = mean(predictions(:, end));
- 	means(end + 1) = pred_mean;
- 	if TEST_ON_CORES
- 		diff_means = pred_mean - y_mean;
- 		fprintf('   Difference between means = %f\n', diff_means);
- 	end
- 	fprintf('\n');
+	means(end + 1) = pred_mean;
+	if TEST_ON_CORES
+		diff_means = pred_mean - y_mean;
+		fprintf('   Difference between means = %f\n', diff_means);
+	end
+	fprintf('\n');
 
 	RMSEs(end + 1) = lin_RMSE; 
 
@@ -480,7 +478,7 @@ for col = 1:M
 		end
 
 		if (x(1) == x(end))
-			scatter(x_denorm(1), ylin(1), 10, 'g', 'd', 'filled');		% Plot single points (for nCores)
+		% 	scatter(x_denorm(1), ylin(1), 10, 'g', 'd', 'filled');		% Plot single points (for nCores)
 		else
 			plot(x_denorm, ylin, 'g', 'linewidth', 1);
 		end
@@ -499,7 +497,7 @@ for col = 1:M
 		end
 
 		if (x(1) == x(end))
-			scatter(x_denorm(1), ysvr(1), 10, COLORS{index}, 'd', 'filled');		% Plot single points (for nCores)
+		% 	scatter(x_denorm(1), ysvr(1), 10, COLORS{index}, 'd', 'filled');		% Plot single points (for nCores)
 		else	
 			plot(x_denorm, ysvr, 'color', COLORS{index}, 'linewidth', 1);
 		end
