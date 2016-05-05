@@ -20,8 +20,8 @@ TRAIN_DATA_LOCATION = {'Query R/R2/Core/60','Query R/R2/Core/72','Query R/R2/Cor
 TEST_DATA_LOCATION = {'Query R/R2/Core/80'};
 %TEST_DATA_LOCATION = {};
 
-SAVE_PLOTS = false;
-OUTPUT_PLOTS_LOCATION = 'outputPlots/';
+SAVE_DATA = true;
+OUTPUT_FOLDER = 'outputPlots/R2/72CORE_VS_ALL/';
 OUTPUT_FORMATS = {	{'-deps', '.eps'},					% generates only one .eps file black and white
 					{'-depslatex', '.eps'},				% generates one .eps file containing only the plot and a .tex file that includes the plot and fill the legend with plain text
 					{'-depsc', '.eps'},					% generates only one .eps file with colour
@@ -219,6 +219,7 @@ b = {};
 SVR_DESCRIPTIONS = {};
 models = {};
 means = [];
+R_2 = [];
 
 %% SVR
 
@@ -234,7 +235,7 @@ means = [];
 %% White box model, nCores  LINEAR
 if ismember(1, MODELS_CHOSEN)
 	fprintf('\nTraining model with linear SVR\n');
-	%fflush(stdout);
+
 	SVR_DESCRIPTIONS{end + 1} = 'Linear SVR';
 
 	[C, eps] = model_selection (y_tr, X_tr, y_cv, X_cv, '-s 3 -t 0 -q -h 0', C_range, E_range);
@@ -242,28 +243,7 @@ if ismember(1, MODELS_CHOSEN)
 	model = svmtrain (y_tr, X_tr, options);
 
 	[predictions(:, end + 1), accuracy, ~] = svmpredict (y_test, X_test, model, '-q');  %% quiet
-	sum_abs = 0;
-	sum_rel = 0;
-	for i = 1:N_test
-		sum_abs = sum_abs + abs(y_test(i) - predictions(i, end));
-		sum_rel = sum_rel + abs((y_test(i) - predictions(i, end)) / predictions(i, end));
-	end
-	mean_abs = sum_abs / N_test;
-	mean_rel = sum_rel / N_test;
-	fprintf('\n Testing results:\n');
-	fprintf('   RMSE = %f\n', sqrt(accuracy(2)));
-	fprintf('   R^2 = %f\n', accuracy(3));
-	fprintf('   Mean abs error = %f\n', mean_abs);
-	fprintf('   Mean rel error = %f\n', mean_rel);
 
-	y_mean = mean(y_test);
-	pred_mean = mean(predictions(:, end));
-	means(end + 1) = pred_mean;
-	if TEST_ON_CORES
-		diff_means = pred_mean - y_mean;
-		fprintf('   Difference between means = %f\n', diff_means);
-	end
-	fprintf('\n');
 
 	models{end + 1} = model;
 	Cs(end + 1) = C;
@@ -272,6 +252,7 @@ if ismember(1, MODELS_CHOSEN)
 	coefficients{end + 1} = model.sv_coef;
 	SVs{end + 1} = model.SVs;
 	b{end + 1} = - model.rho;
+	R_2(end + 1) = accuracy(3);
 end
 
 
@@ -286,28 +267,6 @@ if ismember(2, MODELS_CHOSEN)
 	model = svmtrain (y_tr, X_tr, options);
 
 	[predictions(:, end + 1), accuracy, ~] = svmpredict (y_test, X_test, model, '-q');  %% quiet
-	sum_abs = 0;
-	sum_rel = 0;
-	for i = 1:N_test
-		sum_abs = sum_abs + abs(y_test(i) - predictions(i, end));
-		sum_rel = sum_rel + abs((y_test(i) - predictions(i, end)) / predictions(i, end));
-	end
-	mean_abs = sum_abs / N_test;
-	mean_rel = sum_rel / N_test;
-	fprintf('\n Testing results:\n');
-	fprintf('   RMSE = %f\n', sqrt(accuracy(2)));
-	fprintf('   R^2 = %f\n', accuracy(3));
-	fprintf('   Mean abs error = %f\n', mean_abs);
-	fprintf('   Mean rel error = %f\n', mean_rel);
-
-	y_mean = mean(y_test);
-	pred_mean = mean(predictions(:, end));
-	means(end + 1) = pred_mean;
-	if TEST_ON_CORES
-		diff_means = pred_mean - y_mean;
-		fprintf('   Difference between means = %f\n', diff_means);
-	end
-	fprintf('\n');
 
 	models{end + 1} = model;
 	Cs(end + 1) = C;
@@ -316,6 +275,7 @@ if ismember(2, MODELS_CHOSEN)
 	coefficients{end + 1} = model.sv_coef;
 	SVs{end + 1} = model.SVs;
 	b{end + 1} = - model.rho;
+	R_2(end + 1) = accuracy(3);
 end
 
 
@@ -330,28 +290,7 @@ if ismember(3, MODELS_CHOSEN)
 	model = svmtrain (y_tr, X_tr, options);
 
 	[predictions(:, end + 1), accuracy, ~] = svmpredict (y_test, X_test, model, '-q');  %% quiet
-	sum_abs = 0;
-	sum_rel = 0;
-	for i = 1:N_test
-		sum_abs = sum_abs + abs(y_test(i) - predictions(i, end));
-		sum_rel = sum_rel + abs((y_test(i) - predictions(i, end)) / predictions(i, end));
-	end
-	mean_abs = sum_abs / N_test;
-	mean_rel = sum_rel / N_test;
-	fprintf('\n Testing results:\n');
-	fprintf('   RMSE = %f\n', sqrt(accuracy(2)));
-	fprintf('   R^2 = %f\n', accuracy(3));
-	fprintf('   Mean abs error = %f\n', mean_abs);
-	fprintf('   Mean rel error = %f\n', mean_rel);
 
-	y_mean = mean(y_test);
-	pred_mean = mean(predictions(:, end));
-	means(end + 1) = pred_mean;
-	if TEST_ON_CORES
-		diff_means = pred_mean - y_mean;
-		fprintf('   Difference between means = %f\n', diff_means);
-	end
-	fprintf('\n');
 
 	models{end + 1} = model;
 	Cs(end + 1) = C;
@@ -360,6 +299,7 @@ if ismember(3, MODELS_CHOSEN)
 	coefficients{end + 1} = model.sv_coef;
 	SVs{end + 1} = model.SVs;
 	b{end + 1} = - model.rho;
+	R_2(end + 1) = accuracy(3);
 end
 
 
@@ -372,73 +312,149 @@ if LINEAR_REGRESSION
 
 	[theta, ~, ~, ~, results] = regress(y_tr, X_tr);
 
-	%% Print training results
-	% fprintf('\n theta: \n'); disp(theta');
-	% fprintf('\n Training results: \n');
-	% fprintf('   R^2 = %f\n', results(1));
-	% fprintf('   F = %f\n', results(2));
-	% fprintf('   p-value = %f\n', results(3));
-	% fprintf('   MSE = %f\n', results(4));
-
 	predictions(:, end+1) = [ones(N_test, 1) X_test] * theta;
 
-	% fprintf('predictions  real values\n');
-	% disp([predictions(1:10,1) y_test(1:10)]);
+	models{end + 1} = {};
+	Cs(end + 1) = 0;
+	Es(end + 1) = 0;
+	RMSEs(end + 1) = -1;			%% Will be computed later 
+	coefficients{end + 1} = 0;
+	SVs{end + 1} = 0;
+	b{end+1} = 0;
+	R_2(end + 1) = -1;				%% Will be computed later
+
+	% Removes the intercept
+	X_tr = X_tr(:, 2:end);
+end
+
+
+%% Creates the directory for saving plots and data
+%% @TODO this doesn't work for multiple directories
+fd = -1;
+if SAVE_DATA
+	if ~ exist(OUTPUT_FOLDER)
+		if ~ mkdir(OUTPUT_FOLDER)
+			fprintf('[ERROR] Could not create output folder\nCreate the output folder first and then restart this script\n');
+			quit;
+		end
+	end
+
+	results_filename = strcat(OUTPUT_FOLDER, 'report.txt');
+	fd = fopen(results_filename, 'w');
+
+end
+
+
+%% Compute metrics for all models
+
+for index = 1:length(MODELS_CHOSEN)
+	sum_abs = sum(abs(y_test .- predictions(:, index)));
+	sum_rel = sum(abs((y_test .- predictions(:, index)) ./ predictions(:, index)));
+	
+
+	mean_abs = sum_abs / N_test;
+	mean_rel = sum_rel / N_test;
+	fprintf('\n Testing results for %s:\n', SVR_DESCRIPTIONS{index});
+	fprintf('   RMSE = %f\n', RMSEs(index));
+	fprintf('   R^2 = %f\n', R_2(index));
+	fprintf('   Mean abs error = %f\n', mean_abs);
+	fprintf('   Mean rel error = %f\n', mean_rel);
+
+	if SAVE_DATA
+		fprintf(fd, '\n Testing results for %s:\n', SVR_DESCRIPTIONS{index});
+		fprintf(fd, '   RMSE = %f\n', RMSEs(index));
+		fprintf(fd, '   R^2 = %f\n', R_2(index));
+		fprintf(fd, '   Mean abs error = %f\n', mean_abs);
+		fprintf(fd, '   Mean rel error = %f\n', mean_rel);
+	end
+
 
 	y_mean = mean(y_test);
-	sum_residual = 0;
-	sum_total = 0;
-	sum_abs = 0;
-	sum_rel = 0;
-	for i = 1:N_test
-		sum_residual = sum_residual + (y_test(i) - predictions(i, end))^2;
-		sum_total = sum_total + (y_test(i) - y_mean)^2;
-		sum_abs = sum_abs + abs(y_test(i) - predictions(i, end));
-		sum_rel = sum_rel + abs((y_test(i) - predictions(i, end)) / predictions(i, end));
+	pred_mean = mean(predictions(:, index));
+	means(end + 1) = pred_mean;
+	if TEST_ON_CORES
+		diff_means = pred_mean - y_mean;
+		fprintf('   Difference between means = %f\n', diff_means);
+		if SAVE_DATA
+			fprintf(fd, '   Difference between means = %f\n', diff_means);
+		end
 	end
+	fprintf('\n');
+end
+
+if LINEAR_REGRESSION
+	y_mean = mean(y_test);
+
+	sum_residual = sum((y_test .- predictions(:, end)).^2);
+	sum_total = sum((y_test .- y_mean).^2);
+	sum_abs = sum(abs(y_test - predictions(:, end)));
+	sum_rel = sum(abs((y_test - predictions(:, end)) ./ predictions(:, end)));
 
 	lin_RMSE = sqrt(sum_residual / N_test);			% Root Mean Squared Error
 	lin_R2 = 1 - (sum_residual / sum_total);		% R^2
 	lin_mean_abs = sum_abs / N_test;
 	lin_mean_rel = sum_rel / N_test;
 
-	fprintf('\n Testing results:\n');
+	fprintf('\n Testing results for linear regression:\n');
 	fprintf('   RMSE = %f\n', lin_RMSE);
 	fprintf('   R^2 = %f\n', lin_R2);
 	fprintf('   Mean abs error = %f\n', lin_mean_abs);
 	fprintf('   Mean rel error = %f\n', lin_mean_rel);
+
+	if SAVE_DATA
+		fprintf(fd, '\n Testing results for linear regression:\n');
+		fprintf(fd, '   RMSE = %f\n', lin_RMSE);
+		fprintf(fd, '   R^2 = %f\n', lin_R2);
+		fprintf(fd, '   Mean abs error = %f\n', lin_mean_abs);
+		fprintf(fd, '   Mean rel error = %f\n', lin_mean_rel);
+	end
+
+	RMSEs(end) = lin_RMSE;
+	R_2(end) = lin_R2;
 
 	pred_mean = mean(predictions(:, end));
 	means(end + 1) = pred_mean;
 	if TEST_ON_CORES
 		diff_means = pred_mean - y_mean;
 		fprintf('   Difference between means = %f\n', diff_means);
+		if SAVE_DATA
+			fprintf(fd, '   Difference between means = %f\n', diff_means);
+		end
 	end
 	fprintf('\n');
-
-	RMSEs(end + 1) = lin_RMSE; 
-
-	b{end+1} = 0;
-	coefficients{end + 1} = 0;
-	SVs{end + 1} = 0;
-	Cs(end + 1) = 0;
-	Es(end + 1) = 0;
-
-	% Removes the intercept
-	X_tr = X_tr(:, 2:end);
 end
+
+
+%% Closes the file descriptor
+if SAVE_DATA
+	fclose(fd);
+end
+
+
+
+
 
 % Denormalize means
-means = (means * sigma_y) + mu_y
+means = (means * sigma_y) + mu_y;
 
 
-%% Creates the directory for saving plots
-%% @TODO this doesn't work for multiple directories
-if SAVE_PLOTS
-	if ~ exist(OUTPUT_PLOTS_LOCATION)
-		mkdir(OUTPUT_PLOTS_LOCATION);
-	end
+
+
+%% Denormalize features
+
+if NORMALIZE_FEATURE
+	X_tr_denorm = X_tr .* (ones(N_train, 1) * sigma_X) .+ (ones(N_train, 1) * mu_X);
+	y_tr_denorm = y_tr * sigma_y + mu_y;
+	X_test_denorm = X_test .* (ones(N_test, 1) * sigma_X) .+ (ones(N_test, 1) * mu_X);
+	y_test_denorm = y_test * sigma_y + mu_y;
+else
+	X_tr_denorm = X_tr;
+	y_tr_denorm = y_tr;
+	X_test_denorm = X_test;
+	y_test_denorm = y_test;
 end
+
+
 
 
 %% PLOTTING SVR vs LR
@@ -448,23 +464,17 @@ for col = 1:M
 	figure;
 	hold on;
 
-	% Denormalizes and scatters training and test data
-	X_tr_denorm(:, col) = (X_tr(:, col) * sigma_X(col)) + mu_X(col);
-	y_tr_denorm = (y_tr * sigma_y) + mu_y;
-	X_test_denorm(:, col) = (X_test(:, col) * sigma_X(col)) + mu_X(col);
-	y_test_denorm = (y_test * sigma_y) + mu_y;
-
 	scatter(X_tr_denorm(:, col), y_tr_denorm, 'r', 'x');
 	scatter(X_test_denorm(:, col), y_test_denorm, 'b');
 
-	% w = SVs{svr_index}' * coefficients{svr_index};
-	x = linspace(min(X_test(:, col)), max(X_test(:, col)));		% Normalized, we need this for the predictions
+	% x = linspace(min(X_test(:, col)), max(X_test(:, col)));		% Normalized, we need this for the predictions
+	x = linspace(min(min(X_test(:, col)), min(X_tr(:, col))), max(max(X_test(:, col)), max(X_tr(:, col))));  %% fill all the plot
 	x_denorm = (x * sigma_X(col)) + mu_X(col);
 
 	xsvr = zeros(length(x), M);			% xsvr is a matrix of zeros, except for the column we're plotting currently
 	xsvr(:, col) = x;					% It must be normalized to use svmpredict with the SVR models we found
 
-	% plot(x, w(col)*x + b{svr_index}, 'g');
+
 	if LINEAR_REGRESSION
 		ylin = x * theta(col+1);
 
@@ -473,15 +483,12 @@ for col = 1:M
 			ylin = (ylin * sigma_y) + mu_y;
 		end
 
-		if (ismember(13, FEATURES) & (col == M))
-			scatter(x_denorm(1), means(end), 10, 'g', 'd', 'filled');
-		end
+		% if (ismember(13, FEATURES) & (col == M))   %% If we are plotting N-cores
+		% 	scatter(X_test_denorm(1, col), means(end), 10, 'g', 'd', 'filled');
+		% end
+		plot(x_denorm, ylin, 'g', 'linewidth', 1);
+		
 
-		if (x(1) == x(end))
-		% 	scatter(x_denorm(1), ylin(1), 10, 'g', 'd', 'filled');		% Plot single points (for nCores)
-		else
-			plot(x_denorm, ylin, 'g', 'linewidth', 1);
-		end
 	end
 
 	for index = 1:length(MODELS_CHOSEN)
@@ -492,20 +499,17 @@ for col = 1:M
 			ysvr = (ysvr * sigma_y) + mu_y;
 		end 
 
-		if (ismember(13, FEATURES) & (col == M))
-			scatter(x_denorm(1), means(index), 10, COLORS{index}, 'd', 'filled');
-		end
+		% if (ismember(13, FEATURES) & (col == M))
+		% 	scatter(X_test_denorm(1, col), means(index), 10, COLORS{index}, 'd', 'filled');
+		% end	
+		plot(x_denorm, ysvr, 'color', COLORS{index}, 'linewidth', 1);
+		
 
-		if (x(1) == x(end))
-		% 	scatter(x_denorm(1), ysvr(1), 10, COLORS{index}, 'd', 'filled');		% Plot single points (for nCores)
-		else	
-			plot(x_denorm, ysvr, 'color', COLORS{index}, 'linewidth', 1);
-		end
 	end
 
 	% Plot the mean of the test values (for nCores)
-	if(x(1) == x(end))
-		scatter(x_denorm(1), mean(y_test_denorm), 10, 'k', '.');		
+	if (ismember(13, FEATURES) & (col == M))
+		scatter(X_test_denorm(1, col), mean(y_test_denorm), 10, 'k', '.');		
 	end
 	
 	labels = {'Training set', 'Testing set'};
@@ -521,9 +525,9 @@ for col = 1:M
 	xlabel(FEATURES_DESCRIPTIONS{col});
 	ylabel('Completion Time');
 	% title(cstrcat('Linear regression vs ', SVR_DESCRIPTIONS{svr_index})); 
-	if SAVE_PLOTS
+	if SAVE_DATA
 		% NOTE: the file location shouldn't have any spaces
-		file_location = strrep(strcat(OUTPUT_PLOTS_LOCATION, 'plot_', FEATURES_DESCRIPTIONS{col}, OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{2}), ' ', '');
+		file_location = strrep(strcat(OUTPUT_FOLDER, 'plot_', FEATURES_DESCRIPTIONS{col}, OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{2}), ' ', '');
 		print(OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{1}, file_location);
 	end
 	hold off;
