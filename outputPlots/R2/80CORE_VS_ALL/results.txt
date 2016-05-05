@@ -1,0 +1,57 @@
+Training model with linear SVR
+*
+optimization finished, #iter = 63
+nu = 0.003723
+obj = -0.116528, rho = -0.053749
+nSV = 6, nBSV = 0
+
+ Testing results:
+   RMSE = 0.072199
+   R^2 = 0.999078
+   Mean abs error = 0.066500
+   Mean rel error = 0.172983
+   Difference between means = 0.052571
+
+
+Training model with polynomial SVR
+*
+optimization finished, #iter = 194
+nu = 0.006605
+obj = -0.112372, rho = 0.321778
+nSV = 8, nBSV = 0
+
+ Testing results:
+   RMSE = 0.105019
+   R^2 = 0.997596
+   Mean abs error = 0.086801
+   Mean rel error = 0.183135
+   Difference between means = 0.077998
+
+
+Training model with RBF SVR
+*
+optimization finished, #iter = 52
+nu = 0.022804
+obj = -5.197708, rho = -0.912365
+nSV = 15, nBSV = 0
+
+ Testing results:
+   RMSE = 0.586233
+   R^2 = 0.980178
+   Mean abs error = 0.266192
+   Mean rel error = 0.228588
+   Difference between means = -0.248650
+
+
+Linear regression:
+
+ Testing results:
+   RMSE = 0.093980
+   R^2 = 0.995189
+   Mean abs error = 0.044373
+   Mean rel error = 0.029468
+   Difference between means = -0.037757
+
+means =
+
+   2.8708e+05   2.9469e+05   1.9694e+05   2.6005e+05

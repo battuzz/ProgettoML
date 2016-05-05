@@ -1,0 +1,28 @@
+
+ Testing results for Linear SVR:
+   RMSE = 0.072199
+   R^2 = 0.999078
+   Mean abs error = 0.066500
+   Mean rel error = 0.172983
+   Difference between means = 0.052571
+
+ Testing results for Polynomial SVR:
+   RMSE = 0.105019
+   R^2 = 0.997596
+   Mean abs error = 0.086801
+   Mean rel error = 0.183135
+   Difference between means = 0.077998
+
+ Testing results for Radial Basis Function SVR:
+   RMSE = 0.586233
+   R^2 = 0.980178
+   Mean abs error = 0.266192
+   Mean rel error = 0.228588
+   Difference between means = -0.248650
+
+ Testing results for linear regression:
+   RMSE = 0.093980
+   R^2 = 0.995189
+   Mean abs error = 0.044373
+   Mean rel error = 0.029468
+   Difference between means = -0.037757
