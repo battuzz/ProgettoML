@@ -32,6 +32,14 @@ PLOT_SAVE_FORMAT = 3;
 
 
 
+
+ENABLE_FEATURE_FILTERING = true;
+COMPLETION_TIME_THRESHOLD = 400000;
+
+
+
+
+
 %% CHANGE THESE IF TEST == TRAIN
 TRAIN_FRAC_WO_TEST = 0.6;
 TEST_FRAC_WO_TEST = 0.2;
@@ -122,6 +130,16 @@ if not (isempty(TEST_DATA_LOCATION))
 		test_data = [test_data(:, 1) , tmp(:, FEATURES)];
 	end
 end
+
+
+if ENABLE_FEATURE_FILTERING
+	rows_ok = train_data(:, 1) < COMPLETION_TIME_THRESHOLD;
+	train_data = train_data(rows_ok, :);
+
+	rows_ok = test_data(:, 1) < COMPLETION_TIME_THRESHOLD;
+	test_data = test_data(rows_ok, :);
+end
+
 
 
 M = size(train_data, 2) - 1;   		%% Number of features
@@ -332,16 +350,31 @@ end
 %% @TODO this doesn't work for multiple directories
 fd = -1;
 if SAVE_DATA
-	if ~ exist(OUTPUT_FOLDER)
-		if ~ mkdir(OUTPUT_FOLDER)
-			fprintf('[ERROR] Could not create output folder\nCreate the output folder first and then restart this script\n');
-			quit;
+	if ~ exist(OUTPUT_FOLDER)		%% Checks if the folder exists
+		if ~ mkdir(OUTPUT_FOLDER)		%% Try with the mkdir function
+			if system(cstrcat("mkdir -p ", OUTPUT_FOLDER))		%% This creates subfolders
+				fprintf('[ERROR] Could not create output folder\nCreate the output folder first and then restart this script\n');
+				quit;
+			end
 		end
 	end
 
 	results_filename = strcat(OUTPUT_FOLDER, 'report.txt');
 	fd = fopen(results_filename, 'w');
 
+	%% Prints train and test data location
+
+	fprintf(fd, "TRAIN DATA:\n");
+	for index = 1:length(TRAIN_DATA_LOCATION)
+		fprintf(fd, "%s\n", TRAIN_DATA_LOCATION{index});
+	end
+
+	fprintf(fd, "\n\nTEST DATA:\n");
+	for index = 1:length(TEST_DATA_LOCATION)
+		fprintf(fd, "%s\n", TRAIN_DATA_LOCATION{index});
+	end
+
+	fprintf(fd, "\n\n\n");
 end
 
 
@@ -425,8 +458,26 @@ if LINEAR_REGRESSION
 end
 
 
-%% Closes the file descriptor
+%% Stores the context and closes the file descriptor
 if SAVE_DATA
+	fprintf(fd, "\n\n\n========================\n\n\n");
+	fprintf(fd, "ENABLE_FEATURE_FILTERING: %d\n", ENABLE_FEATURE_FILTERING);
+	fprintf(fd, "COMPLETION_TIME_THRESHOLD: %d\n", COMPLETION_TIME_THRESHOLD);
+	fprintf(fd, "TRAIN_FRAC_WO_TEST: %f\n", TRAIN_FRAC_WO_TEST);
+	fprintf(fd, "TEST_FRAC_WO_TEST: %f\n", TEST_FRAC_WO_TEST);
+	fprintf(fd, "TRAIN_FRAC_W_TEST: %f\n", TRAIN_FRAC_W_TEST);
+	fprintf(fd, "NORMALIZE_FEATURE: %d\n", NORMALIZE_FEATURE);
+	fprintf(fd, "CLEAR_OUTLIERS: %d\n", CLEAR_OUTLIERS);
+	fprintf(fd, "CHOOSE_FEATURES: %d\n", CHOOSE_FEATURES);
+	fprintf(fd, "FEATURES: %s --> ", mat2str(FEATURES));
+	for id = 1:length(FEATURES)
+		fprintf(fd, "%s   ", FEATURES_DESCRIPTIONS{id});
+	end
+	fprintf(fd, "\n");
+	fprintf(fd, "TEST_ON_CORES: %d\n", TEST_ON_CORES);
+	fprintf(fd, "SHUFFLE_DATA: %d\n", SHUFFLE_DATA);
+	
+
 	fclose(fd);
 end
 
@@ -464,8 +515,11 @@ for col = 1:M
 	figure;
 	hold on;
 
-	scatter(X_tr_denorm(:, col), y_tr_denorm, 'r', 'x');
-	scatter(X_test_denorm(:, col), y_test_denorm, 'b');
+	% scatter(X_tr_denorm(:, col), y_tr_denorm, 'r', 'x');
+	% scatter(X_test_denorm(:, col), y_test_denorm, 'b');
+	my_scatter(X_tr_denorm(:, col), y_tr_denorm, 'r', 'x');
+	my_scatter(X_test_denorm(:, col), y_test_denorm, 'b');
+
 
 	% x = linspace(min(X_test(:, col)), max(X_test(:, col)));		% Normalized, we need this for the predictions
 	x = linspace(min(min(X_test(:, col)), min(X_tr(:, col))), max(max(X_test(:, col)), max(X_tr(:, col))));  %% fill all the plot
