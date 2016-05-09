@@ -13,17 +13,17 @@ addpath('./utility/');
 BASE_DIR = './dati/';
 
 %% List of all directories with train data
-TRAIN_DATA_LOCATION = {'Query R/R1/Core/60','Query R/R1/Core/72','Query R/R1/Core/90','Query R/R1/Core/100','Query R/R1/Core/80'};
+% TRAIN_DATA_LOCATION = {'Query R/R1/Core/60','Query R/R1/Core/72','Query R/R1/Core/90','Query R/R1/Core/100','Query R/R1/Core/80'};
 % TRAIN_DATA_LOCATION = {'Core/60', 'Core/80', 'Core/100', 'Core/120', 'Core/72'};
-% TRAIN_DATA_LOCATION = {'Query R/R1/Datasize/750'};
+TRAIN_DATA_LOCATION = {'Query R/R1/'};
 
 %% List of all directories with test data (leave {} if test data equals train data)
-TEST_DATA_LOCATION = {'Query R/R1/Core/120'};
+%TEST_DATA_LOCATION = {'Query R/R1/Core/120'};
 TEST_DATA_LOCATION = {};
 
-OUTPUT_LATEX = true;
-QUERY = 'R1';
-DATASIZE = '750';
+OUTPUT_LATEX = false;
+QUERY = 'R2';
+DATASIZE = '1000';
 if OUTPUT_LATEX
 	TRAIN_DATA_LOCATION = {strcat('Query R/', QUERY, '/Datasize/', DATASIZE)};	% Watch out, overrides TRAIN_DATA_LOCATION
 end
@@ -44,7 +44,7 @@ OUTPUT_FORMATS = {	{'-deps', '.eps'},					% generates only one .eps file black a
 PLOT_SAVE_FORMAT = 3;
 
 ENABLE_FEATURE_FILTERING = false;
-COMPLETION_TIME_THRESHOLD = 120000;
+COMPLETION_TIME_THRESHOLD = 250000;
 
 
 %% CHANGE THESE IF TEST == TRAIN
@@ -78,7 +78,7 @@ LEARNING_CURVES = true;
 % 13 -> N Core
 CHOOSE_FEATURES = true;
 
-FEATURES = [3:8, 13];
+FEATURES = [3:8,13];
 % FEATURES = [1:10, 12:13]; 
 % NB: Bandwidth crea problemi con la linear regression, perché i valori sono tutti uguali per alcuni test
 % LINEAR_REGRESSION va messa a false in quei casi
@@ -656,8 +656,10 @@ for col = 1:M
 		% end
 		plot(x_denorm, ylin, 'g', 'linewidth', 1);
 
-		save(cstrcat(OUTPUT_FOLDER, 'linear_regression_x.mat'), 'x_denorm');
-		save(cstrcat(OUTPUT_FOLDER, 'linear_regression_y.mat'), 'ylin');
+		x = x_denorm;
+		y = ylin;
+		save(cstrcat(OUTPUT_FOLDER, 'Regressione lineare_x.mat'), 'x');
+		save(cstrcat(OUTPUT_FOLDER, 'Regressione lineare_y.mat'), 'y');
 		
 
 	end
@@ -675,8 +677,10 @@ for col = 1:M
 		% end	
 		plot(x_denorm, ysvr, 'color', COLORS{index}, 'linewidth', 1);
 		
-		save(cstrcat(OUTPUT_FOLDER, SVR_DESCRIPTIONS{index}, '_x.mat'), 'x_denorm');
-		save(cstrcat(OUTPUT_FOLDER, SVR_DESCRIPTIONS{index}, '_y.mat'), 'ysvr');
+		x = x_denorm;
+		y = ysvr;
+		save(cstrcat(OUTPUT_FOLDER, SVR_DESCRIPTIONS{index}, '_x.mat'), 'x');
+		save(cstrcat(OUTPUT_FOLDER, SVR_DESCRIPTIONS{index}, '_y.mat'), 'y');
 
 	end
 

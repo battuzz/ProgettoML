@@ -1,0 +1,25 @@
+TRAIN DATA:
+Query R/R2/Datasize/750
+
+\begin{table}[bhpt]
+\centering
+\begin{adjustbox}{center}
+\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
+\hline
+Regressione lineare & 0.2172 & 0.9198 &  79129 & 1.6851 \\
+SVR lineare & 0.2177 & 0.9219 &  79103 & 0.5003 \\
+SVR polinomiale & 0.6016 & 0.7222 &  80166 & 9.7460 \\
+SVR sigmoidale & 0.2593 & 0.8958 &  79206 & 0.4017 \\
+\end{tabular}
+\end{adjustbox}
+\\
+\caption{Risultati per il test su query R2 con datasize 750}
+\label{table_R2_750}
+\end{table}
+
+\begin {figure}[hbtp]
+\centering
+\includegraphics[width=\textwidth]{output/R2_750/plot_R2_750.eps}
+\caption {Plot per il test su query R2 con datasize 750}
+\end {figure}
