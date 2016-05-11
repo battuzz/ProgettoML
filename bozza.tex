@@ -27,7 +27,7 @@ Come si può vedere dalla Tabella \ref{tabletest1} i risultati migliori si hanno
 \begin{table}[bhpt]
 \centering
 \begin{adjustbox}{center}
-\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+\begin{tabular}{c | c M{1.2cm} M{2.5cm} M{2.5cm} M{1.8cm}}
 Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio & Differenza medie \tabularnewline
 \hline
 Regressione lineare & 0.0940 & 0.9952 & 213397 & 0.0295 & -0.0378 \\
@@ -49,6 +49,274 @@ SVR sigmoidale & 0.5862 & 0.9802 & 279777 & 0.2286 & -0.2487
 \end {figure}
 
 \newpage
+\section{Features: solo nCores}
+\subsection{Query R1 -- solo nCores}
+\begin{table}[bhpt]
+	\centering
+	\begin{adjustbox}{center}
+		\begin{tabular}{c | c M{1.2cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+			Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
+			\hline
+			Regressione lineare & 0.9214 & 0.1942 & 336910 & 4.7709 \\
+			SVR lineare & 0.9428 & 0.1971 & 343224 & 5.3213 \\
+			SVR polinomiale & 0.9460 & 0.2004 & 343757 & 6.2289 \\
+			SVR sigmoidale & 0.9151 & 0.2592 & 336308 & 16.6191 \\
+		\end{tabular}
+	\end{adjustbox}
+	\\
+	\caption{Risultati per il test su query R1 
+(solo nCores)}
+	\label{table_R1_nCores}
+\end{table}
+
+\begin {figure}[hbtp]
+\centering
+\includegraphics[width=\textwidth]{output/R1_SOLO_CORE/plot_R1_-.eps}
+\caption {Completion time vs Numero di cores (query R1, solo nCores)}
+\end {figure}
+
+\newpage
+\subsection{Query R2 -- solo nCores}
+\begin{table}[bhpt]
+	\centering
+	\begin{adjustbox}{center}
+		\begin{tabular}{c | c M{1.2cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+			Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
+			\hline
+			Regressione lineare & 1.0279 & 0.0011 &  83988 & 33.5075 \\
+			SVR lineare & 1.0288 & 0.0038 &  83986 & 25.1568 \\
+			SVR polinomiale & 1.0276 & 0.0053 &  83996 & 22.9335 \\
+			SVR sigmoidale & 0.9861 & 0.0902 &  83660 & 5.3084 \\
+		\end{tabular}
+	\end{adjustbox}
+	\\
+	\caption{Risultati per il test su query R2 
+(solo nCores)}
+	\label{table_R2_nCores}
+\end{table}
+
+\begin {figure}[hbtp]
+\centering
+\includegraphics[width=\textwidth]{output/R2_SOLO_CORE_FILTER_500000/plot_R2_-.eps}
+\caption {Completion time vs Numero di cores (query R2, solo nCores)}
+\end {figure}
+
+\newpage
+\subsection{Query R3 -- solo nCores}
+\begin{table}[bhpt]
+	\centering
+	\begin{adjustbox}{center}
+		\begin{tabular}{c | c M{1.2cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+			Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
+			\hline
+			Regressione lineare & 0.8424 & 0.2186 & 857309 & 4.1395 \\
+			SVR lineare & 0.8653 & 0.2198 & 865917 & 5.6068 \\
+			SVR polinomiale & 0.8736 & 0.1973 & 867099 & 141.9124 \\
+			SVR sigmoidale & 0.8479 & 0.3154 & 859635 & 5.9594 \\
+		\end{tabular}
+	\end{adjustbox}
+	\\
+	\caption{Risultati per il test su query R3 
+(solo nCores)}
+	\label{table_R3_nCores}
+\end{table}
+
+\begin {figure}[hbtp]
+\centering
+\includegraphics[width=\textwidth]{output/R3_SOLO_CORE/plot_R3_-.eps}
+\caption {Completion time vs Numero di cores (query R3, solo nCores)}
+\end {figure}
+
+\newpage
+\subsection{Query R4 -- solo nCores}
+\begin{table}[bhpt]
+	\centering
+	\begin{adjustbox}{center}
+		\begin{tabular}{c | c M{1.2cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+			Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
+			\hline
+			Regressione lineare & 0.7926 & 0.2278 & 667442 & 2.3770 \\
+			SVR lineare & 0.7993 & 0.2307 & 669068 & 2.0618 \\
+			SVR polinomiale & 0.8358 & 0.2111 & 666297 & 1.9794 \\
+			SVR sigmoidale & 0.7923 & 0.2665 & 643343 & 1.7699 \\
+		\end{tabular}
+	\end{adjustbox}
+	\\
+	\caption{Completion time vs Numero di cores (query R4, solo nCores)}
+	\label{table_R4_nCores}
+\end{table}
+
+\begin {figure}[hbtp]
+\centering
+\includegraphics[width=\textwidth]{output/R4_SOLO_CORE_FILTER_1500000/plot_R4_-.eps}
+\caption {Plot per il test su query R4 
+(solo nCores)}
+\end {figure}
+
+\newpage
+\subsection{Query R5 -- solo nCores}
+\begin{table}[bhpt]
+	\centering
+	\begin{adjustbox}{center}
+		\begin{tabular}{c | c M{1.2cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+			Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
+			\hline
+			Regressione lineare & 1.0607 & -0.0175 &  32694 & 9.4298 \\
+			SVR lineare & 1.0595 & 0.0001 &  32728 & 13.2545 \\
+			SVR polinomiale & 1.0654 & 0.0026 &  32786 & 98.7186 \\
+			SVR sigmoidale & 1.0560 & 0.0009 &  32687 & 8.6378 \\
+		\end{tabular}
+	\end{adjustbox}
+	\\
+	\caption{Completion time vs Numero di cores (query R5, solo nCores)}
+	\label{table_R5_nCores}
+\end{table}
+
+\begin {figure}[hbtp]
+\centering
+\includegraphics[width=\textwidth]{output/R5_SOLO_CORE/plot_R5_-.eps}
+\caption {Plot per il test su query R5 
+(solo nCores)}
+\end {figure}
+
+\newpage
+\subsection{Confronto tra Query}
+
+\begin {figure}[hbtp]
+\centering
+\includegraphics[width=\textwidth]{output/QUERY_COMP_CORE/SVRlineare/plot.eps}
+\caption {Completion time vs Numero di core per ogni query (SVR lineare)}
+\end {figure}
+
+\newpage
+\section{Features: solo Datasize}
+\subsection{Query R1 -- solo Datasize}
+
+\begin{table}[bhpt]
+	\centering
+	\begin{adjustbox}{center}
+		\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+			Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
+			\hline
+			Regressione lineare & 0.5954 & 0.6487 & 299905 & 0.8711 \\
+			SVR lineare & 0.5995 & 0.6493 & 304265 & 0.9475 \\
+			SVR polinomiale & 0.5782 & 0.6853 & 306565 & 3.3077 \\
+			SVR sigmoidale & 0.5891 & 0.6609 & 298098 & 1.0758 \\
+		\end{tabular}
+	\end{adjustbox}
+	\\
+	\caption{Risultati per il test su query R1 (solo Datasize)}
+	\label{table_R1_datasize}
+\end{table}
+
+\begin {figure}[hbtp]
+\centering
+\includegraphics[width=\textwidth]{output/R1_SOLO_DATASIZE/plot_R1.eps}
+\caption {Completion time vs Datasize (query R1, solo Datasize)}
+\end {figure}
+
+\newpage
+\subsection{Query R2 -- solo Datasize}
+\begin{table}[bhpt]
+	\centering
+	\begin{adjustbox}{center}
+		\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+			Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
+			\hline
+			Regressione lineare & 0.7694 & 0.4398 & 425310 & 1.3569 \\
+			SVR lineare & 0.7690 & 0.4437 & 419702 & 1.2363 \\
+			SVR polinomiale & 0.5527 & 0.7148 & 366820 & 4.3320 \\
+			SVR sigmoidale & 0.4320 & 0.8241 & 299461 & 0.2465 \\
+		\end{tabular}
+	\end{adjustbox}
+	\\
+	\caption{Risultati per il test su query R2 (solo Datasize)}
+	\label{table_R2_datasize}
+\end{table}
+
+\begin {figure}[hbtp]
+\centering
+\includegraphics[width=\textwidth]{output/R2_SOLO_DATASIZE/plot_R2.eps}
+\caption {Completion time vs Datasize (query R2, solo Datasize)}
+\end {figure}
+
+\newpage
+\subsection{Query R3 -- solo Datasize}
+\begin{table}[bhpt]
+	\centering
+	\begin{adjustbox}{center}
+		\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+			Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
+			\hline
+			Regressione lineare & 0.5972 & 0.6072 & 761010 & 1.1226 \\
+			SVR lineare & 0.6064 & 0.6101 & 758201 & 0.9973 \\
+			SVR polinomiale & 0.6554 & 0.5273 & 785449 & 20.5795 \\
+			SVR sigmoidale & 0.6046 & 0.6111 & 758566 & 1.0293 \\
+		\end{tabular}
+	\end{adjustbox}
+	\\
+	\caption{Risultati per il test su query R3 (solo Datasize)}
+	\label{table_R3_datasize}
+\end{table}
+
+\begin {figure}[hbtp]
+\centering
+\includegraphics[width=\textwidth]{output/R3_SOLO_DATASIZE/plot_R3.eps}
+\caption {Completion time vs Datasize (query R3, solo Datasize)}
+\end {figure}
+
+\newpage
+\subsection{Query R4 -- solo Datasize}
+\begin{table}[bhpt]
+	\centering
+	\begin{adjustbox}{center}
+		\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+			Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
+			\hline
+			Regressione lineare & 0.6813 & 0.5673 & 950814 & 1.2418 \\
+			SVR lineare & 0.7115 & 0.5755 & 923975 & 1.2164 \\
+			SVR polinomiale & 0.5875 & 0.7100 & 892010 & 6.3294 \\
+			SVR sigmoidale & 0.5805 & 0.7317 & 844285 & 0.6455 \\
+		\end{tabular}
+	\end{adjustbox}
+	\\
+	\caption{Risultati per il test su query R4 (solo Datasize)}
+	\label{table_R4_datasize}
+\end{table}
+
+\begin {figure}[hbtp]
+\centering
+\includegraphics[width=\textwidth]{output/R4_SOLO_DATASIZE/plot_R4.eps}
+\caption {Completion time vs Datasize (query R4, solo Datasize)}
+\end {figure}
+
+\newpage
+\subsection{Query R5 -- solo Datasize}
+\begin{table}[bhpt]
+	\centering
+	\begin{adjustbox}{center}
+		\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+			Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
+			\hline
+			Regressione lineare & 0.8601 & 0.3309 &  31953 & 2.2261 \\
+			SVR lineare & 0.8610 & 0.3377 &  31991 & 2.0043 \\
+			SVR polinomiale & 0.7544 & 0.5017 &  31346 & 2.5800 \\
+			SVR sigmoidale & 0.6393 & 0.6383 &  29939 & 0.8116 \\
+		\end{tabular}
+	\end{adjustbox}
+	\\
+	\caption{Risultati per il test su query R5 (solo Datasize)}
+	\label{table_R5_datasize}
+\end{table}
+
+\begin {figure}[hbtp]
+\centering
+\includegraphics[width=\textwidth]{output/R5_SOLO_DATASIZE/plot_R5.eps}
+\caption {Completion time vs Datasize (query R5, solo Datasize)}
+\end {figure}
+
+
+\newpage
 \section{Fixed Datasize}
 
 \subsection{Query R1}
@@ -57,7 +325,7 @@ SVR sigmoidale & 0.5862 & 0.9802 & 279777 & 0.2286 & -0.2487
 \begin{table}[bhpt]
 	\centering
 	\begin{adjustbox}{center}
-		\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+		\begin{tabular}{c | c M{1.2cm} M{2.5cm} M{2.5cm} M{1.8cm}}
 			Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
 			\hline
 			Regressione lineare & 0.1795 & 0.9757 &  56367 & 0.2186 \\
@@ -85,7 +353,7 @@ SVR sigmoidale & 0.5862 & 0.9802 & 279777 & 0.2286 & -0.2487
 \begin{table}[bhpt]
 	\centering
 	\begin{adjustbox}{center}
-		\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+		\begin{tabular}{c | c M{1.2cm} M{2.5cm} M{2.5cm} M{1.8cm}}
 			Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
 			\hline
 			Regressione lineare & 0.5279 & 0.7681 & 100565 & 1.8233 \\
@@ -113,7 +381,7 @@ SVR sigmoidale & 0.5862 & 0.9802 & 279777 & 0.2286 & -0.2487
 \begin{table}[bhpt]
 	\centering
 	\begin{adjustbox}{center}
-		\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+		\begin{tabular}{c | c M{1.2cm} M{2.5cm} M{2.5cm} M{1.8cm}}
 			Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
 			\hline
 			Regressione lineare & 0.1606 & 0.9676 & 272212 & 1.2198 \\
@@ -139,7 +407,7 @@ SVR sigmoidale & 0.5862 & 0.9802 & 279777 & 0.2286 & -0.2487
 \begin{table}[bhpt]
 	\centering
 	\begin{adjustbox}{center}
-		\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+		\begin{tabular}{c | c M{1.2cm} M{2.5cm} M{2.5cm} M{1.8cm}}
 			Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
 			\hline
 			Regressione lineare & 0.1019 & 0.9875 & 431805 & 0.3050 \\
@@ -166,7 +434,7 @@ SVR sigmoidale & 0.5862 & 0.9802 & 279777 & 0.2286 & -0.2487
 \begin{table}[bhpt]
 	\centering
 	\begin{adjustbox}{center}
-		\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+		\begin{tabular}{c | c M{1.2cm} M{2.5cm} M{2.5cm} M{1.8cm}}
 			Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
 			\hline
 			Regressione lineare & 0.2945 & 0.9300 &  83930 & 1.2256 \\
@@ -191,7 +459,7 @@ SVR sigmoidale & 0.5862 & 0.9802 & 279777 & 0.2286 & -0.2487
 \begin{table}[bhpt]
 	\centering
 	\begin{adjustbox}{center}
-		\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+		\begin{tabular}{c | c M{1.2cm} M{2.5cm} M{2.5cm} M{1.8cm}}
 			Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
 			\hline
 			Regressione lineare & 0.1810 & 0.9688 &  73280 & 0.4963 \\
@@ -215,7 +483,7 @@ SVR sigmoidale & 0.5862 & 0.9802 & 279777 & 0.2286 & -0.2487
 \begin{table}[bhpt]
 	\centering
 	\begin{adjustbox}{center}
-		\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+		\begin{tabular}{c | c M{1.2cm} M{2.5cm} M{2.5cm} M{1.8cm}}
 			Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
 			\hline
 			Regressione lineare & 0.2172 & 0.9198 &  79129 & 1.6851 \\
@@ -239,7 +507,7 @@ SVR sigmoidale & 0.5862 & 0.9802 & 279777 & 0.2286 & -0.2487
 \begin{table}[bhpt]
 	\centering
 	\begin{adjustbox}{center}
-		\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+		\begin{tabular}{c | c M{1.2cm} M{2.5cm} M{2.5cm} M{1.8cm}}
 			Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
 			\hline
 			Regressione lineare & 0.6206 & 0.4222 & 1461868 & 1.1535 \\
@@ -266,7 +534,7 @@ SVR sigmoidale & 0.5862 & 0.9802 & 279777 & 0.2286 & -0.2487
 \begin{table}[bhpt]
 	\centering
 	\begin{adjustbox}{center}
-		\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+		\begin{tabular}{c | c M{1.2cm} M{2.5cm} M{2.5cm} M{1.8cm}}
 			Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
 			\hline
 			Regressione lineare & 0.1367 & 0.9728 & 196466 & 1.2421 \\
@@ -290,7 +558,7 @@ SVR sigmoidale & 0.5862 & 0.9802 & 279777 & 0.2286 & -0.2487
 \begin{table}[bhpt]
 	\centering
 	\begin{adjustbox}{center}
-		\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+		\begin{tabular}{c | c M{1.2cm} M{2.5cm} M{2.5cm} M{1.8cm}}
 			Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
 			\hline
 			Regressione lineare & 0.4296 & 0.7341 & 616021 & 1.6412 \\
@@ -314,7 +582,7 @@ SVR sigmoidale & 0.5862 & 0.9802 & 279777 & 0.2286 & -0.2487
 \begin{table}[bhpt]
 	\centering
 	\begin{adjustbox}{center}
-		\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+		\begin{tabular}{c | c M{1.2cm} M{2.5cm} M{2.5cm} M{1.8cm}}
 			Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
 			\hline
 			Regressione lineare & 0.0336 & 0.9987 & 788712 & 0.1637 \\
@@ -338,7 +606,7 @@ SVR sigmoidale & 0.5862 & 0.9802 & 279777 & 0.2286 & -0.2487
 \begin{table}[bhpt]
 	\centering
 	\begin{adjustbox}{center}
-		\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+		\begin{tabular}{c | c M{1.2cm} M{2.5cm} M{2.5cm} M{1.8cm}}
 			Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
 			\hline
 			Regressione lineare & 0.0225 & 0.9995 & 1017476 & 0.2029 \\
@@ -365,7 +633,7 @@ SVR sigmoidale & 0.5862 & 0.9802 & 279777 & 0.2286 & -0.2487
 \begin{table}[bhpt]
 	\centering
 	\begin{adjustbox}{center}
-		\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+		\begin{tabular}{c | c M{1.2cm} M{2.5cm} M{2.5cm} M{1.8cm}}
 			Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
 			\hline
 			Regressione lineare & 0.1366 & 0.9770 & 163760 & 0.2719 \\
@@ -389,7 +657,7 @@ SVR sigmoidale & 0.5862 & 0.9802 & 279777 & 0.2286 & -0.2487
 \begin{table}[bhpt]
 	\centering
 	\begin{adjustbox}{center}
-		\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+		\begin{tabular}{c | c M{1.2cm} M{2.5cm} M{2.5cm} M{1.8cm}}
 			Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
 			\hline
 			Regressione lineare & 0.4873 & 0.7455 & 481376 & 1.6211 \\
@@ -413,7 +681,7 @@ SVR sigmoidale & 0.5862 & 0.9802 & 279777 & 0.2286 & -0.2487
 \begin{table}[bhpt]
 	\centering
 	\begin{adjustbox}{center}
-		\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+		\begin{tabular}{c | c M{1.2cm} M{2.5cm} M{2.5cm} M{1.8cm}}
 			Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
 			\hline
 			Regressione lineare & 0.0248 & 0.9993 & 620160 & 0.1281 \\
@@ -438,7 +706,7 @@ SVR sigmoidale & 0.5862 & 0.9802 & 279777 & 0.2286 & -0.2487
 \begin{table}[bhpt]
 	\centering
 	\begin{adjustbox}{center}
-		\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+		\begin{tabular}{c | c M{1.2cm} M{2.5cm} M{2.5cm} M{1.8cm}}
 			Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
 			\hline
 			Regressione lineare & 0.1125 & 0.9886 & 1937660 & 0.3304 \\
@@ -465,7 +733,7 @@ SVR sigmoidale & 0.5862 & 0.9802 & 279777 & 0.2286 & -0.2487
 \begin{table}[bhpt]
 	\centering
 	\begin{adjustbox}{center}
-		\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+		\begin{tabular}{c | c M{1.2cm} M{2.5cm} M{2.5cm} M{1.8cm}}
 			Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
 			\hline
 			Regressione lineare & 0.7396 & 0.5197 &  25756 & 1.4684 \\
@@ -489,7 +757,7 @@ SVR sigmoidale & 0.5862 & 0.9802 & 279777 & 0.2286 & -0.2487
 \begin{table}[bhpt]
 	\centering
 	\begin{adjustbox}{center}
-		\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+		\begin{tabular}{c | c M{1.2cm} M{2.5cm} M{2.5cm} M{1.8cm}}
 			Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
 			\hline
 			Regressione lineare & 0.5126 & 0.5127 &  24308 & 1.2420 \\
@@ -513,7 +781,7 @@ SVR sigmoidale & 0.5862 & 0.9802 & 279777 & 0.2286 & -0.2487
 \begin{table}[bhpt]
 	\centering
 	\begin{adjustbox}{center}
-		\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+		\begin{tabular}{c | c M{1.2cm} M{2.5cm} M{2.5cm} M{1.8cm}}
 			Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
 			\hline
 			Regressione lineare & 0.9679 & 0.1647 &  24739 & 1.1966 \\
@@ -537,7 +805,7 @@ SVR sigmoidale & 0.5862 & 0.9802 & 279777 & 0.2286 & -0.2487
 \begin{table}[bhpt]
 	\centering
 	\begin{adjustbox}{center}
-		\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+		\begin{tabular}{c | c M{1.2cm} M{2.5cm} M{2.5cm} M{1.8cm}}
 			Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
 			\hline
 			Regressione lineare & 0.6269 & 0.1119 &  41327 & 0.9856 \\
@@ -556,4 +824,74 @@ SVR sigmoidale & 0.5862 & 0.9802 & 279777 & 0.2286 & -0.2487
 \includegraphics[width=\textwidth]{output/R5_1000/plot_R5_1000.eps}
 \caption {Plot per il test su query R5 con datasize 1000}
 \end {figure}
+
+\newpage
+\section{Fixed Cores}
+\subsection{Query R1}
+\subsubsection{Query R1 -- 60 cores}
+\begin{table}[bhpt]
+	\centering
+	\begin{adjustbox}{center}
+		\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+			Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
+			\hline
+			Regressione lineare & 0.0992 & 0.9900 & 364573 & 0.8210 \\
+			SVR lineare & 0.1036 & 0.9899 & 367989 & 0.1656 \\
+			SVR polinomiale & 0.1528 & 0.9768 & 374847 & 0.3522 \\
+			SVR sigmoidale & 0.2846 & 0.9356 & 383455 & 2.6615 \\
+		\end{tabular}
+	\end{adjustbox}
+	\\
+	\caption{Risultati per il test su query R1 con 60 cores}
+	\label{table_R1_60cores}
+\end{table}
+
+\begin {figure}[hbtp]
+\centering
+\includegraphics[width=\textwidth]{output/R1_60CORES/plot_R1_60CORES.eps}
+\caption {Completion time vs Data size (R1 con 60 cores)}
+\end {figure}
+\newpage
+\subsubsection{Query R1 -- 80 cores}
+\newpage
+\subsubsection{Query R1 -- 100 cores}
+\newpage
+\subsubsection{Query R1 -- 120 cores}
+\newpage
+\subsection{Query R2}
+\subsubsection{Query R2 -- 60 cores}
+\newpage
+\subsubsection{Query R2 -- 80 cores}
+\newpage
+\subsubsection{Query R2 -- 100 cores}
+\newpage
+\subsubsection{Query R2 -- 120 cores}
+\newpage
+\subsection{Query R3}
+\subsubsection{Query R3 -- 60 cores}
+\newpage
+\subsubsection{Query R3 -- 80 cores}
+\newpage
+\subsubsection{Query R3 -- 100 cores}
+\newpage
+\subsubsection{Query R3 -- 120 cores}
+\newpage
+\subsection{Query R4}
+\subsubsection{Query R4 -- 60 cores}
+\newpage
+\subsubsection{Query R4 -- 80 cores}
+\newpage
+\subsubsection{Query R4 -- 100 cores}
+\newpage
+\subsubsection{Query R4 -- 120 cores}
+\newpage
+\subsection{Query R5}
+\subsubsection{Query R5 -- 60 cores}
+\newpage
+\subsubsection{Query R5 -- 80 cores}
+\newpage
+\subsubsection{Query R5 -- 100 cores}
+\newpage
+\subsubsection{Query R5 -- 120 cores}
+
 \end{document}

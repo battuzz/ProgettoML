@@ -1,0 +1,25 @@
+TRAIN DATA:
+Query R/R3/Core/60
+
+\begin{table}[bhpt]
+\centering
+\begin{adjustbox}{center}
+\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
+\hline
+Regressione lineare & 0.0634 & 0.9963 & 957704 & 0.0568 \\
+SVR lineare & 0.0939 & 0.9923 & 975478 & 0.2259 \\
+SVR polinomiale & 0.3029 & 0.9497 & 999351 & 0.1964 \\
+SVR sigmoidale & 0.3016 & 0.9523 & 1019894 & 0.3590 \\
+\end{tabular}
+\end{adjustbox}
+\\
+\caption{Risultati per il test su query R3 con 60 cores}
+\label{table_R3_60cores}
+\end{table}
+
+\begin {figure}[hbtp]
+\centering
+\includegraphics[width=\textwidth]{output/R3_60CORES/plot_R3_60CORES.eps}
+\caption {Completion time vs Data size (R3 con 60 cores)}
+\end {figure}

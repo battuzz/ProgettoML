@@ -1,0 +1,25 @@
+TRAIN DATA:
+Query R/R5/Core/120
+
+\begin{table}[bhpt]
+\centering
+\begin{adjustbox}{center}
+\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
+\hline
+Regressione lineare & 0.4715 & 0.7743 &  29562 & 0.7659 \\
+SVR lineare & 0.4703 & 0.8721 &  29467 & 0.6116 \\
+SVR polinomiale & 0.4617 & 0.8642 &  29122 & 0.3437 \\
+SVR sigmoidale & 0.2730 & 0.9369 &  28464 & 0.3179 \\
+\end{tabular}
+\end{adjustbox}
+\\
+\caption{Risultati per il test su query R5 con 120 cores}
+\label{table_R5_120cores}
+\end{table}
+
+\begin {figure}[hbtp]
+\centering
+\includegraphics[width=\textwidth]{output/R5_120CORES/plot_R5_120CORES.eps}
+\caption {Completion time vs Data size (R5 con 120 cores)}
+\end {figure}
