@@ -660,8 +660,10 @@ for col = 1:M
 		% end
 		plot(x_denorm, ylin, 'g', 'linewidth', 1);
 
-		save(cstrcat(OUTPUT_FOLDER, 'linear_regression_x.mat'), 'x_denorm');
-		save(cstrcat(OUTPUT_FOLDER, 'linear_regression_y.mat'), 'ylin');
+		x = x_denorm;
+		y = ylin;
+		save(cstrcat(OUTPUT_FOLDER, 'Regressione lineare_x.mat'), 'x');
+		save(cstrcat(OUTPUT_FOLDER, 'Regressione lineare_y.mat'), 'y');
 		
 
 	end
@@ -679,8 +681,10 @@ for col = 1:M
 		% end	
 		plot(x_denorm, ysvr, 'color', COLORS{index}, 'linewidth', 1);
 		
-		save(cstrcat(OUTPUT_FOLDER, SVR_DESCRIPTIONS{index}, '_x.mat'), 'x_denorm');
-		save(cstrcat(OUTPUT_FOLDER, SVR_DESCRIPTIONS{index}, '_y.mat'), 'ysvr');
+		x = x_denorm;
+		y = ysvr;
+		save(cstrcat(OUTPUT_FOLDER, SVR_DESCRIPTIONS{index}, '_x.mat'), 'x');
+		save(cstrcat(OUTPUT_FOLDER, SVR_DESCRIPTIONS{index}, '_y.mat'), 'y');
 
 	end
 
