@@ -1,0 +1,25 @@
+TRAIN DATA:
+Query R/R4/
+
+\begin{table}[bhpt]
+\centering
+\begin{adjustbox}{center}
+\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
+\hline
+Regressione lineare & 0.7926 & 0.2278 & 667442 & 2.3770 \\
+SVR lineare & 0.7993 & 0.2307 & 669068 & 2.0618 \\
+SVR polinomiale & 0.8358 & 0.2111 & 666297 & 1.9794 \\
+SVR sigmoidale & 0.7923 & 0.2665 & 643343 & 1.7699 \\
+\end{tabular}
+\end{adjustbox}
+\\
+\caption{Risultati per il test su query R4 con datasize -}
+\label{table_R4_-}
+\end{table}
+
+\begin {figure}[hbtp]
+\centering
+\includegraphics[width=\textwidth]{output/R4/SOLO_CORE_FILTER_1500000/plot_R4_-.eps}
+\caption {Plot per il test su query R4 con datasize -}
+\end {figure}

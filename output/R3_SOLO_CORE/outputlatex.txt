@@ -1,0 +1,25 @@
+TRAIN DATA:
+Query R/R3/
+
+\begin{table}[bhpt]
+\centering
+\begin{adjustbox}{center}
+\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
+\hline
+Regressione lineare & 0.8424 & 0.2186 & 857309 & 4.1395 \\
+SVR lineare & 0.8653 & 0.2198 & 865917 & 5.6068 \\
+SVR polinomiale & 0.8736 & 0.1973 & 867099 & 141.9124 \\
+SVR sigmoidale & 0.8479 & 0.3154 & 859635 & 5.9594 \\
+\end{tabular}
+\end{adjustbox}
+\\
+\caption{Risultati per il test su query R3 con datasize -}
+\label{table_R3_-}
+\end{table}
+
+\begin {figure}[hbtp]
+\centering
+\includegraphics[width=\textwidth]{output/R3/SOLO_CORE/plot_R3_-.eps}
+\caption {Plot per il test su query R3 con datasize -}
+\end {figure}
