@@ -1,6 +1,6 @@
 addpath('./utility');
 
-FOLDER = 'output/R1_comparison/'
+FOLDER = 'output/QUERY_COMP_CORE/SVR lineare/'
 X_AXIS_LABEL = 'N Core'
 Y_AXIS_LABEL = 'Completion time'
 
@@ -16,7 +16,7 @@ figure()
 hold on
 
 legend_str = {}
-color = {'r', 'b', 'g', 'k'};
+color = {'r', 'b', 'g', 'k', 'c'};
 for i = 1 : length(files_x)
 	desc_x = strrep(files_x{i}, '_x.mat', '');
 	desc_y = strrep(files_y{i}, '_y.mat', '');
