@@ -1,0 +1,25 @@
+TRAIN DATA:
+Query R/R5/Core/60
+
+\begin{table}[bhpt]
+\centering
+\begin{adjustbox}{center}
+\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
+\hline
+Regressione lineare & 0.1280 & 0.9785 &  28767 & 0.2478 \\
+SVR lineare & 0.1128 & 0.9849 &  28674 & 0.2193 \\
+SVR polinomiale & 0.2629 & 0.9191 &  29401 & 0.3702 \\
+SVR sigmoidale & 0.1346 & 0.9762 &  28739 & 0.2811 \\
+\end{tabular}
+\end{adjustbox}
+\\
+\caption{Risultati per il test su query R5 con 60 cores}
+\label{table_R5_60cores}
+\end{table}
+
+\begin {figure}[hbtp]
+\centering
+\includegraphics[width=\textwidth]{output/R5_60CORES/plot_R5_60CORES.eps}
+\caption {Completion time vs Data size (R5 con 60 cores)}
+\end {figure}
