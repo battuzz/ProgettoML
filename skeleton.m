@@ -12,29 +12,25 @@ addpath('./utility/');
 
 BASE_DIR = './dati/';
 
+QUERY = 'R5';
+DATASIZE = '-';
+
 %% List of all directories with train data
-% TRAIN_DATA_LOCATION = {'Query R/R1/Core/60','Query R/R1/Core/72','Query R/R1/Core/90','Query R/R1/Core/100','Query R/R1/Core/80'};
+TRAIN_DATA_LOCATION = {strcat('Query R/', QUERY, '/')};
 % TRAIN_DATA_LOCATION = {'Core/60', 'Core/80', 'Core/100', 'Core/120', 'Core/72'};
-TRAIN_DATA_LOCATION = {'Query R/R1/'};
+% TRAIN_DATA_LOCATION = {'Query R/R1/Datasize/750'};
 
 %% List of all directories with test data (leave {} if test data equals train data)
-%TEST_DATA_LOCATION = {'Query R/R1/Core/120'};
+% TEST_DATA_LOCATION = {'Query R/R1/Core/120'};
 TEST_DATA_LOCATION = {};
 
-OUTPUT_LATEX = false;
-QUERY = 'R2';
-DATASIZE = '1000';
-if OUTPUT_LATEX
-	TRAIN_DATA_LOCATION = {strcat('Query R/', QUERY, '/Datasize/', DATASIZE)};	% Watch out, overrides TRAIN_DATA_LOCATION
-end
+OUTPUT_LATEX = true;
+
 
 SAVE_DATA = true;
 
-if OUTPUT_LATEX
-	OUTPUT_FOLDER = strcat('output/', QUERY, '_', DATASIZE, '/');
-else
-	OUTPUT_FOLDER = 'output/';
-end
+OUTPUT_FOLDER = strcat('output/', QUERY , '/SOLO_CORE_FILTERED_32000/');
+
 OUTPUT_FORMATS = {	{'-deps', '.eps'},					% generates only one .eps file black and white
 					{'-depslatex', '.eps'},				% generates one .eps file containing only the plot and a .tex file that includes the plot and fill the legend with plain text
 					{'-depsc', '.eps'},					% generates only one .eps file with colour
@@ -43,8 +39,10 @@ OUTPUT_FORMATS = {	{'-deps', '.eps'},					% generates only one .eps file black a
 				};
 PLOT_SAVE_FORMAT = 3;
 
-ENABLE_FEATURE_FILTERING = false;
-COMPLETION_TIME_THRESHOLD = 250000;
+
+
+ENABLE_FEATURE_FILTERING = true;
+COMPLETION_TIME_THRESHOLD = 32000;
 
 
 %% CHANGE THESE IF TEST == TRAIN
@@ -78,8 +76,8 @@ LEARNING_CURVES = true;
 % 13 -> N Core
 CHOOSE_FEATURES = true;
 
-FEATURES = [3:8,13];
-% FEATURES = [1:10, 12:13]; 
+% FEATURES = [3:8, 12:13];
+FEATURES = [13];
 % NB: Bandwidth crea problemi con la linear regression, perché i valori sono tutti uguali per alcuni test
 % LINEAR_REGRESSION va messa a false in quei casi
 
@@ -122,6 +120,18 @@ E_range = linspace (0.1, 5, 20);
 % |									       DO NOT  MODIFY 								           |
 % |										   UNDER THIS BOX 								           |
 % --------------------------------------------------------------------------------------------------
+
+% Create output folder
+if ~ exist(OUTPUT_FOLDER)		%% Checks if the folder exists
+	if ~ mkdir(OUTPUT_FOLDER)		%% Try with the mkdir function
+		if system(cstrcat('mkdir -p ', OUTPUT_FOLDER))		%% This creates subfolders
+			fprintf('[ERROR] Could not create output folder\nCreate the output folder first and then restart this script\n');
+			quit;
+		end
+	end
+end
+
+
 
 %% Retrieve the data
 
@@ -190,6 +200,9 @@ if NORMALIZE_FEATURE
 
 	train_data = scaled(1:N_train, :);
 	test_data = scaled(N_train+1:end, :);
+
+	save(strcat(OUTPUT_FOLDER, 'mu.mat'), 'mu');
+	save(strcat(OUTPUT_FOLDER, 'sigma.mat'), 'sigma');
 
 end
 
@@ -387,14 +400,6 @@ end
 %% @TODO this doesn't work for multiple directories
 fd = -1;
 if SAVE_DATA
-	if ~ exist(OUTPUT_FOLDER)		%% Checks if the folder exists
-		if ~ mkdir(OUTPUT_FOLDER)		%% Try with the mkdir function
-			if system(cstrcat('mkdir -p ', OUTPUT_FOLDER))		%% This creates subfolders
-				fprintf('[ERROR] Could not create output folder\nCreate the output folder first and then restart this script\n');
-				quit;
-			end
-		end
-	end
 
 	results_filename = strcat(OUTPUT_FOLDER, 'report.txt');
 	fd = fopen(results_filename, 'w');
@@ -512,7 +517,6 @@ end
 for index = 1:length(MODELS_CHOSEN)
 	sum_abs = sum(abs(y_test .- predictions(:, index)));
 	sum_rel = sum(abs((y_test .- predictions(:, index)) ./ predictions(:, index)));
-	
 
 	mean_abs = ((sum_abs / N_test) * sigma_y) + mu_y;
 	mean_rel = sum_rel / N_test;
@@ -656,10 +660,8 @@ for col = 1:M
 		% end
 		plot(x_denorm, ylin, 'g', 'linewidth', 1);
 
-		x = x_denorm;
-		y = ylin;
-		save(cstrcat(OUTPUT_FOLDER, 'Regressione lineare_x.mat'), 'x');
-		save(cstrcat(OUTPUT_FOLDER, 'Regressione lineare_y.mat'), 'y');
+		save(cstrcat(OUTPUT_FOLDER, 'linear_regression_x.mat'), 'x_denorm');
+		save(cstrcat(OUTPUT_FOLDER, 'linear_regression_y.mat'), 'ylin');
 		
 
 	end
@@ -677,10 +679,8 @@ for col = 1:M
 		% end	
 		plot(x_denorm, ysvr, 'color', COLORS{index}, 'linewidth', 1);
 		
-		x = x_denorm;
-		y = ysvr;
-		save(cstrcat(OUTPUT_FOLDER, SVR_DESCRIPTIONS{index}, '_x.mat'), 'x');
-		save(cstrcat(OUTPUT_FOLDER, SVR_DESCRIPTIONS{index}, '_y.mat'), 'y');
+		save(cstrcat(OUTPUT_FOLDER, SVR_DESCRIPTIONS{index}, '_x.mat'), 'x_denorm');
+		save(cstrcat(OUTPUT_FOLDER, SVR_DESCRIPTIONS{index}, '_y.mat'), 'ysvr');
 
 	end
 
