@@ -1,0 +1,49 @@
+TRAIN DATA:
+Query R/R4/Datasize/500
+
+
+TEST DATA:
+
+
+
+
+ Testing results for linear regression:
+   RMSE = 0.487279
+   R^2 = 0.745536
+   Mean abs error = 481375.743982
+   Mean rel error = 1.621052
+
+ Testing results for SVR lineare:
+   RMSE = 0.483628
+   R^2 = 0.758255
+   Mean abs error = 488121.641933
+   Mean rel error = 3.232546
+
+ Testing results for SVR polinomiale:
+   RMSE = 0.551782
+   R^2 = 0.689780
+   Mean abs error = 511493.037375
+   Mean rel error = 2.214904
+
+ Testing results for SVR sigmoidale:
+   RMSE = 0.514069
+   R^2 = 0.719326
+   Mean abs error = 494294.679616
+   Mean rel error = 1.182834
+
+
+
+========================
+
+
+ENABLE_FEATURE_FILTERING: 0
+COMPLETION_TIME_THRESHOLD: 250000
+TRAIN_FRAC_WO_TEST: 0.600000
+TEST_FRAC_WO_TEST: 0.200000
+TRAIN_FRAC_W_TEST: 0.700000
+NORMALIZE_FEATURE: 1
+CLEAR_OUTLIERS: 1
+CHOOSE_FEATURES: 1
+FEATURES: [3 4 5 6 7 8 13] --> Map time avg   Map time max   Reduce time avg   Reduce time max   Shuffle time avg   Shuffle time max   N core   
+TEST_ON_CORES: 0
+SHUFFLE_DATA: 1

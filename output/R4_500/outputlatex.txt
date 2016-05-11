@@ -1,0 +1,25 @@
+TRAIN DATA:
+Query R/R4/Datasize/500
+
+\begin{table}[bhpt]
+\centering
+\begin{adjustbox}{center}
+\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
+\hline
+Regressione lineare & 0.4873 & 0.7455 & 481376 & 1.6211 \\
+SVR lineare & 0.4836 & 0.7583 & 488122 & 3.2325 \\
+SVR polinomiale & 0.5518 & 0.6898 & 511493 & 2.2149 \\
+SVR sigmoidale & 0.5141 & 0.7193 & 494295 & 1.1828 \\
+\end{tabular}
+\end{adjustbox}
+\\
+\caption{Risultati per il test su query R4 con datasize 500}
+\label{table_R4_500}
+\end{table}
+
+\begin {figure}[hbtp]
+\centering
+\includegraphics[width=\textwidth]{output/R4_500/plot_R4_500.eps}
+\caption {Plot per il test su query R4 con datasize 500}
+\end {figure}
