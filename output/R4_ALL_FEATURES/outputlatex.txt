@@ -1,0 +1,19 @@
+TRAIN DATA:
+Query R/R4
+
+\begin{table}[bhpt]
+\centering
+\begin{adjustbox}{center}
+\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
+\hline
+Regressione lineare & 0.1100 & 0.9839 & 635533 & 0.2955 \\
+SVR lineare & 0.0980 & 0.9897 & 633626 & 0.2595 \\
+SVR polinomiale & 0.1363 & 0.9758 & 655302 & 0.4895 \\
+SVR sigmoidale & 0.1475 & 0.9713 & 637238 & 0.1925 \\
+\end{tabular}
+\end{adjustbox}
+\\
+\caption{Risultati ottenuti utilizzando tutte le features a nostra disposizione sulla query R4}
+\label{table_all_features_all_queries}
+\end{table}

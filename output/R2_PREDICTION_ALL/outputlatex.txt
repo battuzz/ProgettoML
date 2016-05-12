@@ -1,0 +1,26 @@
+TRAIN DATA:
+Query R/R1
+Query R/R3
+Query R/R4
+Query R/R5
+
+
+TEST DATA:
+Query R/R1
+
+\begin{table}[bhpt]
+\centering
+\begin{adjustbox}{center}
+\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
+\hline
+Regressione lineare & 6.7594 & -206.4530 & 2449822 & 1.0955 \\
+SVR lineare & 3.6704 & 0.6393 & 1461610 & 1.1971 \\
+SVR polinomiale & 16.3941 & 0.9375 & 2098971 & 2.5578 \\
+SVR sigmoidale & 1.3420 & 0.3488 & 706741 & 1.9021 \\
+\end{tabular}
+\end{adjustbox}
+\\
+\caption{Previsione del tempo di completamento di R2 facendo training sulle altre query}
+\label{table_R2_prediction_all}
+\end{table}

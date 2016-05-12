@@ -1,0 +1,19 @@
+TRAIN DATA:
+
+
+\begin{table}[bhpt]
+\centering
+\begin{adjustbox}{center}
+\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+Modello & RMSE & R\textsuperscript{2} & Errore assoluto medio & Errore relativo medio \tabularnewline
+\hline
+Regressione lineare & 0.1144 & 0.9869 & 317207 & 0.9756 \\
+SVR lineare & 0.0894 & 0.9921 & 310083 & 0.1711 \\
+SVR polinomiale & 0.4480 & 0.8420 & 419987 & 7.6979 \\
+SVR sigmoidale & 0.0943 & 0.9919 & 310602 & 0.2055 \\
+\end{tabular}
+\end{adjustbox}
+\\
+\caption{Risultati ottenuti utilizzando tutte le features a nostra disposizione}
+\label{table_all_features_all_queries}
+\end{table}
