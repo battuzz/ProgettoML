@@ -25,8 +25,9 @@ TRAIN_DATA_LOCATION = {'R1/Datasize/500'};
 % TEST_DATA_LOCATION = {'Query R/R1/Core/120'};
 TEST_DATA_LOCATION = {};
 
-OUTPUT_LATEX = false;
-
+OUTPUT_LATEX = true;
+TABLE_CAPTION = 'test table';
+PLOT_CAPTION = 'test plot';
 
 SAVE_DATA = true;
 
@@ -464,7 +465,6 @@ end
 
 
 %% Linear Regression
-
 if LINEAR_REGRESSION
 	fprintf('\nTraining Linear regression.\n');
 
@@ -655,15 +655,15 @@ if OUTPUT_LATEX
 	fprintf(flatex, cstrcat('\\end{tabular}\n', ...
 					'\\end{adjustbox}\n', ...
 					'\\\\\n', ...
-					'\\caption{Completion time prediction of ', QUERY, ' with training on other queries}\n', ...
+					'\\caption{', TABLE_CAPTION, '}\n', ...
 					'\\label{table_', QUERY, '_prediction_all}\n', ...
 					'\\end{table}\n'));
 
-	% fprintf(flatex, cstrcat('\n\\begin {figure}[hbtp]\n', ...
-	% 						'\\centering\n', ...
-	% 						'\\includegraphics[width=\\textwidth]{', OUTPUT_FOLDER, 'plot_', QUERY, '_', DATASIZE, OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{2}, '}\n', ...
-	% 						'\\caption {Plot per il test su query ', QUERY, ' con datasize ', DATASIZE, '}\n', ...
-	% 						'\\end {figure}\n'));	
+	fprintf(flatex, cstrcat('\n\\begin {figure}[hbtp]\n', ...
+							'\\centering\n', ...
+							'\\includegraphics[width=\\textwidth]{', OUTPUT_FOLDER, 'plot_', QUERY, '_', DATASIZE, OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{2}, '}\n', ...
+							'\\caption {', PLOT_CAPTION, '}\n', ...
+							'\\end {figure}\n'));	
 	fclose(flatex);
 end
 
@@ -685,7 +685,6 @@ if SAVE_DATA
 	fprintf(fd, '\n');
 	fprintf(fd, 'TEST_ON_CORES: %d\n', TEST_ON_CORES);
 	fprintf(fd, 'SHUFFLE_DATA: %d\n', SHUFFLE_DATA);
-	save(strcat(OUTPUT_FOLDER, 'models.mat'), 'SVs', 'coefficients', 'b', 'models', 'Cs', 'Es', 'theta', 'mu', 'sigma');
 	
 
 	fclose(fd);
@@ -783,7 +782,7 @@ for col = 1:M
 		end
 
 		plot(x_plot, ysvr, 'color', COLORS{index}, 'linewidth', 1);
-		
+
 		x = x_denorm;
 		y = ysvr;
 		save(cstrcat(OUTPUT_FOLDER, SVR_DESCRIPTIONS{index}, '.mat'), 'x', 'y', 'QUERY', 'DATASIZE');
