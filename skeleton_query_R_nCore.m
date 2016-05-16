@@ -25,7 +25,7 @@ TRAIN_DATA_LOCATION = {'R1/Datasize/500'};
 % TEST_DATA_LOCATION = {'Query R/R1/Core/120'};
 TEST_DATA_LOCATION = {};
 
-OUTPUT_LATEX = false;
+OUTPUT_LATEX = true;
 
 
 SAVE_DATA = true;
