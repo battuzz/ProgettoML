@@ -55,7 +55,7 @@ TEST_FRAC_WO_TEST = 0.2;
 TRAIN_FRAC_W_TEST = 0.7;
 
 
-NON_LINEAR_FEATURES = false;
+N_CORES_INVERSE = true;		%% ncores^(-1)
 NORMALIZE_FEATURE = true;
 CLEAR_OUTLIERS = true;
 
@@ -191,7 +191,7 @@ if CLEAR_OUTLIERS
 end
 
 
-if NON_LINEAR_FEATURES
+if N_CORES_INVERSE
 
 	complete_data(:, end) = 1./complete_data(:, end);  %% replace nCores with 1/nCores
 
@@ -726,8 +726,16 @@ for col = 1:M
 
 	% scatter(X_tr_denorm(:, col), y_tr_denorm, 'r', 'x');
 	% scatter(X_test_denorm(:, col), y_test_denorm, 'b');
-	my_scatter(X_tr_denorm(:, col), y_tr_denorm, 'r', 'x');
-	my_scatter(X_test_denorm(:, col), y_test_denorm, 'b');
+	X_tr_denorm_col = X_tr_denorm(:, col);
+	X_test_denorm_col = X_test_denorm(:, col);
+	
+	if (N_CORES_INVERSE & ismember(13, FEATURES) & (col == M))
+		X_tr_denorm_col = 1./X_tr_denorm_col;
+		X_test_denorm_col = 1./X_test_denorm_col;
+	end
+
+	my_scatter(X_tr_denorm_col, y_tr_denorm, 'r', 'x');
+	my_scatter(X_test_denorm_col, y_test_denorm, 'b');
 
 
 	% x = linspace(min(X_test(:, col)), max(X_test(:, col)));		% Normalized, we need this for the predictions
@@ -746,7 +754,12 @@ for col = 1:M
 			ylin = (ylin * sigma_y) + mu_y;
 		end
 
-		plot(x_denorm, ylin, 'g', 'linewidth', 1);
+		x_plot = x_denorm;
+		if (N_CORES_INVERSE & ismember(13, FEATURES) & (col == M))
+			x_plot = 1./x_plot;  
+		end
+
+		plot(x_plot, ylin, 'color', [0.5, 0, 1], 'linewidth', 1);
 
 		x = x_denorm;
 		y = ylin;
@@ -763,7 +776,12 @@ for col = 1:M
 			ysvr = (ysvr * sigma_y) + mu_y;
 		end 
 
-		plot(x_denorm, ysvr, 'color', COLORS{index}, 'linewidth', 1);
+		x_plot = x_denorm;
+		if (N_CORES_INVERSE & ismember(13, FEATURES) & (col == M))
+			x_plot = 1./x_plot;  
+		end
+
+		plot(x_plot, ysvr, 'color', COLORS{index}, 'linewidth', 1);
 		
 		x = x_denorm;
 		y = ysvr;
