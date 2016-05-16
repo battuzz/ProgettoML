@@ -28,7 +28,7 @@ TEST_DATA_LOCATION = {};
 OUTPUT_LATEX = false;
 
 
-SAVE_DATA = false;
+SAVE_DATA = true;
 
 % OUTPUT_FOLDER = strcat('output/', QUERY, '_ALL_FEATURES/');
 OUTPUT_FOLDER = strcat('output/', QUERY, '_PREDICTION_ALL/');
@@ -685,6 +685,7 @@ if SAVE_DATA
 	fprintf(fd, '\n');
 	fprintf(fd, 'TEST_ON_CORES: %d\n', TEST_ON_CORES);
 	fprintf(fd, 'SHUFFLE_DATA: %d\n', SHUFFLE_DATA);
+	save(strcat(OUTPUT_FOLDER, 'models.mat'), 'SVs', 'coefficients', 'b', 'models', 'Cs', 'Es', 'theta', 'mu', 'sigma');
 	
 
 	fclose(fd);
