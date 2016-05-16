@@ -78,7 +78,7 @@ LEARNING_CURVES = false;
 % 13 -> N Core
 CHOOSE_FEATURES = true;
 
-FEATURES = [3:8, 13];
+FEATURES = [13];
 % FEATURES = [13];
 
 
@@ -177,7 +177,9 @@ complete_data = [train_data ; test_data];
 
 
 if CLEAR_OUTLIERS
-	[clean, indices] = clear_outliers(complete_data);
+	% [clean, indices] = clear_outliers(complete_data);
+
+	[clean,indices] = clear_outliers_ncores(complete_data);
 
 	train_data = clean(indices <= N_train, :);
 	test_data = clean(indices > N_train, :);
@@ -206,8 +208,7 @@ if NORMALIZE_FEATURE
 	test_data = scaled(N_train+1:end, :);
 
 	% Save data for - maybe - later uses
-	save(strcat(OUTPUT_FOLDER, 'mu.mat'), 'mu');
-	save(strcat(OUTPUT_FOLDER, 'sigma.mat'), 'sigma');
+	save(strcat(OUTPUT_FOLDER, 'mu_sigma.mat'), 'mu', 'sigma');
 
 end
 
@@ -749,8 +750,7 @@ for col = 1:M
 
 		x = x_denorm;
 		y = ylin;
-		save(cstrcat(OUTPUT_FOLDER, 'Regressione lineare_x.mat'), 'x');
-		save(cstrcat(OUTPUT_FOLDER, 'Regressione lineare_y.mat'), 'y');
+		save(cstrcat(OUTPUT_FOLDER, 'Regressione lineare.mat'), 'x', 'y', 'QUERY', 'DATASIZE');
 		
 
 	end
@@ -767,8 +767,7 @@ for col = 1:M
 		
 		x = x_denorm;
 		y = ysvr;
-		save(cstrcat(OUTPUT_FOLDER, SVR_DESCRIPTIONS{index}, '_x.mat'), 'x');
-		save(cstrcat(OUTPUT_FOLDER, SVR_DESCRIPTIONS{index}, '_y.mat'), 'y');
+		save(cstrcat(OUTPUT_FOLDER, SVR_DESCRIPTIONS{index}, '.mat'), 'x', 'y', 'QUERY', 'DATASIZE');
 
 	end
 
