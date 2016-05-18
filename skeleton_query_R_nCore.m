@@ -26,13 +26,13 @@ TRAIN_DATA_LOCATION = {strcat(QUERY, '/Datasize/', DATASIZE)};
 TEST_DATA_LOCATION = {};
 
 OUTPUT_LATEX = true;
-TABLE_CAPTION = cstrcat('Results for ', QUERY, '-', DATASIZE, ' with non-linear 1/ncores feature');
-PLOT_CAPTION = cstrcat('Completion time vs ncores for query ', QUERY, ' with datasize ', DATASIZE, 'GB');
+TABLE_CAPTION = cstrcat('Results for ', QUERY, '-', DATASIZE, ' considering only non-linear 1/ncores feature');
+PLOT_CAPTION = cstrcat('Completion time vs ncores for query ', QUERY, ' with datasize ', DATASIZE, 'GB with only 1/ncores feature');
 
 SAVE_DATA = true;
 
 % OUTPUT_FOLDER = strcat('output/', QUERY, '_ALL_FEATURES/');
-OUTPUT_FOLDER = strcat('output/', QUERY, '_', DATASIZE, '_1_OVER_NCORES/');
+OUTPUT_FOLDER = strcat('output/', QUERY, '_', DATASIZE, '_ONLY_1_OVER_NCORES/');
 
 OUTPUT_FORMATS = {	{'-deps', '.eps'},					% generates only one .eps file black and white
 					{'-depslatex', '.eps'},				% generates one .eps file containing only the plot and a .tex file that includes the plot and fill the legend with plain text
@@ -77,7 +77,7 @@ LEARNING_CURVES = true;
 % 13 -> N Core
 CHOOSE_FEATURES = true;
 
-FEATURES = [3:8,13];
+FEATURES = [13];
 % FEATURES = [13];
 
 
