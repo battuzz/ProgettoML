@@ -56,7 +56,7 @@ dev = std (dirty);     %% Calcola varianza per COLONNE
 
 for (jj = 1:cols)
   if (dev(jj) > 0)     %% Toglie quelli con varianza 0 (esempio numero di core o dimensione tabella)
-    idx = (abs (clean(:, jj) - avg(jj)) < 3 * dev(jj));     %% vettore con 1 se il test è buono, 0 se ha varianza > 3 * dev
+    idx = (abs (clean(:, jj) - avg(jj)) < 2 * dev(jj));     %% vettore con 1 se il test è buono, 0 se ha varianza > 3 * dev
     clean = clean(idx, :);    %% Prende tutte le righe 'buone'
     indices = indices(idx);    %% Filtra gli indici 'buoni'
   endif

@@ -12,11 +12,11 @@ addpath('./utility/');
 
 BASE_DIR = './dati/Query R/';
 
-QUERY = 'R1';
-DATASIZE = '500';
+QUERY = 'R5';
+DATASIZE = '1000';
 
 %% List of all directories with train data
-TRAIN_DATA_LOCATION = {'R1/Datasize/500'};
+TRAIN_DATA_LOCATION = {strcat(QUERY, '/Datasize/', DATASIZE)};
 % TRAIN_DATA_LOCATION = {strcat('')};
 % TRAIN_DATA_LOCATION = {'Core/60', 'Core/80', 'Core/100', 'Core/120', 'Core/72'};
 % TRAIN_DATA_LOCATION = {'Query R/R1/Datasize/750'};
@@ -26,13 +26,13 @@ TRAIN_DATA_LOCATION = {'R1/Datasize/500'};
 TEST_DATA_LOCATION = {};
 
 OUTPUT_LATEX = true;
-TABLE_CAPTION = 'test table';
-PLOT_CAPTION = 'test plot';
+TABLE_CAPTION = cstrcat('Results for ', QUERY, '-', DATASIZE, ' with non-linear 1/ncores feature');
+PLOT_CAPTION = cstrcat('Completion time vs ncores for query ', QUERY, ' with datasize ', DATASIZE, 'GB');
 
 SAVE_DATA = true;
 
 % OUTPUT_FOLDER = strcat('output/', QUERY, '_ALL_FEATURES/');
-OUTPUT_FOLDER = strcat('output/', QUERY, '_PREDICTION_ALL/');
+OUTPUT_FOLDER = strcat('output/', QUERY, '_', DATASIZE, '_1_OVER_NCORES/');
 
 OUTPUT_FORMATS = {	{'-deps', '.eps'},					% generates only one .eps file black and white
 					{'-depslatex', '.eps'},				% generates one .eps file containing only the plot and a .tex file that includes the plot and fill the legend with plain text
@@ -59,7 +59,7 @@ NORMALIZE_FEATURE = true;
 CLEAR_OUTLIERS = true;
 
 
-LEARNING_CURVES = false;
+LEARNING_CURVES = true;
 
 %% FEATURE DESCRIPTION:
 % 1 -> N map
@@ -77,7 +77,7 @@ LEARNING_CURVES = false;
 % 13 -> N Core
 CHOOSE_FEATURES = true;
 
-FEATURES = [13];
+FEATURES = [3:8,13];
 % FEATURES = [13];
 
 
@@ -105,15 +105,15 @@ FEATURES_DESCRIPTIONS = {			% These will be used to describe the plot axis
 % 5 -> Polynomial SVR (6 degree)
 % 6 -> RBF SVR
 MODELS_CHOSEN = [1, 2, 3, 4, 5, 6];
-COLORS = {'m', [1, 0.5, 0], 'c', 'k', 'g', 'r'};	% magenta, orange, cyan, black, green, red
+COLORS = {'g', [1, 0.5, 0.2], 'c', 'k', 'm', 'r'};	% magenta, orange, cyan, black, green, red
 
 LINEAR_REGRESSION = true;
 
 BEST_MODELS = true;
 
-TEST_ON_CORES = false;	% To add the 'difference between means' metric
+TEST_ON_CORES = true;	% To add the 'difference between means' metric
 
-rand('seed', 17);
+rand('seed', 18);
 SHUFFLE_DATA = true;
 
 C_range = linspace (0.1, 5, 20);
@@ -477,11 +477,11 @@ if LINEAR_REGRESSION
 	models{end + 1} = {};
 	Cs(end + 1) = 0;
 	Es(end + 1) = 0;
-	RMSEs(end + 1) = -1;			%% Will be computed later 
+	% RMSEs(end + 1) = -1;			%% Will be computed later 
 	coefficients{end + 1} = 0;
 	SVs{end + 1} = 0;
 	b{end+1} = 0;
-	R_2(end + 1) = -1;				%% Will be computed later
+	% R_2(end + 1) = -1;				%% Will be computed later
 
 	% Removes the intercept
 	X_tr = X_tr(:, 2:end);
@@ -796,9 +796,9 @@ for col = 1:M
 	end
 
 	% Plot the mean of the test values (for nCores)
-	if (TEST_ON_CORES & ismember(13, FEATURES) & (col == M))
-		scatter(X_test_denorm(1, col), mean(y_test_denorm), 10, 'k', '.');		
-	end
+	% if (TEST_ON_CORES & ismember(13, FEATURES) & (col == M))
+	% 	scatter(X_test_denorm(1, col), mean(y_test_denorm), 10, 'k', '.');		
+	% end
 	
 	labels = {'Training set', 'Testing set'};
 	if LINEAR_REGRESSION
@@ -877,9 +877,9 @@ if BEST_MODELS
 
 			plot(x_plot, ylin, 'color', [0.5, 0, 1], 'linewidth', 1);
 
-			x = x_denorm;
-			y = ylin;
-			save(cstrcat(OUTPUT_FOLDER, 'Regressione lineare.mat'), 'x', 'y', 'QUERY', 'DATASIZE');
+			% x = x_denorm;
+			% y = ylin;
+			% save(cstrcat(OUTPUT_FOLDER, 'Regressione lineare.mat'), 'x', 'y', 'QUERY', 'DATASIZE');
 			
 
 		end
@@ -900,16 +900,16 @@ if BEST_MODELS
 
 				plot(x_plot, ysvr, 'color', COLORS{index}, 'linewidth', 1);
 
-				x = x_denorm;
-				y = ysvr;
-				save(cstrcat(OUTPUT_FOLDER, SVR_DESCRIPTIONS{index}, '.mat'), 'x', 'y', 'QUERY', 'DATASIZE');
+				% x = x_denorm;
+				% y = ysvr;
+				% save(cstrcat(OUTPUT_FOLDER, SVR_DESCRIPTIONS{index}, '.mat'), 'x', 'y', 'QUERY', 'DATASIZE');
 			end
 		end
 
 		% Plot the mean of the test values (for nCores)
-		if (TEST_ON_CORES & ismember(13, FEATURES) & (col == M))
-			scatter(X_test_denorm(1, col), mean(y_test_denorm), 10, 'k', '.');		
-		end
+		% if (TEST_ON_CORES & ismember(13, FEATURES) & (col == M))
+		% 	scatter(X_test_denorm(1, col), mean(y_test_denorm), 10, 'k', '.');		
+		% end
 		
 		labels = {'Training set', 'Testing set'};
 		if (LINEAR_REGRESSION && ismember(length(MODELS_CHOSEN)+1, best_models_idx))
