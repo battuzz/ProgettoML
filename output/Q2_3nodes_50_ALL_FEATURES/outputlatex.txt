@@ -1,0 +1,29 @@
+TRAIN DATA:
+datiQ-20160509/dataset50/3nodes/fetched/Q2/data/
+
+\begin{table}[H]
+\centering
+\begin{adjustbox}{center}
+\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+Model & RMSE & R\textsuperscript{2} & Mean absolute error & Mean relative error & Mean difference \tabularnewline
+\hline
+Linear regression & 1.3760 & -0.0446 & 305654 & 1.1141 & -0.5351 \\
+Linear SVR & 0.9961 & 0.9535 & 305765 & 2.8422 & -0.4838 \\
+Polynomial SVR (2) & 1.2016 & 0.6193 & 309119 & 18.5295 & -0.1677 \\
+Polynomial SVR (3) & 1.3941 & 0.5408 & 310894 & 12.2766 & -0.3381 \\
+Polynomial SVR (4) & 1.2755 & 0.5974 & 309680 & 7.7260 & -0.2929 \\
+Polynomial SVR (6) & 1.3008 & 0.5628 & 310040 & 11.3124 & -0.2705 \\
+Gaussian SVR & 1.2506 & 0.7530 & 307852 & 9.5254 & -0.5087 \\
+\end{tabular}
+\end{adjustbox}
+\\
+\caption{Results for Q2-50GB with 3 nodes}
+\label{fig:all_linear_Q2_50}
+\end{table}
+
+\begin {figure}[hbtp]
+\centering
+\includegraphics[width=\textwidth]{output/Q2_3nodes_50_ALL_FEATURES/plot_Q2_50_bestmodels.eps}
+\caption{Completion time vs ncores for query Q2 3nodes with datasize 50}
+\label{fig:all_linear_Q2_50}
+\end {figure}

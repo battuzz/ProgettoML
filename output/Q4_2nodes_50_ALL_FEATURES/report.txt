@@ -1,0 +1,74 @@
+TRAIN DATA:
+datiQ-20160509/dataset50/2nodes/fetched/Q4/data/
+
+
+TEST DATA:
+
+
+
+
+ Testing results for linear regression:
+   RMSE = 0.515482
+   R^2 = -1.417884
+   Mean abs error = 379184.016048
+   Mean rel error = 1.226069
+   Difference between means = -0.393021
+
+ Testing results for Linear SVR:
+   RMSE = 0.315921
+   R^2 = 0.317171
+   Mean abs error = 374533.634347
+   Mean rel error = 1.317103
+   Difference between means = -0.131849
+
+ Testing results for Polynomial SVR (2):
+   RMSE = 0.353782
+   R^2 = 0.190173
+   Mean abs error = 377109.817219
+   Mean rel error = 1.724494
+   Difference between means = 0.114764
+
+ Testing results for Polynomial SVR (3):
+   RMSE = 0.329131
+   R^2 = 0.664518
+   Mean abs error = 376014.960636
+   Mean rel error = 1.563803
+   Difference between means = 0.168681
+
+ Testing results for Polynomial SVR (4):
+   RMSE = 0.350438
+   R^2 = 0.199619
+   Mean abs error = 377054.959419
+   Mean rel error = 1.756732
+   Difference between means = 0.112226
+
+ Testing results for Polynomial SVR (6):
+   RMSE = 0.350105
+   R^2 = 0.209101
+   Mean abs error = 377043.884089
+   Mean rel error = 1.755677
+   Difference between means = 0.112354
+
+ Testing results for Gaussian SVR:
+   RMSE = 0.281992
+   R^2 = 0.361019
+   Mean abs error = 375283.312231
+   Mean rel error = 2.297978
+   Difference between means = -0.095619
+
+
+
+========================
+
+
+ENABLE_FEATURE_FILTERING: 0
+COMPLETION_TIME_THRESHOLD: 32000
+TRAIN_FRAC_WO_TEST: 0.600000
+TEST_FRAC_WO_TEST: 0.200000
+TRAIN_FRAC_W_TEST: 0.700000
+NORMALIZE_FEATURE: 1
+CLEAR_OUTLIERS: 1
+CHOOSE_FEATURES: 0
+FEATURES: [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30] --> N map 1   M1avg   M1max   nR2   R2avg   R2max   S2avg   S2max   S2Bavg   S2Bmax   nR3   R3avg   R3max   S3avg   S3max   S3Bavg   S3Bmax   nM4   M4avg   M4max   nR5   R5avg   R5max   S5avg   S5max   S5Bavg   S5Bmax   users   dataSize   nCores   
+TEST_ON_CORES: 1
+SHUFFLE_DATA: 1
