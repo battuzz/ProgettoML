@@ -12,8 +12,8 @@ addpath('./utility/');
 
 BASE_DIR = './dati/Query R/';
 
-QUERY = 'R5';
-DATASIZE = '1000';
+QUERY = 'R1';
+DATASIZE = '250';
 
 %% List of all directories with train data
 TRAIN_DATA_LOCATION = {strcat(QUERY, '/Datasize/', DATASIZE)};
@@ -26,8 +26,10 @@ TRAIN_DATA_LOCATION = {strcat(QUERY, '/Datasize/', DATASIZE)};
 TEST_DATA_LOCATION = {};
 
 OUTPUT_LATEX = true;
-TABLE_CAPTION = cstrcat('Results for ', QUERY, '-', DATASIZE, ' considering only non-linear 1/ncores feature');
-PLOT_CAPTION = cstrcat('Completion time vs ncores for query ', QUERY, ' with datasize ', DATASIZE, 'GB with only 1/ncores feature');
+TABLE_CAPTION = cstrcat('Results for ', QUERY, '-', DATASIZE);
+PLOT_CAPTION = cstrcat('Completion time vs ncores for query ', QUERY, ' with datasize ', DATASIZE);
+TABLE_LABEL = cstrcat('tab:', 'all_linear_', QUERY, '_', DATASIZE);
+PLOT_LABEL = cstrcat('fig:', 'all_linear_', QUERY, '_', DATASIZE);
 
 SAVE_DATA = true;
 
@@ -652,13 +654,14 @@ if OUTPUT_LATEX
 					'\\end{adjustbox}\n', ...
 					'\\\\\n', ...
 					'\\caption{', TABLE_CAPTION, '}\n', ...
-					'\\label{table_', QUERY, '_prediction_all}\n', ...
+					'\\label{', PLOT_LABEL, '}\n', ...
 					'\\end{table}\n'));
 
 	fprintf(flatex, cstrcat('\n\\begin {figure}[hbtp]\n', ...
 							'\\centering\n', ...
 							'\\includegraphics[width=\\textwidth]{', OUTPUT_FOLDER, 'plot_', QUERY, '_', DATASIZE, '_bestmodels', OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{2}, '}\n', ...
-							'\\caption {', PLOT_CAPTION, '}\n', ...
+							'\\caption{', PLOT_CAPTION, '}\n', ...
+							'\\label{', PLOT_LABEL, '}\n', ...
 							'\\end {figure}\n'));	
 	fclose(flatex);
 end
