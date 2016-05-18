@@ -1,0 +1,28 @@
+TRAIN DATA:
+R3/Datasize/250_NO_72_90
+
+\begin{table}[H]
+\centering
+\begin{adjustbox}{center}
+\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+Model & RMSE & R\textsuperscript{2} & Mean absolute error & Mean relative error & Mean difference \tabularnewline
+\hline
+Linear regression & 0.6073 & 0.6555 & 220156 & 1.1869 & -0.1188 \\
+Linear SVR & 0.6177 & 0.6687 & 220214 & 1.2979 & -0.1555 \\
+Polynomial SVR (2) & 0.9097 & 0.2319 & 238176 & 29.0584 & 0.0010 \\
+Polynomial SVR (3) & 0.6375 & 0.6375 & 222035 & 1.0650 & -0.1254 \\
+Polynomial SVR (4) & 0.7891 & 0.4276 & 231030 & 3.6890 & 0.0835 \\
+Polynomial SVR (6) & 0.7315 & 0.5050 & 227058 & 1.6310 & 0.0720 \\
+Gaussian SVR & 0.6284 & 0.6602 & 221659 & 5.7880 & -0.1561 \\
+\end{tabular}
+\end{adjustbox}
+\\
+\caption{Results for R3-250 considering only non-linear 1/ncores feature}
+\label{table_R3_prediction_all}
+\end{table}
+
+\begin {figure}[hbtp]
+\centering
+\includegraphics[width=\textwidth]{output/R3_250_ONLY_1_OVER_NCORES/plot_R3_250_bestmodels.eps}
+\caption {Completion time vs ncores for query R3 with datasize 250GB with only 1/ncores feature}
+\end {figure}
