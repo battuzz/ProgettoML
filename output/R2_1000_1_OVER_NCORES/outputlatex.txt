@@ -1,0 +1,28 @@
+TRAIN DATA:
+R2/Datasize/1000
+
+\begin{table}[H]
+\centering
+\begin{adjustbox}{center}
+\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+Model & RMSE & R\textsuperscript{2} & Mean absolute error & Mean relative error & Mean difference \tabularnewline
+\hline
+Linear regression & 0.0462 & 0.9983 & 1124528 & 0.1815 & 0.0091 \\
+Linear SVR & 0.0822 & 0.9949 & 1140186 & 0.2180 & -0.0168 \\
+Polynomial SVR (2) & 0.7408 & 0.5722 & 1456474 & 2.1287 & 0.0114 \\
+Polynomial SVR (3) & 0.4716 & 0.9256 & 1285649 & 0.7305 & 0.2304 \\
+Polynomial SVR (4) & 0.8006 & 0.5912 & 1461556 & 5.8049 & 0.0416 \\
+Polynomial SVR (6) & 1.2837 & 0.0083 & 1575200 & 11.0978 & -0.2082 \\
+Gaussian SVR & 0.2323 & 0.9735 & 1176463 & 0.2942 & -0.0733 \\
+\end{tabular}
+\end{adjustbox}
+\\
+\caption{Results for R2-1000 with non-linear 1/ncores feature}
+\label{table_R2_prediction_all}
+\end{table}
+
+\begin {figure}[hbtp]
+\centering
+\includegraphics[width=\textwidth]{output/R2_1000_1_OVER_NCORES/plot_R2_1000_bestmodels.eps}
+\caption {Completion time vs ncores for query R2 with datasize 1000GB}
+\end {figure}

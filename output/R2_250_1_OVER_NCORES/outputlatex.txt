@@ -1,0 +1,28 @@
+TRAIN DATA:
+R2/Datasize/250
+
+\begin{table}[H]
+\centering
+\begin{adjustbox}{center}
+\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+Model & RMSE & R\textsuperscript{2} & Mean absolute error & Mean relative error & Mean difference \tabularnewline
+\hline
+Linear regression & 0.3028 & 0.8437 &  84158 & 0.5741 & 0.1546 \\
+Linear SVR & 0.2787 & 0.9102 &  84112 & 0.9490 & 0.0788 \\
+Polynomial SVR (2) & 0.7866 & 0.1779 &  85478 & 5.0203 & 0.3004 \\
+Polynomial SVR (3) & 0.4266 & 0.8241 &  84426 & 3.9011 & 0.0783 \\
+Polynomial SVR (4) & 0.7607 & 0.0664 &  85134 & 3.6554 & -0.0199 \\
+Polynomial SVR (6) & 0.9025 & 0.0260 &  85445 & 2.1886 & -0.0311 \\
+Gaussian SVR & 0.3532 & 0.7985 &  84292 & 1.6876 & -0.0613 \\
+\end{tabular}
+\end{adjustbox}
+\\
+\caption{Results for R2-250 with non-linear 1/ncores feature}
+\label{table_R2_prediction_all}
+\end{table}
+
+\begin {figure}[hbtp]
+\centering
+\includegraphics[width=\textwidth]{output/R2_250_1_OVER_NCORES/plot_R2_250_bestmodels.eps}
+\caption {Completion time vs ncores for query R2 with datasize 250GB}
+\end {figure}
