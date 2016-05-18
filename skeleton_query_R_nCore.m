@@ -769,7 +769,7 @@ for col = 1:M
 
 		x = x_denorm;
 		y = ylin;
-		save(cstrcat(OUTPUT_FOLDER, 'Regressione lineare.mat'), 'x', 'y', 'QUERY', 'DATASIZE');
+		save(cstrcat(OUTPUT_FOLDER, 'Linear Regression.mat'), 'x', 'y', 'QUERY', 'DATASIZE');
 		
 
 	end
@@ -802,7 +802,7 @@ for col = 1:M
 	
 	labels = {'Training set', 'Testing set'};
 	if LINEAR_REGRESSION
-		labels{end+1} = 'Regressione lineare';
+		labels{end+1} = 'Linear Regression';
 	end
 	labels(end+1:end+length(SVR_DESCRIPTIONS)) = SVR_DESCRIPTIONS;
 	legend(labels, 'location', 'northeastoutside');
@@ -875,12 +875,7 @@ if BEST_MODELS
 				x_plot = 1./x_plot;  
 			end
 
-			plot(x_plot, ylin, 'color', [0.5, 0, 1], 'linewidth', 1);
-
-			% x = x_denorm;
-			% y = ylin;
-			% save(cstrcat(OUTPUT_FOLDER, 'Regressione lineare.mat'), 'x', 'y', 'QUERY', 'DATASIZE');
-			
+			plot(x_plot, ylin, 'color', [0.5, 0, 1], 'linewidth', 1);		
 
 		end
 
@@ -899,10 +894,6 @@ if BEST_MODELS
 				end
 
 				plot(x_plot, ysvr, 'color', COLORS{index}, 'linewidth', 1);
-
-				% x = x_denorm;
-				% y = ysvr;
-				% save(cstrcat(OUTPUT_FOLDER, SVR_DESCRIPTIONS{index}, '.mat'), 'x', 'y', 'QUERY', 'DATASIZE');
 			end
 		end
 
@@ -913,7 +904,7 @@ if BEST_MODELS
 		
 		labels = {'Training set', 'Testing set'};
 		if (LINEAR_REGRESSION && ismember(length(MODELS_CHOSEN)+1, best_models_idx))
-			labels{end+1} = 'Regressione lineare';
+			labels{end+1} = 'Linear Regression';
 		end
 		for index = 1:length(SVR_DESCRIPTIONS)
 			if ismember(index, best_models_idx)
