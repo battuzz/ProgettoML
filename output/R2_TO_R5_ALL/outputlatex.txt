@@ -1,0 +1,33 @@
+TRAIN DATA:
+R2
+
+
+TEST DATA:
+R2
+
+\begin{table}[H]
+\centering
+\begin{adjustbox}{center}
+\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+Model & RMSE & R\textsuperscript{2} & Mean absolute error & Mean relative error & Mean difference \tabularnewline
+\hline
+Linear regression & 0.1568 & -0.8648 &  67566 & 0.6681 & 0.1335 \\
+Linear SVR & 0.1490 & 0.0239 &  64453 & 0.1964 & -0.0737 \\
+Polynomial SVR (2) & 0.7511 & 0.4029 & 109514 & 2.3830 & 0.7317 \\
+Polynomial SVR (3) & 0.5915 & 0.3052 &  99021 & 3.6806 & 0.5830 \\
+Polynomial SVR (4) & 0.9178 & 0.1582 & 122126 & 1.8357 & 0.9105 \\
+Polynomial SVR (6) & 0.9128 & 0.0059 & 121777 & 1.8446 & 0.9055 \\
+Gaussian SVR & 2.9328 & 0.0434 & 264196 & 1.1654 & 2.9244 \\
+\end{tabular}
+\end{adjustbox}
+\\
+\caption{Results for R2 -> R5 }
+\label{fig:query_comp_001}
+\end{table}
+
+\begin {figure}[hbtp]
+\centering
+\includegraphics[width=\textwidth]{output/R2_TO_R5_ALL/plot_query_comp_001_bestmodels.eps}
+\caption{Completion time vs ncores}
+\label{fig:query_comp_001}
+\end {figure}

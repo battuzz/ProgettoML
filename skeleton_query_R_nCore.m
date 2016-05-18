@@ -12,8 +12,8 @@ addpath('./utility/');
 
 BASE_DIR = './dati/Query R/';
 
-QUERY = 'R1';
-DATASIZE = '250';
+QUERY = 'R5';
+DATASIZE = '1000';
 
 %% List of all directories with train data
 TRAIN_DATA_LOCATION = {strcat(QUERY, '/Datasize/', DATASIZE)};
@@ -28,13 +28,13 @@ TEST_DATA_LOCATION = {};
 OUTPUT_LATEX = true;
 TABLE_CAPTION = cstrcat('Results for ', QUERY, '-', DATASIZE);
 PLOT_CAPTION = cstrcat('Completion time vs ncores for query ', QUERY, ' with datasize ', DATASIZE);
-TABLE_LABEL = cstrcat('tab:', 'all_linear_', QUERY, '_', DATASIZE);
-PLOT_LABEL = cstrcat('fig:', 'all_linear_', QUERY, '_', DATASIZE);
+TABLE_LABEL = cstrcat('tab:', 'coreonly_linear_', QUERY, '_', DATASIZE);
+PLOT_LABEL = cstrcat('fig:', 'coreonly_linear_', QUERY, '_', DATASIZE);
 
 SAVE_DATA = true;
 
 % OUTPUT_FOLDER = strcat('output/', QUERY, '_ALL_FEATURES/');
-OUTPUT_FOLDER = strcat('output/', QUERY, '_', DATASIZE, '_ONLY_1_OVER_NCORES/');
+OUTPUT_FOLDER = strcat('output/', QUERY, '_', DATASIZE, '_ONLY_1_LINEAR_NCORE/');
 
 OUTPUT_FORMATS = {	{'-deps', '.eps'},					% generates only one .eps file black and white
 					{'-depslatex', '.eps'},				% generates one .eps file containing only the plot and a .tex file that includes the plot and fill the legend with plain text
@@ -56,7 +56,7 @@ TEST_FRAC_WO_TEST = 0.2;
 TRAIN_FRAC_W_TEST = 0.7;
 
 
-N_CORES_INVERSE = true;		%% ncores^(-1)
+N_CORES_INVERSE = false;		%% ncores^(-1)
 NORMALIZE_FEATURE = true;
 CLEAR_OUTLIERS = true;
 
@@ -79,8 +79,8 @@ LEARNING_CURVES = true;
 % 13 -> N Core
 CHOOSE_FEATURES = true;
 
+% FEATURES = [3:8,13];
 FEATURES = [13];
-% FEATURES = [13];
 
 
 FEATURES_DESCRIPTIONS = {			% These will be used to describe the plot axis
@@ -541,7 +541,7 @@ if OUTPUT_LATEX
 	fprintf(flatex, cstrcat('\\begin{table}[H]\n', ...
 					'\\centering\n', ...
 					'\\begin{adjustbox}{center}\n', ...
-					'\\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}\n'));
+					'\\begin{tabular}{c | c M{1.2cm} M{2.5cm} M{2.5cm} M{1.8cm}}\n'));
 	if TEST_ON_CORES
 		fprintf(flatex, 'Model & RMSE & R\\textsuperscript{2} & Mean absolute error & Mean relative error & Mean difference \\tabularnewline\n');
 	else
@@ -654,7 +654,7 @@ if OUTPUT_LATEX
 					'\\end{adjustbox}\n', ...
 					'\\\\\n', ...
 					'\\caption{', TABLE_CAPTION, '}\n', ...
-					'\\label{', PLOT_LABEL, '}\n', ...
+					'\\label{', TABLE_LABEL, '}\n', ...
 					'\\end{table}\n'));
 
 	fprintf(flatex, cstrcat('\n\\begin {figure}[hbtp]\n', ...

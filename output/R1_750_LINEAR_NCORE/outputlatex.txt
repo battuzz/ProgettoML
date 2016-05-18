@@ -1,0 +1,29 @@
+TRAIN DATA:
+R1/Datasize/750
+
+\begin{table}[H]
+\centering
+\begin{adjustbox}{center}
+\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+Model & RMSE & R\textsuperscript{2} & Mean absolute error & Mean relative error & Mean difference \tabularnewline
+\hline
+Linear regression & 0.1572 & 0.9665 & 266884 & 0.1727 & 0.0236 \\
+Linear SVR & 0.2120 & 0.9688 & 272955 & 0.2542 & 0.1291 \\
+Polynomial SVR (2) & 0.7508 & 0.3524 & 315378 & 3.4186 & 0.2712 \\
+Polynomial SVR (3) & 0.3593 & 0.9177 & 283626 & 0.7417 & 0.0705 \\
+Polynomial SVR (4) & 0.7471 & 0.3213 & 313379 & 60.2071 & 0.1553 \\
+Polynomial SVR (6) & 0.7398 & 0.3099 & 312928 & 72.9881 & 0.1585 \\
+Gaussian SVR & 0.2646 & 0.9347 & 275101 & 0.3102 & 0.1353 \\
+\end{tabular}
+\end{adjustbox}
+\\
+\caption{Results for R1-750}
+\label{fig:all_linear_R1_750}
+\end{table}
+
+\begin {figure}[hbtp]
+\centering
+\includegraphics[width=\textwidth]{output/R1_750_LINEAR_NCORE/plot_R1_750_bestmodels.eps}
+\caption{Completion time vs ncores for query R1 with datasize 750}
+\label{fig:all_linear_R1_750}
+\end {figure}

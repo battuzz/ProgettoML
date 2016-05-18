@@ -1,0 +1,29 @@
+TRAIN DATA:
+R4/Datasize/1000
+
+\begin{table}[H]
+\centering
+\begin{adjustbox}{center}
+\begin{tabular}{c | c M{1cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+Model & RMSE & R\textsuperscript{2} & Mean absolute error & Mean relative error & Mean difference \tabularnewline
+\hline
+Linear regression & 0.5953 & 0.6065 & 2256524 & 1.0838 & -0.0301 \\
+Linear SVR & 0.6276 & 0.6095 & 2210275 & 1.4608 & 0.2046 \\
+Polynomial SVR (2) & 0.9265 & 0.0485 & 2524263 & 7.2145 & 0.0283 \\
+Polynomial SVR (3) & 0.7427 & 0.4249 & 2292008 & 2.5018 & 0.1736 \\
+Polynomial SVR (4) & 0.9240 & 0.0540 & 2524220 & 7.5100 & 0.0366 \\
+Polynomial SVR (6) & 0.9199 & 0.0628 & 2523162 & 7.5533 & 0.0449 \\
+Gaussian SVR & 0.4845 & 0.7610 & 2071198 & 0.2998 & 0.1305 \\
+\end{tabular}
+\end{adjustbox}
+\\
+\caption{Results for R4-1000}
+\label{fig:coreonly_linear_R4_1000}
+\end{table}
+
+\begin {figure}[hbtp]
+\centering
+\includegraphics[width=\textwidth]{output/R4_1000_ONLY_1_LINEAR_NCORE/plot_R4_1000_bestmodels.eps}
+\caption{Completion time vs ncores for query R4 with datasize 1000}
+\label{fig:coreonly_linear_R4_1000}
+\end {figure}

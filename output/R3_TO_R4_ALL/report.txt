@@ -1,0 +1,75 @@
+TRAIN DATA:
+R3
+
+
+TEST DATA:
+R4
+
+
+
+
+ Testing results for linear regression:
+   RMSE = 0.283304
+   R^2 = 0.920194
+   Mean abs error = 650059.264024
+   Mean rel error = 0.425723
+   Difference between means = -0.126548
+
+ Testing results for Linear SVR:
+   RMSE = 0.182452
+   R^2 = 0.982608
+   Mean abs error = 634329.434145
+   Mean rel error = 0.219780
+   Difference between means = -0.053793
+
+ Testing results for Polynomial SVR (2):
+   RMSE = 4.019925
+   R^2 = 0.534026
+   Mean abs error = 1213449.008207
+   Mean rel error = 27.114030
+   Difference between means = -0.968651
+
+ Testing results for Polynomial SVR (3):
+   RMSE = 2.484196
+   R^2 = 0.654297
+   Mean abs error = 954968.234885
+   Mean rel error = 2.189496
+   Difference between means = 1.039119
+
+ Testing results for Polynomial SVR (4):
+   RMSE = 3.637506
+   R^2 = 0.469385
+   Mean abs error = 1146481.870502
+   Mean rel error = 2255.354887
+   Difference between means = -0.780969
+
+ Testing results for Polynomial SVR (6):
+   RMSE = 10.165229
+   R^2 = 0.237669
+   Mean abs error = 1622002.423960
+   Mean rel error = 6.116920
+   Difference between means = -1.419620
+
+ Testing results for Gaussian SVR:
+   RMSE = 0.645792
+   R^2 = 0.626942
+   Mean abs error = 709948.265717
+   Mean rel error = 6.212280
+   Difference between means = -0.098292
+
+
+
+========================
+
+
+ENABLE_FEATURE_FILTERING: 0
+COMPLETION_TIME_THRESHOLD: 32000
+TRAIN_FRAC_WO_TEST: 0.600000
+TEST_FRAC_WO_TEST: 0.200000
+TRAIN_FRAC_W_TEST: 0.700000
+NORMALIZE_FEATURE: 1
+CLEAR_OUTLIERS: 1
+CHOOSE_FEATURES: 1
+FEATURES: [3 4 5 6 7 8 12 13] --> Map time avg   Map time max   Reduce time avg   Reduce time max   Shuffle time avg   Shuffle time max   Datasize   N core   
+TEST_ON_CORES: 1
+SHUFFLE_DATA: 1
