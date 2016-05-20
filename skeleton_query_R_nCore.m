@@ -12,8 +12,8 @@ addpath('./utility/');
 
 BASE_DIR = './dati/Query R/';
 
-QUERY = 'R5';
-DATASIZE = '1000';
+QUERY = 'R2';
+DATASIZE = '250';
 
 %% List of all directories with train data
 TRAIN_DATA_LOCATION = {strcat(QUERY, '/Datasize/', DATASIZE)};
@@ -25,13 +25,13 @@ TRAIN_DATA_LOCATION = {strcat(QUERY, '/Datasize/', DATASIZE)};
 % TEST_DATA_LOCATION = {'Query R/R1/Core/120'};
 TEST_DATA_LOCATION = {};
 
-OUTPUT_LATEX = true;
+OUTPUT_LATEX = false;
 TABLE_CAPTION = cstrcat('Results for ', QUERY, '-', DATASIZE);
 PLOT_CAPTION = cstrcat('Completion time vs ncores for query ', QUERY, ' with datasize ', DATASIZE);
 TABLE_LABEL = cstrcat('tab:', 'coreonly_linear_', QUERY, '_', DATASIZE);
 PLOT_LABEL = cstrcat('fig:', 'coreonly_linear_', QUERY, '_', DATASIZE);
 
-SAVE_DATA = true;
+SAVE_DATA = false;
 
 % OUTPUT_FOLDER = strcat('output/', QUERY, '_ALL_FEATURES/');
 OUTPUT_FOLDER = strcat('output/', QUERY, '_', DATASIZE, '_ONLY_1_LINEAR_NCORE/');
@@ -61,7 +61,7 @@ NORMALIZE_FEATURE = true;
 CLEAR_OUTLIERS = true;
 
 
-LEARNING_CURVES = true;
+LEARNING_CURVES = false;
 
 %% FEATURE DESCRIPTION:
 % 1 -> N map
@@ -557,15 +557,26 @@ end
 if LINEAR_REGRESSION
 	y_mean = mean(y_test);
 
-	sum_residual = sum((y_test .- predictions(:, end)).^2);
-	sum_total = sum((y_test .- y_mean).^2);
-	sum_abs = sum(abs(y_test - predictions(:, end)));
-	sum_rel = sum(abs((y_test - predictions(:, end)) ./ predictions(:, end)));
+	sum_residual = sum((y_test - predictions(:, end)).^2);
+	sum_total = sum((y_test - y_mean).^2);
+
+	real_test_values = mu_y + sigma_y * y_test;
+	real_predictions = mu_y + sigma_y * predictions(:, end);
+
+	abs_err = abs(real_test_values - real_predictions);
+	rel_err = abs_err ./ real_test_values;
+
+	lin_mean_abs = mean(abs_err);
+	lin_mean_rel = mean(rel_err);
+
+
+	% sum_abs = sum(abs(y_test - predictions(:, end)));
+	% sum_rel = sum(sigma_y * abs((y_test - predictions(:, end)) ./ (sigma_y * predictions(:, end)) + mu_y);
 
 	lin_RMSE = sqrt(sum_residual / N_test);			% Root Mean Squared Error
 	lin_R2 = 1 - (sum_residual / sum_total);		% R^2
-	lin_mean_abs = ((sum_abs / N_test) * sigma_y) + mu_y;
-	lin_mean_rel = sum_rel / N_test;
+	% lin_mean_abs = ((sum_abs / N_test));
+	% lin_mean_rel = sum_rel / N_test;
 
 	fprintf('\n Testing results for linear regression:\n');
 	fprintf('   RMSE = %f\n', lin_RMSE);
@@ -608,11 +619,20 @@ end
 
 
 for index = 1:length(MODELS_CHOSEN)
-	sum_abs = sum(abs(y_test .- predictions(:, index)));
-	sum_rel = sum(abs((y_test .- predictions(:, index)) ./ predictions(:, index)));
+	real_predictions = mu_y + sigma_y * predictions(:, index);
+	real_test_values = mu_y + sigma_y * y_test;
 
-	mean_abs = ((sum_abs / N_test) * sigma_y) + mu_y;
-	mean_rel = sum_rel / N_test;
+	abs_err = abs(real_predictions - real_test_values);
+	rel_err = abs_err ./ real_test_values;
+
+	mean_abs = mean(abs_err);
+	mean_rel = mean(rel_err);
+
+	% sum_abs = sum(abs(y_test - predictions(:, index)));
+	% sum_rel = sum(sigma_y * abs((y_test - predictions(:, index)) ./ (sigma_y * predictions(:, index)) + mu_y);
+
+	% mean_abs = ((sum_abs / N_test) * sigma_y);
+	% mean_rel = sum_rel / N_test;
 	fprintf('\n Testing results for %s:\n', SVR_DESCRIPTIONS{index});
 	fprintf('   RMSE = %f\n', RMSEs(index));
 	fprintf('   R^2 = %f\n', R_2(index));
