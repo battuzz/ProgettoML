@@ -12,8 +12,8 @@ addpath('./utility/');
 
 BASE_DIR = './dati/Query R/';
 
-QUERY = 'R2';
-DATASIZE = '250';
+QUERY = 'R4';
+DATASIZE = '1000';
 
 %% List of all directories with train data
 TRAIN_DATA_LOCATION = {strcat(QUERY, '/Datasize/', DATASIZE)};
@@ -25,18 +25,17 @@ TRAIN_DATA_LOCATION = {strcat(QUERY, '/Datasize/', DATASIZE)};
 % TEST_DATA_LOCATION = {'Query R/R1/Core/120'};
 TEST_DATA_LOCATION = {};
 
-OUTPUT_LATEX = false;
-LATEX_SINGLE_FILE_LOCATION = 'outputReport/report_all.tex';
-
+OUTPUT_LATEX = true;
 TABLE_CAPTION = cstrcat('Results for ', QUERY, '-', DATASIZE);
 PLOT_CAPTION = cstrcat('Completion time vs ncores for query ', QUERY, ' with datasize ', DATASIZE);
 TABLE_LABEL = cstrcat('tab:', 'coreonly_linear_', QUERY, '_', DATASIZE);
 PLOT_LABEL = cstrcat('fig:', 'coreonly_linear_', QUERY, '_', DATASIZE);
 
-SAVE_DATA = false;
+SAVE_DATA = true;
 
 % OUTPUT_FOLDER = strcat('output/', QUERY, '_ALL_FEATURES/');
-OUTPUT_FOLDER = strcat('output/', QUERY, '_', DATASIZE, '_ONLY_1_LINEAR_NCORE/');
+% OUTPUT_FOLDER = strcat('output/', QUERY, '_', DATASIZE, '_ONLY_1_LINEAR_NCORE/');
+OUTPUT_FOLDER = strcat('output/TESTING/');
 
 OUTPUT_FORMATS = {	{'-deps', '.eps'},					% generates only one .eps file black and white
 					{'-depslatex', '.eps'},				% generates one .eps file containing only the plot and a .tex file that includes the plot and fill the legend with plain text
@@ -81,8 +80,8 @@ LEARNING_CURVES = false;
 % 13 -> N Core
 CHOOSE_FEATURES = true;
 
-% FEATURES = [3:8,13];
-FEATURES = [13];
+FEATURES = [3:8,13];
+% FEATURES = [13];
 
 
 FEATURES_DESCRIPTIONS = {			% These will be used to describe the plot axis
@@ -115,7 +114,7 @@ LINEAR_REGRESSION = true;
 
 BEST_MODELS = true;
 
-TEST_ON_CORES = true;	% To add the 'difference between means' metric
+TEST_ON_CORES = false;	% To add the 'difference between means' metric
 
 rand('seed', 18);
 SHUFFLE_DATA = true;
@@ -511,46 +510,40 @@ if SAVE_DATA
 		fprintf(fd, '%s\n', TEST_DATA_LOCATION{index});
 	end
 
-	fclose(fd);
+	fprintf(fd, '\n\n\n');
 end
 
 if OUTPUT_LATEX
-	% if ~ exist(OUTPUT_FOLDER)		%% Checks if the folder exists
-	% 	if ~ mkdir(OUTPUT_FOLDER)		%% Try with the mkdir function
-	% 		if system(cstrcat('mkdir -p ', OUTPUT_FOLDER))		%% This creates subfolders
-	% 			fprintf('[ERROR] Could not create output folder\nCreate the output folder first and then restart this script\n');
-	% 			quit;
-	% 		end
-	% 	end
-	% end
-	latex_filename = strcat(OUTPUT_FOLDER, 'outputlatex.tex');
-	flatex = fopen(latex_filename, 'w');
+	if ~ exist(OUTPUT_FOLDER)		%% Checks if the folder exists
+		if ~ mkdir(OUTPUT_FOLDER)		%% Try with the mkdir function
+			if system(cstrcat('mkdir -p ', OUTPUT_FOLDER))		%% This creates subfolders
+				fprintf('[ERROR] Could not create output folder\nCreate the output folder first and then restart this script\n');
+				quit;
+			end
+		end
+	end
+	latex_filename_table = strcat(OUTPUT_FOLDER, 'outputlatex_table.txt');
+	flatex_table = fopen(latex_filename_table, 'w');
 
-	% fprintf(flatex, 'TRAIN DATA:\n');
-	% for index = 1:length(TRAIN_DATA_LOCATION)
-	% 	fprintf(flatex, '%s\n', TRAIN_DATA_LOCATION{index});
-	% end
+	latex_filename_plot = strcat(OUTPUT_FOLDER, 'outputlatex_plot.txt');
+	flatex_plot = fopen(latex_filename_plot, 'w');
 
-	% if ~isempty(TEST_DATA_LOCATION)
-	% 	fprintf(flatex, '\n\nTEST DATA:\n');
-	% 	for index = 1:length(TEST_DATA_LOCATION)
-	% 		fprintf(flatex, '%s\n', TRAIN_DATA_LOCATION{index});
-	% 	end
-	% end
+	if BEST_MODELS
+		latex_filename_plot_bestmodels = strcat(OUTPUT_FOLDER, 'outputlatex_plot_bestmodels.txt');
+		flatex_plot_bestmodels = fopen(latex_filename_plot_bestmodels, 'w');
+	end
 
-	fprintf(flatex, '\n');
-
-	fprintf(flatex, cstrcat('\\begin{table}[H]\n', ...
+	fprintf(flatex_table, cstrcat('\\begin{table}[H]\n', ...
 					'\\centering\n', ...
 					'\\begin{adjustbox}{center}\n', ...
 					'\\begin{tabular}{c | c M{1.2cm} M{2.5cm} M{2.5cm} M{1.8cm}}\n'));
 	if TEST_ON_CORES
-		fprintf(flatex, 'Model & RMSE & R\\textsuperscript{2} & Mean absolute error & Mean relative error & Mean difference \\tabularnewline\n');
+		fprintf(flatex_table, 'Model & RMSE & R\\textsuperscript{2} & Mean absolute error & Mean relative error & Mean difference \\tabularnewline\n');
 	else
-		fprintf(flatex, 'Model & RMSE & R\\textsuperscript{2} & Mean absolute error & Mean relative error \\tabularnewline\n');
+		fprintf(flatex_table, 'Model & RMSE & R\\textsuperscript{2} & Mean absolute error & Mean relative error \\tabularnewline\n');
 	end
 
-	fprintf(flatex, '\\hline\n');
+	fprintf(flatex_table, '\\hline\n');
 
 end	
 
@@ -609,11 +602,11 @@ if LINEAR_REGRESSION
 
 
 	if (OUTPUT_LATEX & ~TEST_ON_CORES)
-		fprintf(flatex, 'Linear regression & %5.4f & %5.4f & %6.0f & %5.4f \\\\\n', lin_RMSE, lin_R2, lin_mean_abs, lin_mean_rel);
+		fprintf(flatex_table, 'Linear regression & %5.4f & %5.4f & %6.0f & %5.4f \\\\\n', lin_RMSE, lin_R2, lin_mean_abs, lin_mean_rel);
 	end
 
 	if (OUTPUT_LATEX & TEST_ON_CORES)
-		fprintf(flatex, 'Linear regression & %5.4f & %5.4f & %6.0f & %5.4f & %5.4f \\\\\n', lin_RMSE, lin_R2, lin_mean_abs, lin_mean_rel, diff_means);
+		fprintf(flatex_table, 'Linear regression & %5.4f & %5.4f & %6.0f & %5.4f & %5.4f \\\\\n', lin_RMSE, lin_R2, lin_mean_abs, lin_mean_rel, diff_means);
 	end
 
 	fprintf('\n');
@@ -661,31 +654,42 @@ for index = 1:length(MODELS_CHOSEN)
 	end
 
 	if (OUTPUT_LATEX & ~TEST_ON_CORES)
-		fprintf(flatex, '%s & %5.4f & %5.4f & %6.0f & %5.4f \\\\\n', SVR_DESCRIPTIONS{index}, RMSEs(index), R_2(index), mean_abs, mean_rel);
+		fprintf(flatex_table, '%s & %5.4f & %5.4f & %6.0f & %5.4f \\\\\n', SVR_DESCRIPTIONS{index}, RMSEs(index), R_2(index), mean_abs, mean_rel);
 	end
 
 	if (OUTPUT_LATEX & TEST_ON_CORES)
-		fprintf(flatex, '%s & %5.4f & %5.4f & %6.0f & %5.4f & %5.4f \\\\\n', SVR_DESCRIPTIONS{index}, RMSEs(index), R_2(index), mean_abs, mean_rel, diff_means);
+		fprintf(flatex_table, '%s & %5.4f & %5.4f & %6.0f & %5.4f & %5.4f \\\\\n', SVR_DESCRIPTIONS{index}, RMSEs(index), R_2(index), mean_abs, mean_rel, diff_means);
 	end
 
 	fprintf('\n');
 end
 
 if OUTPUT_LATEX
-	fprintf(flatex, cstrcat('\\end{tabular}\n', ...
-					'\\end{adjustbox}\n', ...
-					'\\\\\n', ...
-					'\\caption{', TABLE_CAPTION, '}\n', ...
-					'\\label{', TABLE_LABEL, '}\n', ...
-					'\\end{table}\n'));
+	fprintf(flatex_table, cstrcat('\\end{tabular}\n', ...
+								'\\end{adjustbox}\n', ...
+								'\\\\\n', ...
+								'\\caption{', TABLE_CAPTION, '}\n', ...
+								'\\label{', TABLE_LABEL, '}\n', ...
+								'\\end{table}\n'));
+	fclose(flatex_table);
 
-	fprintf(flatex, cstrcat('\n\\begin {figure}[hbtp]\n', ...
-							'\\centering\n', ...
-							'\\includegraphics[width=\\textwidth]{', OUTPUT_FOLDER, 'plot_', QUERY, '_', DATASIZE, '_bestmodels', OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{2}, '}\n', ...
-							'\\caption{', PLOT_CAPTION, '}\n', ...
-							'\\label{', PLOT_LABEL, '}\n', ...
-							'\\end {figure}\n'));	
-	fclose(flatex);
+	fprintf(flatex_plot, cstrcat('\n\\begin {figure}[hbtp]\n', ...
+								'\\centering\n', ...
+								'\\includegraphics[width=\\textwidth]{', OUTPUT_FOLDER, 'plot_', QUERY, '_', DATASIZE, OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{2}, '}\n', ...
+								'\\caption{', PLOT_CAPTION, '}\n', ...
+								'\\label{', PLOT_LABEL, '}\n', ...
+								'\\end {figure}\n'));	
+	fclose(flatex_plot);
+
+	if BEST_MODELS
+		fprintf(flatex_plot_bestmodels, cstrcat('\n\\begin {figure}[hbtp]\n', ...
+												'\\centering\n', ...
+												'\\includegraphics[width=\\textwidth]{', OUTPUT_FOLDER, 'plot_', QUERY, '_', DATASIZE, '_bestmodels', OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{2}, '}\n', ...
+												'\\caption{', PLOT_CAPTION, '}\n', ...
+												'\\label{', PLOT_LABEL, '}\n', ...
+												'\\end {figure}\n'));	
+		fclose(flatex_plot_bestmodels);
+	end
 end
 
 %% Stores the context and closes the file descriptor
