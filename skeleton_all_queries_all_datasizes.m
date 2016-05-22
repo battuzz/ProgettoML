@@ -85,7 +85,7 @@ CHOOSE_FEATURES = true;
 FEATURES = [3:8,13];
 % FEATURES = [13];
 
-FEATURES_DESCRIPTIONS = {			% These will be used to describe the plot axis
+ALL_FEATURES_DESCRIPTIONS = {			% These will be used to describe the plot axis
 	'N map',
 	'N reduce',
 	'Map time avg',
@@ -168,9 +168,9 @@ for query_id = 1:length(QUERIES)
 		train_data = get_all_data_from_dirs(BASE_DIR, TRAIN_DATA_LOCATION);
 
 		if CHOOSE_FEATURES
-			tmp = train_data(:, 2:end);
+			tmp = train_data(:, 2:end)
 			train_data = [train_data(:, 1) , tmp(:, FEATURES)];
-			FEATURES_DESCRIPTIONS = FEATURES_DESCRIPTIONS(FEATURES);
+			FEATURES_DESCRIPTIONS = ALL_FEATURES_DESCRIPTIONS{FEATURES);
 		end
 
 		test_data = [];
