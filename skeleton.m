@@ -12,7 +12,7 @@ addpath('./utility/');
 
 BASE_DIR = './dati/';
 
-QUERY = 'R5';
+QUERY = 'R1';
 DATASIZE = '-';
 
 %% List of all directories with train data
@@ -203,7 +203,6 @@ if NORMALIZE_FEATURE
 
 	save(strcat(OUTPUT_FOLDER, 'mu.mat'), 'mu');
 	save(strcat(OUTPUT_FOLDER, 'sigma.mat'), 'sigma');
-
 end
 
 
@@ -685,6 +684,8 @@ for col = 1:M
 		y = ysvr;
 		save(cstrcat(OUTPUT_FOLDER, SVR_DESCRIPTIONS{index}, '_x.mat'), 'x');
 		save(cstrcat(OUTPUT_FOLDER, SVR_DESCRIPTIONS{index}, '_y.mat'), 'y');
+
+		save(cstrcat(OUTPUT_FOLDER, SVR_DESCRIPTIONS{index}, '.mat'), 'x', 'y');
 
 	end
 

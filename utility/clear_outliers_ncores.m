@@ -43,7 +43,7 @@ for l = 1:length(CORES_TO_SEARCH)
 	avg = mean(clean(idx_cores, 1));		%% mean of these records considering only nCores
 	dev = (std(clean(idx_cores, 1)));		%% std
 
-	good_idx = clean(:, 1) - avg < 2*dev;
+	good_idx = (abs(clean(:, 1) - avg)) < 2*dev;
 	good_idx = (good_idx & idx_cores) | idx_other;
 
 	clean = clean(good_idx, :);

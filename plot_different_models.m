@@ -1,7 +1,7 @@
 addpath('./utility');
 
-FOLDER = 'output/QUERY_COMP_CORE/SVR lineare/'
-X_AXIS_LABEL = 'N Core'
+FOLDER = 'output/QUERY_COMP_DATASIZE/SVR sigmoidale/'
+X_AXIS_LABEL = 'Datasize'
 Y_AXIS_LABEL = 'Completion time'
 
 files_x = glob(strcat(FOLDER, '*_x.mat'));
@@ -15,7 +15,7 @@ assert (length(files_x) == length(files_y));
 figure()
 hold on
 
-legend_str = {}
+legend_str = {};
 color = {'r', 'b', 'g', 'k', 'c'};
 for i = 1 : length(files_x)
 	desc_x = strrep(files_x{i}, '_x.mat', '');
@@ -39,4 +39,4 @@ legend(legend_str);
 xlabel(X_AXIS_LABEL);
 ylabel(Y_AXIS_LABEL);
 
-
+print('-depsc', strcat(FOLDER, 'plot.eps'));

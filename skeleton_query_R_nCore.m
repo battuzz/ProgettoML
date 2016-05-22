@@ -26,6 +26,8 @@ TRAIN_DATA_LOCATION = {strcat(QUERY, '/Datasize/', DATASIZE)};
 TEST_DATA_LOCATION = {};
 
 OUTPUT_LATEX = false;
+LATEX_SINGLE_FILE_LOCATION = 'outputReport/report_all.tex';
+
 TABLE_CAPTION = cstrcat('Results for ', QUERY, '-', DATASIZE);
 PLOT_CAPTION = cstrcat('Completion time vs ncores for query ', QUERY, ' with datasize ', DATASIZE);
 TABLE_LABEL = cstrcat('tab:', 'coreonly_linear_', QUERY, '_', DATASIZE);
@@ -509,32 +511,32 @@ if SAVE_DATA
 		fprintf(fd, '%s\n', TEST_DATA_LOCATION{index});
 	end
 
-	fprintf(fd, '\n\n\n');
+	fclose(fd);
 end
 
 if OUTPUT_LATEX
-	if ~ exist(OUTPUT_FOLDER)		%% Checks if the folder exists
-		if ~ mkdir(OUTPUT_FOLDER)		%% Try with the mkdir function
-			if system(cstrcat('mkdir -p ', OUTPUT_FOLDER))		%% This creates subfolders
-				fprintf('[ERROR] Could not create output folder\nCreate the output folder first and then restart this script\n');
-				quit;
-			end
-		end
-	end
-	latex_filename = strcat(OUTPUT_FOLDER, 'outputlatex.txt');
+	% if ~ exist(OUTPUT_FOLDER)		%% Checks if the folder exists
+	% 	if ~ mkdir(OUTPUT_FOLDER)		%% Try with the mkdir function
+	% 		if system(cstrcat('mkdir -p ', OUTPUT_FOLDER))		%% This creates subfolders
+	% 			fprintf('[ERROR] Could not create output folder\nCreate the output folder first and then restart this script\n');
+	% 			quit;
+	% 		end
+	% 	end
+	% end
+	latex_filename = strcat(OUTPUT_FOLDER, 'outputlatex.tex');
 	flatex = fopen(latex_filename, 'w');
 
-	fprintf(flatex, 'TRAIN DATA:\n');
-	for index = 1:length(TRAIN_DATA_LOCATION)
-		fprintf(flatex, '%s\n', TRAIN_DATA_LOCATION{index});
-	end
+	% fprintf(flatex, 'TRAIN DATA:\n');
+	% for index = 1:length(TRAIN_DATA_LOCATION)
+	% 	fprintf(flatex, '%s\n', TRAIN_DATA_LOCATION{index});
+	% end
 
-	if ~isempty(TEST_DATA_LOCATION)
-		fprintf(flatex, '\n\nTEST DATA:\n');
-		for index = 1:length(TEST_DATA_LOCATION)
-			fprintf(flatex, '%s\n', TRAIN_DATA_LOCATION{index});
-		end
-	end
+	% if ~isempty(TEST_DATA_LOCATION)
+	% 	fprintf(flatex, '\n\nTEST DATA:\n');
+	% 	for index = 1:length(TEST_DATA_LOCATION)
+	% 		fprintf(flatex, '%s\n', TRAIN_DATA_LOCATION{index});
+	% 	end
+	% end
 
 	fprintf(flatex, '\n');
 
