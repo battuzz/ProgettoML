@@ -11,8 +11,11 @@ addpath('./utility/');
 
 BASE_DIR = './dati/Query R/';
 
-QUERIES = {'R1', 'R2', 'R3', 'R4', 'R5'};
-DATASIZES = {'250', '500', '750', '1000'};
+% QUERIES = {'R1', 'R2', 'R3', 'R4', 'R5'};
+% DATASIZES = {'250', '500', '750', '1000'};
+
+QUERIES = {'R1', 'R2'};
+DATASIZES = {'250', '500'};
 
 
 
@@ -109,7 +112,7 @@ E_range = linspace (0.1, 5, 20);
 if OUTPUT_LATEX
 	flatex = fopen('output/fixed_datasize_all_features.tex', 'w');
 	fprintf(flatex, cstrcat('\\newpage\n', ...
-							'\\section{Fixed Datasize, all the features\n'));
+							'\\section{Fixed Datasize, all the features}\n'));
 end
 
 
@@ -168,7 +171,7 @@ for query_id = 1:length(QUERIES)
 		train_data = get_all_data_from_dirs(BASE_DIR, TRAIN_DATA_LOCATION);
 
 		if CHOOSE_FEATURES
-			tmp = train_data(:, 2:end)
+			tmp = train_data(:, 2:end);
 			train_data = [train_data(:, 1) , tmp(:, FEATURES)];
 			FEATURES_DESCRIPTIONS = ALL_FEATURES_DESCRIPTIONS(FEATURES);
 		end
