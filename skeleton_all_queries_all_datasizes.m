@@ -25,6 +25,7 @@ LATEX_PLOT = false;
 LATEX_PLOT_BESTMODELS = true;
 
 SAVE_DATA = true;
+ALL_THE_PLOTS = false;
 
 LEARNING_CURVES = false;
 
@@ -779,7 +780,116 @@ for query_id = 1:length(QUERIES)
 
 		%% PLOTTING SVR vs LR
 
-		for col = 1:M
+		if ALL_THE_PLOTS
+			for col = 1:M
+
+				figure;
+				hold on;
+
+				% scatter(X_tr_denorm(:, col), y_tr_denorm, 'r', 'x');
+				% scatter(X_test_denorm(:, col), y_test_denorm, 'b');
+				X_tr_denorm_col = X_tr_denorm(:, col);
+				X_test_denorm_col = X_test_denorm(:, col);
+				
+				if (N_CORES_INVERSE & ismember(13, FEATURES) & (col == M))
+					X_tr_denorm_col = 1./X_tr_denorm_col;
+					X_test_denorm_col = 1./X_test_denorm_col;
+				end
+
+				my_scatter(X_tr_denorm_col, y_tr_denorm, 'r', 'x');
+				my_scatter(X_test_denorm_col, y_test_denorm, 'b');
+
+
+				% x = linspace(min(X_test(:, col)), max(X_test(:, col)));		% Normalized, we need this for the predictions
+				x = linspace(min(min(X_test(:, col)), min(X_tr(:, col))), max(max(X_test(:, col)), max(X_tr(:, col))));  %% fill all the plot
+				x_denorm = (x * sigma_X(col)) + mu_X(col);
+
+				xsvr = zeros(length(x), M);			% xsvr is a matrix of zeros, except for the column we're plotting currently
+				xsvr(:, col) = x;					% It must be normalized to use svmpredict with the SVR models we found
+
+
+				if LINEAR_REGRESSION
+					ylin = x * theta(col+1);
+
+					% Denormalize y
+					if NORMALIZE_FEATURE
+						ylin = (ylin * sigma_y) + mu_y;
+					end
+
+					x_plot = x_denorm;
+					if (N_CORES_INVERSE & ismember(13, FEATURES) & (col == M))
+						x_plot = 1./x_plot;  
+					end
+
+					plot(x_plot, ylin, 'color', [0.5, 0, 1], 'linewidth', 1);
+
+					x = x_denorm;
+					y = ylin;
+					save(cstrcat(OUTPUT_FOLDER, 'Linear Regression.mat'), 'x', 'y', 'QUERY', 'DATASIZE');
+					
+
+				end
+
+				for index = 1:length(MODELS_CHOSEN)
+					[ysvr, ~, ~] = svmpredict(zeros(length(x), 1), xsvr, models{index}, '-q');	%% quiet
+
+					% Denormalize
+					if NORMALIZE_FEATURE
+						ysvr = (ysvr * sigma_y) + mu_y;
+					end 
+
+					x_plot = x_denorm;
+					if (N_CORES_INVERSE & ismember(13, FEATURES) & (col == M))
+						x_plot = 1./x_plot;  
+					end
+
+					plot(x_plot, ysvr, 'color', COLORS{index}, 'linewidth', 1);
+
+					x = x_denorm;
+					y = ysvr;
+					save(cstrcat(OUTPUT_FOLDER, SVR_DESCRIPTIONS{index}, '.mat'), 'x', 'y', 'QUERY', 'DATASIZE');
+
+				end
+
+				% Plot the mean of the test values (for nCores)
+				% if (TEST_ON_CORES & ismember(13, FEATURES) & (col == M))
+				% 	scatter(X_test_denorm(1, col), mean(y_test_denorm), 10, 'k', '.');		
+				% end
+				
+				labels = {'Training set', 'Testing set'};
+				if LINEAR_REGRESSION
+					labels{end+1} = 'Linear Regression';
+				end
+				labels(end+1:end+length(SVR_DESCRIPTIONS)) = SVR_DESCRIPTIONS;
+				legend(labels, 'location', 'northeastoutside');
+
+				
+
+				% Labels the axes
+				xlabel(FEATURES_DESCRIPTIONS{col});
+				ylabel('Completion Time');
+				% title(cstrcat('Linear regression vs ', SVR_DESCRIPTIONS{svr_index})); 
+				if SAVE_DATA
+					% NOTE: the file location shouldn't have any spaces
+					file_location = strrep(strcat(OUTPUT_FOLDER, 'plot_', FEATURES_DESCRIPTIONS{col}, OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{2}), ' ', '');
+					% file_location = strrep(strcat(OUTPUT_FOLDER, 'plot_', QUERY, '_', DATASIZE, FEATURES_DESCRIPTIONS{col}, OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{2}), ' ', '');
+					print(OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{1}, file_location);
+				end
+
+				if SAVE_DATA & ismember(13, FEATURES) & (col == M)
+					file_location = strrep(strcat(OUTPUT_FOLDER, 'plot_', QUERY, '_', DATASIZE, OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{2}), ' ', '');
+					print(OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{1}, file_location);
+				end
+
+				hold off;
+				
+				% pause;
+
+			end
+		
+		else
+			
+			col = M;
 
 			figure;
 			hold on;
@@ -889,7 +999,113 @@ for query_id = 1:length(QUERIES)
 		%% Plot and save (only the best models)
 
 		if BEST_MODELS
-			for col = 1:M
+
+			if ALL_THE_PLOTS
+			
+				for col = 1:M
+
+					figure;
+					hold on;
+
+					% scatter(X_tr_denorm(:, col), y_tr_denorm, 'r', 'x');
+					% scatter(X_test_denorm(:, col), y_test_denorm, 'b');
+					X_tr_denorm_col = X_tr_denorm(:, col);
+					X_test_denorm_col = X_test_denorm(:, col);
+					
+					if (N_CORES_INVERSE & ismember(13, FEATURES) & (col == M))
+						X_tr_denorm_col = 1./X_tr_denorm_col;
+						X_test_denorm_col = 1./X_test_denorm_col;
+					end
+
+					my_scatter(X_tr_denorm_col, y_tr_denorm, 'r', 'x');
+					my_scatter(X_test_denorm_col, y_test_denorm, 'b');
+
+
+					% x = linspace(min(X_test(:, col)), max(X_test(:, col)));		% Normalized, we need this for the predictions
+					x = linspace(min(min(X_test(:, col)), min(X_tr(:, col))), max(max(X_test(:, col)), max(X_tr(:, col))));  %% fill all the plot
+					x_denorm = (x * sigma_X(col)) + mu_X(col);
+
+					xsvr = zeros(length(x), M);			% xsvr is a matrix of zeros, except for the column we're plotting currently
+					xsvr(:, col) = x;					% It must be normalized to use svmpredict with the SVR models we found
+
+
+					if (LINEAR_REGRESSION && ismember(length(MODELS_CHOSEN)+1, best_models_idx))	% if linear regression is one of the best models
+						ylin = x * theta(col+1);
+
+						% Denormalize y
+						if NORMALIZE_FEATURE
+							ylin = (ylin * sigma_y) + mu_y;
+						end
+
+						x_plot = x_denorm;
+						if (N_CORES_INVERSE & ismember(13, FEATURES) & (col == M))
+							x_plot = 1./x_plot;  
+						end
+
+						plot(x_plot, ylin, 'color', [0.5, 0, 1], 'linewidth', 1);		
+
+					end
+
+					for index = 1:length(MODELS_CHOSEN)
+						if ismember(index, best_models_idx)
+							[ysvr, ~, ~] = svmpredict(zeros(length(x), 1), xsvr, models{index}, '-q');	%% quiet
+
+							% Denormalize
+							if NORMALIZE_FEATURE
+								ysvr = (ysvr * sigma_y) + mu_y;
+							end 
+
+							x_plot = x_denorm;
+							if (N_CORES_INVERSE & ismember(13, FEATURES) & (col == M))
+								x_plot = 1./x_plot;  
+							end
+
+							plot(x_plot, ysvr, 'color', COLORS{index}, 'linewidth', 1);
+						end
+					end
+
+					% Plot the mean of the test values (for nCores)
+					% if (TEST_ON_CORES & ismember(13, FEATURES) & (col == M))
+					% 	scatter(X_test_denorm(1, col), mean(y_test_denorm), 10, 'k', '.');		
+					% end
+					
+					labels = {'Training set', 'Testing set'};
+					if (LINEAR_REGRESSION && ismember(length(MODELS_CHOSEN)+1, best_models_idx))
+						labels{end+1} = 'Linear Regression';
+					end
+					for index = 1:length(SVR_DESCRIPTIONS)
+						if ismember(index, best_models_idx)
+							labels(end+1) = SVR_DESCRIPTIONS{index};
+						end
+					end
+					legend(labels, 'location', 'northeastoutside');
+
+					
+
+					% Labels the axes
+					xlabel(FEATURES_DESCRIPTIONS{col});
+					ylabel('Completion Time');
+					% title(cstrcat('Linear regression vs ', SVR_DESCRIPTIONS{svr_index})); 
+					if SAVE_DATA
+						% NOTE: the file location shouldn't have any spaces
+						file_location = strrep(strcat(OUTPUT_FOLDER, 'plot_', FEATURES_DESCRIPTIONS{col}, '_bestmodels', OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{2}), ' ', '');
+						% file_location = strrep(strcat(OUTPUT_FOLDER, 'plot_', QUERY, '_', DATASIZE, FEATURES_DESCRIPTIONS{col}, OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{2}), ' ', '');
+						print(OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{1}, file_location);
+					end
+
+					if SAVE_DATA & ismember(13, FEATURES) & (col == M)
+						file_location = strrep(strcat(OUTPUT_FOLDER, 'plot_', QUERY, '_', DATASIZE, '_bestmodels', OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{2}), ' ', '');
+						print(OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{1}, file_location);
+					end
+
+					hold off;
+					
+					% pause;
+
+				end
+			
+			else
+				col = M;
 
 				figure;
 				hold on;
@@ -990,6 +1206,7 @@ for query_id = 1:length(QUERIES)
 				% pause;
 
 			end
+
 		end
 
 		if OUTPUT_LATEX 
