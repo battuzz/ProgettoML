@@ -170,7 +170,7 @@ for query_id = 1:length(QUERIES)
 		if CHOOSE_FEATURES
 			tmp = train_data(:, 2:end)
 			train_data = [train_data(:, 1) , tmp(:, FEATURES)];
-			FEATURES_DESCRIPTIONS = ALL_FEATURES_DESCRIPTIONS{FEATURES);
+			FEATURES_DESCRIPTIONS = ALL_FEATURES_DESCRIPTIONS(FEATURES);
 		end
 
 		test_data = [];
