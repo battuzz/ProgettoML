@@ -3,23 +3,129 @@
 %%% TODO
 %% - Automatic feature selection (with penalties?)
 
+clear all;
+clc;
+close all hidden;
+
+addpath('./utility/');
+
+BASE_DIR = './dati/Query R/';
+
 QUERIES = {'R1', 'R2', 'R3', 'R4', 'R5'};
 DATASIZES = {'250', '500', '750', '1000'};
 
+
+
+OUTPUT_LATEX = true;
+LATEX_TABLE = true;
+LATEX_PLOT = false;
+LATEX_PLOT_BESTMODELS = true;
+
+SAVE_DATA = true;
+
+LEARNING_CURVES = false;
+
+OUTPUT_FORMATS = {	{'-deps', '.eps'},					% generates only one .eps file black and white
+					{'-depslatex', '.eps'},				% generates one .eps file containing only the plot and a .tex file that includes the plot and fill the legend with plain text
+					{'-depsc', '.eps'},					% generates only one .eps file with colour
+					{'-dpdflatex', '.pdf'}				% generates one .pdf file containing only the plot and a .tex file that includes the plot and fill the legend with plain text
+					{'-dpdf', '.pdf'}					% generates one complete .pdf file A4
+				};
+PLOT_SAVE_FORMAT = 3;
+
+N_CORES_INVERSE = false;		%% ncores^(-1)
+NORMALIZE_FEATURE = true;
+CLEAR_OUTLIERS = true;
+
+SHUFFLE_DATA = true;
+rand('seed', 18);
+
+%% CHANGE THESE IF TEST == TRAIN
+TRAIN_FRAC_WO_TEST = 0.6;
+TEST_FRAC_WO_TEST = 0.2;
+
+%% CHANGE THESE IF TEST != TRAIN
+TRAIN_FRAC_W_TEST = 0.7;
+
+ENABLE_FEATURE_FILTERING = false;
+COMPLETION_TIME_THRESHOLD = 32000;
+
+%% Choose which SVR models to use
+% 1 -> Linear SVR
+% 2 -> Polynomial SVR (2 degree)
+% 3 -> Polynomial SVR (3 degree)
+% 4 -> Polynomial SVR (4 degree)
+% 5 -> Polynomial SVR (6 degree)
+% 6 -> RBF SVR
+MODELS_CHOSEN = [1, 2, 3, 4, 5, 6];
+COLORS = {'g', [1, 0.5, 0.2], 'c', 'k', 'm', 'r'};	% magenta, orange, cyan, black, green, red
+
+LINEAR_REGRESSION = true;
+
+BEST_MODELS = true;
+
+TEST_ON_CORES = false;	% To add the 'difference between means' metric
+
+%% FEATURE DESCRIPTION:
+% 1 -> N map
+% 2 -> N reduce
+% 3 -> Map time avg
+% 4 -> Map time max
+% 5 -> Reduce time avg
+% 6 -> Reduce time max
+% 7 -> Shuffle time avg
+% 8 -> Shuffle time max
+% 9 -> Bandwidth avg
+% 10 -> Bandwidth max
+% 11 -> N Users
+% 12 -> Datasize
+% 13 -> N Core
+CHOOSE_FEATURES = true;
+
+FEATURES = [3:8,13];
+% FEATURES = [13];
+
+FEATURES_DESCRIPTIONS = {			% These will be used to describe the plot axis
+	'N map',
+	'N reduce',
+	'Map time avg',
+	'Map time max',
+	'Reduce time avg',
+	'Reduce time max',
+	'Shuffle time avg',
+	'Shuffle time max',
+	'Bandwidth avg',
+	'Bandwidth max',
+	'N Users',
+	'Datasize',
+	'N core'
+};
+
+C_range = linspace (0.1, 5, 20);
+E_range = linspace (0.1, 5, 20);
+
+
+%% Create a latex file with all the results, already formatted
+if OUTPUT_LATEX
+	flatex = fopen('output/fixed_datasize_all_features.tex', 'w');
+	fprintf(flatex, cstrcat('\\newpage\n', ...
+							'\\section{Fixed Datasize, all the features\n'));
+end
+
+
 for query_id = 1:length(QUERIES)
+
+	QUERY = QUERIES{query_id};
+
+	fprintf(flatex, cstrcat('\\subsection{Query ', QUERY, '}\n'));
 
 	for datasize_id = 1:length(DATASIZES)
 
-		clear all;
-		clc;
-		close all hidden;
-
-		addpath('./utility/');
-
-		BASE_DIR = './dati/Query R/';
-
-		QUERY = QUERIES{query_id};
 		DATASIZE = DATASIZES{datasize_id};
+
+		fprintf(flatex, cstrcat('\\subsubsection{Query ', QUERY, ' --- Datasize ', DATASIZE, 'GB}\n'));
+
+		close all hidden;
 
 		%% List of all directories with train data
 		TRAIN_DATA_LOCATION = {strcat(QUERY, '/Datasize/', DATASIZE)};
@@ -31,103 +137,13 @@ for query_id = 1:length(QUERIES)
 		% TEST_DATA_LOCATION = {'Query R/R1/Core/120'};
 		TEST_DATA_LOCATION = {};
 
-		OUTPUT_LATEX = true;
 		TABLE_CAPTION = cstrcat('Results for ', QUERY, '-', DATASIZE);
-		PLOT_CAPTION = cstrcat('Completion time vs ncores for query ', QUERY, ' with datasize ', DATASIZE);
+		PLOT_CAPTION = cstrcat('Completion time vs ncores for query ', QUERY, ' with datasize ', DATASIZE, 'GB');
 		TABLE_LABEL = cstrcat('tab:', 'coreonly_linear_', QUERY, '_', DATASIZE);
 		PLOT_LABEL = cstrcat('fig:', 'coreonly_linear_', QUERY, '_', DATASIZE);
 
-		SAVE_DATA = false;
-
 		% OUTPUT_FOLDER = strcat('output/', QUERY, '_ALL_FEATURES/');
-		% OUTPUT_FOLDER = strcat('output/', QUERY, '_', DATASIZE, '_ONLY_1_LINEAR_NCORE/');
-		OUTPUT_FOLDER = strcat('output/TESTING/');
-
-		OUTPUT_FORMATS = {	{'-deps', '.eps'},					% generates only one .eps file black and white
-							{'-depslatex', '.eps'},				% generates one .eps file containing only the plot and a .tex file that includes the plot and fill the legend with plain text
-							{'-depsc', '.eps'},					% generates only one .eps file with colour
-							{'-dpdflatex', '.pdf'}				% generates one .pdf file containing only the plot and a .tex file that includes the plot and fill the legend with plain text
-							{'-dpdf', '.pdf'}					% generates one complete .pdf file A4
-						};
-		PLOT_SAVE_FORMAT = 3;
-
-		ENABLE_FEATURE_FILTERING = false;
-		COMPLETION_TIME_THRESHOLD = 32000;
-
-
-		%% CHANGE THESE IF TEST == TRAIN
-		TRAIN_FRAC_WO_TEST = 0.6;
-		TEST_FRAC_WO_TEST = 0.2;
-
-		%% CHANGE THESE IF TEST != TRAIN
-		TRAIN_FRAC_W_TEST = 0.7;
-
-
-		N_CORES_INVERSE = false;		%% ncores^(-1)
-		NORMALIZE_FEATURE = true;
-		CLEAR_OUTLIERS = true;
-
-
-		LEARNING_CURVES = false;
-
-		%% FEATURE DESCRIPTION:
-		% 1 -> N map
-		% 2 -> N reduce
-		% 3 -> Map time avg
-		% 4 -> Map time max
-		% 5 -> Reduce time avg
-		% 6 -> Reduce time max
-		% 7 -> Shuffle time avg
-		% 8 -> Shuffle time max
-		% 9 -> Bandwidth avg
-		% 10 -> Bandwidth max
-		% 11 -> N Users
-		% 12 -> Datasize
-		% 13 -> N Core
-		CHOOSE_FEATURES = true;
-
-		FEATURES = [3:8,13];
-		% FEATURES = [13];
-
-
-		FEATURES_DESCRIPTIONS = {			% These will be used to describe the plot axis
-			'N map',
-			'N reduce',
-			'Map time avg',
-			'Map time max',
-			'Reduce time avg',
-			'Reduce time max',
-			'Shuffle time avg',
-			'Shuffle time max',
-			'Bandwidth avg',
-			'Bandwidth max',
-			'N Users',
-			'Datasize',
-			'N core'
-		};
-
-		%% Choose which SVR models to use
-		% 1 -> Linear SVR
-		% 2 -> Polynomial SVR (2 degree)
-		% 3 -> Polynomial SVR (3 degree)
-		% 4 -> Polynomial SVR (4 degree)
-		% 5 -> Polynomial SVR (6 degree)
-		% 6 -> RBF SVR
-		MODELS_CHOSEN = [1, 2, 3, 4, 5, 6];
-		COLORS = {'g', [1, 0.5, 0.2], 'c', 'k', 'm', 'r'};	% magenta, orange, cyan, black, green, red
-
-		LINEAR_REGRESSION = true;
-
-		BEST_MODELS = true;
-
-		TEST_ON_CORES = false;	% To add the 'difference between means' metric
-
-		rand('seed', 18);
-		SHUFFLE_DATA = true;
-
-		C_range = linspace (0.1, 5, 20);
-		E_range = linspace (0.1, 5, 20);
-
+		OUTPUT_FOLDER = strcat('output/', QUERY, '_', DATASIZE, '_LINEAR_NCORE/');
 
 
 		% --------------------------------------------------------------------------------------------------
@@ -528,14 +544,14 @@ for query_id = 1:length(QUERIES)
 					end
 				end
 			end
-			latex_filename_table = strcat(OUTPUT_FOLDER, 'outputlatex_table.txt');
+			latex_filename_table = strcat(OUTPUT_FOLDER, 'outputlatex_table.tex');
 			flatex_table = fopen(latex_filename_table, 'w');
 
-			latex_filename_plot = strcat(OUTPUT_FOLDER, 'outputlatex_plot.txt');
+			latex_filename_plot = strcat(OUTPUT_FOLDER, 'outputlatex_plot.tex');
 			flatex_plot = fopen(latex_filename_plot, 'w');
 
 			if BEST_MODELS
-				latex_filename_plot_bestmodels = strcat(OUTPUT_FOLDER, 'outputlatex_plot_bestmodels.txt');
+				latex_filename_plot_bestmodels = strcat(OUTPUT_FOLDER, 'outputlatex_plot_bestmodels.tex');
 				flatex_plot_bestmodels = fopen(latex_filename_plot_bestmodels, 'w');
 			end
 
@@ -973,6 +989,26 @@ for query_id = 1:length(QUERIES)
 			end
 		end
 
+		if OUTPUT_LATEX 
+			if LATEX_TABLE
+				fprintf(flatex, cstrcat('\\input{', latex_filename_table, '}\n'));
+			end
+
+			if LATEX_PLOT
+				fprintf(flatex, cstrcat('\\input{', latex_filename_plot, '}\n'));
+			end
+
+			if LATEX_PLOT_BESTMODELS
+				fprintf(flatex, cstrcat('\\input{', latex_filename_plot_bestmodels, '}\n'));
+			end
+		
+		fprintf(flatex, '\n\\newpage\n');
+		end
+	
 	end
 
+end
+
+if OUTPUT_LATEX
+	fclose(flatex);
 end
