@@ -1,0 +1,680 @@
+# Created by Octave 3.8.2, Mon May 23 11:07:12 2016 CEST <Andrea@Andreas-MacBook-Pro.local>
+# name: SVs
+# type: cell
+# rows: 1
+# columns: 7
+# name: <cell-element>
+# type: sparse matrix
+# nnz: 0
+# rows: 0
+# columns: 7
+
+
+
+# name: <cell-element>
+# type: sparse matrix
+# nnz: 0
+# rows: 0
+# columns: 7
+
+
+
+# name: <cell-element>
+# type: sparse matrix
+# nnz: 0
+# rows: 0
+# columns: 7
+
+
+
+# name: <cell-element>
+# type: sparse matrix
+# nnz: 0
+# rows: 0
+# columns: 7
+
+
+
+# name: <cell-element>
+# type: sparse matrix
+# nnz: 0
+# rows: 0
+# columns: 7
+
+
+
+# name: <cell-element>
+# type: sparse matrix
+# nnz: 0
+# rows: 0
+# columns: 7
+
+
+
+# name: <cell-element>
+# type: scalar
+0
+
+
+
+
+
+# name: coefficients
+# type: cell
+# rows: 1
+# columns: 7
+# name: <cell-element>
+# type: matrix
+# rows: 0
+# columns: 1
+
+
+
+# name: <cell-element>
+# type: matrix
+# rows: 0
+# columns: 1
+
+
+
+# name: <cell-element>
+# type: matrix
+# rows: 0
+# columns: 1
+
+
+
+# name: <cell-element>
+# type: matrix
+# rows: 0
+# columns: 1
+
+
+
+# name: <cell-element>
+# type: matrix
+# rows: 0
+# columns: 1
+
+
+
+# name: <cell-element>
+# type: matrix
+# rows: 0
+# columns: 1
+
+
+
+# name: <cell-element>
+# type: scalar
+0
+
+
+
+
+
+# name: b
+# type: cell
+# rows: 1
+# columns: 7
+# name: <cell-element>
+# type: scalar
+-0.7685664553520688
+
+
+
+# name: <cell-element>
+# type: scalar
+-0.7685664553520688
+
+
+
+# name: <cell-element>
+# type: scalar
+-0.7685664553520688
+
+
+
+# name: <cell-element>
+# type: scalar
+-0.7685664553520688
+
+
+
+# name: <cell-element>
+# type: scalar
+-0.7685664553520688
+
+
+
+# name: <cell-element>
+# type: scalar
+-0.7685664553520688
+
+
+
+# name: <cell-element>
+# type: scalar
+0
+
+
+
+
+
+# name: models
+# type: cell
+# rows: 1
+# columns: 7
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 11
+# name: Parameters
+# type: matrix
+# rows: 5
+# columns: 1
+ 3
+ 0
+ 3
+ 0.1428571428571428
+ 0
+
+
+# name: nr_class
+# type: scalar
+2
+
+
+# name: totalSV
+# type: scalar
+0
+
+
+# name: rho
+# type: scalar
+0.7685664553520688
+
+
+# name: Label
+# type: matrix
+# rows: 0
+# columns: 0
+
+
+# name: sv_indices
+# type: matrix
+# rows: 0
+# columns: 1
+
+
+# name: ProbA
+# type: matrix
+# rows: 0
+# columns: 0
+
+
+# name: ProbB
+# type: matrix
+# rows: 0
+# columns: 0
+
+
+# name: nSV
+# type: matrix
+# rows: 0
+# columns: 0
+
+
+# name: sv_coef
+# type: matrix
+# rows: 0
+# columns: 1
+
+
+# name: SVs
+# type: sparse matrix
+# nnz: 0
+# rows: 0
+# columns: 7
+
+
+
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 11
+# name: Parameters
+# type: matrix
+# rows: 5
+# columns: 1
+ 3
+ 1
+ 2
+ 0.1428571428571428
+ 0
+
+
+# name: nr_class
+# type: scalar
+2
+
+
+# name: totalSV
+# type: scalar
+0
+
+
+# name: rho
+# type: scalar
+0.7685664553520688
+
+
+# name: Label
+# type: matrix
+# rows: 0
+# columns: 0
+
+
+# name: sv_indices
+# type: matrix
+# rows: 0
+# columns: 1
+
+
+# name: ProbA
+# type: matrix
+# rows: 0
+# columns: 0
+
+
+# name: ProbB
+# type: matrix
+# rows: 0
+# columns: 0
+
+
+# name: nSV
+# type: matrix
+# rows: 0
+# columns: 0
+
+
+# name: sv_coef
+# type: matrix
+# rows: 0
+# columns: 1
+
+
+# name: SVs
+# type: sparse matrix
+# nnz: 0
+# rows: 0
+# columns: 7
+
+
+
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 11
+# name: Parameters
+# type: matrix
+# rows: 5
+# columns: 1
+ 3
+ 1
+ 3
+ 0.1428571428571428
+ 0
+
+
+# name: nr_class
+# type: scalar
+2
+
+
+# name: totalSV
+# type: scalar
+0
+
+
+# name: rho
+# type: scalar
+0.7685664553520688
+
+
+# name: Label
+# type: matrix
+# rows: 0
+# columns: 0
+
+
+# name: sv_indices
+# type: matrix
+# rows: 0
+# columns: 1
+
+
+# name: ProbA
+# type: matrix
+# rows: 0
+# columns: 0
+
+
+# name: ProbB
+# type: matrix
+# rows: 0
+# columns: 0
+
+
+# name: nSV
+# type: matrix
+# rows: 0
+# columns: 0
+
+
+# name: sv_coef
+# type: matrix
+# rows: 0
+# columns: 1
+
+
+# name: SVs
+# type: sparse matrix
+# nnz: 0
+# rows: 0
+# columns: 7
+
+
+
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 11
+# name: Parameters
+# type: matrix
+# rows: 5
+# columns: 1
+ 3
+ 1
+ 4
+ 0.1428571428571428
+ 0
+
+
+# name: nr_class
+# type: scalar
+2
+
+
+# name: totalSV
+# type: scalar
+0
+
+
+# name: rho
+# type: scalar
+0.7685664553520688
+
+
+# name: Label
+# type: matrix
+# rows: 0
+# columns: 0
+
+
+# name: sv_indices
+# type: matrix
+# rows: 0
+# columns: 1
+
+
+# name: ProbA
+# type: matrix
+# rows: 0
+# columns: 0
+
+
+# name: ProbB
+# type: matrix
+# rows: 0
+# columns: 0
+
+
+# name: nSV
+# type: matrix
+# rows: 0
+# columns: 0
+
+
+# name: sv_coef
+# type: matrix
+# rows: 0
+# columns: 1
+
+
+# name: SVs
+# type: sparse matrix
+# nnz: 0
+# rows: 0
+# columns: 7
+
+
+
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 11
+# name: Parameters
+# type: matrix
+# rows: 5
+# columns: 1
+ 3
+ 1
+ 6
+ 0.1428571428571428
+ 0
+
+
+# name: nr_class
+# type: scalar
+2
+
+
+# name: totalSV
+# type: scalar
+0
+
+
+# name: rho
+# type: scalar
+0.7685664553520688
+
+
+# name: Label
+# type: matrix
+# rows: 0
+# columns: 0
+
+
+# name: sv_indices
+# type: matrix
+# rows: 0
+# columns: 1
+
+
+# name: ProbA
+# type: matrix
+# rows: 0
+# columns: 0
+
+
+# name: ProbB
+# type: matrix
+# rows: 0
+# columns: 0
+
+
+# name: nSV
+# type: matrix
+# rows: 0
+# columns: 0
+
+
+# name: sv_coef
+# type: matrix
+# rows: 0
+# columns: 1
+
+
+# name: SVs
+# type: sparse matrix
+# nnz: 0
+# rows: 0
+# columns: 7
+
+
+
+
+
+# name: <cell-element>
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 11
+# name: Parameters
+# type: matrix
+# rows: 5
+# columns: 1
+ 3
+ 2
+ 3
+ 0.1428571428571428
+ 0
+
+
+# name: nr_class
+# type: scalar
+2
+
+
+# name: totalSV
+# type: scalar
+0
+
+
+# name: rho
+# type: scalar
+0.7685664553520688
+
+
+# name: Label
+# type: matrix
+# rows: 0
+# columns: 0
+
+
+# name: sv_indices
+# type: matrix
+# rows: 0
+# columns: 1
+
+
+# name: ProbA
+# type: matrix
+# rows: 0
+# columns: 0
+
+
+# name: ProbB
+# type: matrix
+# rows: 0
+# columns: 0
+
+
+# name: nSV
+# type: matrix
+# rows: 0
+# columns: 0
+
+
+# name: sv_coef
+# type: matrix
+# rows: 0
+# columns: 1
+
+
+# name: SVs
+# type: sparse matrix
+# nnz: 0
+# rows: 0
+# columns: 7
+
+
+
+
+
+# name: <cell-element>
+# type: cell
+# rows: 0
+# columns: 0
+
+
+
+
+
+# name: Cs
+# type: matrix
+# rows: 1
+# columns: 7
+ 0.1 0.1 0.1 0.1 0.1 0.1 0
+
+
+# name: Es
+# type: matrix
+# rows: 1
+# columns: 7
+ 3.968421052631579 3.968421052631579 3.968421052631579 3.968421052631579 3.968421052631579 3.968421052631579 0
+
+
+# name: theta
+# type: matrix
+# rows: 8
+# columns: 1
+ -0.05459761757880344
+ 0.5972731455422231
+ -0.4668777402492061
+ 0.006310225451947038
+ 0.009959426625808648
+ 0.5301348322213464
+ 0.3351019035711129
+ 0.001441027661057359
+
+
+# name: mu
+# type: matrix
+# rows: 1
+# columns: 8
+ 418833.5531914894 162404.5815602837 348672.0567375887 5904.702127659574 7937.666666666667 310186.6666666667 335099.7801418439 93.33333333333333
+
+
+# name: sigma
+# type: matrix
+# rows: 1
+# columns: 8
+ 481641.5686811605 227173.3823100182 431153.9424437595 4959.758514779123 6376.967190787556 380417.0159682034 409091.285099777 21.06678722087267
+
+

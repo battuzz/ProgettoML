@@ -1,0 +1,19 @@
+\begin{table}[H]
+\centering
+\begin{adjustbox}{center}
+\begin{tabular}{c | c M{1.2cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+Model & RMSE & R\textsuperscript{2} & Mean absolute error & Mean relative error \tabularnewline
+\hline
+Linear regression & 0.0999 & 0.9905 &   7743 & 0.0556 \\
+Linear SVR & 0.1017 & 0.9936 &   7894 & 0.0559 \\
+Polynomial SVR (2) & 1.2864 & 0.0000 & 109952 & 0.8321 \\
+Polynomial SVR (3) & 0.5276 & 0.8127 &  40426 & 0.2156 \\
+Polynomial SVR (4) & 0.9298 & 0.2785 &  77573 & 0.5374 \\
+Polynomial SVR (6) & 0.8746 & 0.2982 &  69520 & 0.4722 \\
+Gaussian SVR & 0.5125 & 0.8738 &  39988 & 0.2815 \\
+\end{tabular}
+\end{adjustbox}
+\\
+\caption{Results for R3 $\rightarrow$ R4-250}
+\label{tab:coreonly_linear_R3_R4_250}
+\end{table}
