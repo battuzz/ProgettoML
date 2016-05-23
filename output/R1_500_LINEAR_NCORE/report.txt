@@ -8,53 +8,46 @@ TEST DATA:
 
 
  Testing results for linear regression:
-   RMSE = 0.054244
-   R^2 = 0.993768
-   Mean abs error = 149334.086730
-   Mean rel error = 0.127058
-   Difference between means = -0.020737
+   RMSE = 0.090497
+   R^2 = 0.995425
+   Mean abs error = 5713.792417
+   Mean rel error = 0.029287
 
  Testing results for Linear SVR:
-   RMSE = 0.075071
-   R^2 = 0.989457
-   Mean abs error = 151475.834282
-   Mean rel error = 0.240932
-   Difference between means = -0.011576
+   RMSE = 0.099416
+   R^2 = 0.997933
+   Mean abs error = 6740.463769
+   Mean rel error = 0.035575
 
  Testing results for Polynomial SVR (2):
-   RMSE = 0.433234
-   R^2 = 0.664026
-   Mean abs error = 169212.177667
-   Mean rel error = 1.041722
-   Difference between means = -0.042741
+   RMSE = 0.486192
+   R^2 = 0.917293
+   Mean abs error = 30726.736223
+   Mean rel error = 0.174080
 
  Testing results for Polynomial SVR (3):
-   RMSE = 0.335717
-   R^2 = 0.885262
-   Mean abs error = 163272.747798
-   Mean rel error = 0.524410
-   Difference between means = -0.020499
+   RMSE = 0.253703
+   R^2 = 0.966224
+   Mean abs error = 13301.697900
+   Mean rel error = 0.064316
 
  Testing results for Polynomial SVR (4):
-   RMSE = 0.501430
-   R^2 = 0.601580
-   Mean abs error = 169259.361871
-   Mean rel error = 1.040133
-   Difference between means = -0.048376
+   RMSE = 0.677230
+   R^2 = 0.874635
+   Mean abs error = 42865.185367
+   Mean rel error = 0.228453
 
  Testing results for Polynomial SVR (6):
-   RMSE = 0.555430
-   R^2 = 0.455992
-   Mean abs error = 172256.861385
-   Mean rel error = 2.688321
-   Difference between means = -0.016882
+   RMSE = 1.379917
+   R^2 = 0.697906
+   Mean abs error = 67885.579178
+   Mean rel error = 0.312840
 
  Testing results for Gaussian SVR:
-   RMSE = 0.365027
-   R^2 = 0.838305
-   Mean abs error = 162323.667938
-   Mean rel error = 0.820978
-   Difference between means = -0.020227
+   RMSE = 0.357056
+   R^2 = 0.977902
+   Mean abs error = 17588.929062
+   Mean rel error = 0.075591
 
 
 
@@ -70,5 +63,5 @@ NORMALIZE_FEATURE: 1
 CLEAR_OUTLIERS: 1
 CHOOSE_FEATURES: 1
 FEATURES: [3 4 5 6 7 8 13] --> Map time avg   Map time max   Reduce time avg   Reduce time max   Shuffle time avg   Shuffle time max   N core   
-TEST_ON_CORES: 1
+TEST_ON_CORES: 0
 SHUFFLE_DATA: 1

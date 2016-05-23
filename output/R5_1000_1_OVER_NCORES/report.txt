@@ -7,55 +7,6 @@ TEST DATA:
 
 
 
- Testing results for linear regression:
-   RMSE = 0.775671
-   R^2 = 0.127173
-   Mean abs error = 40268.829014
-   Mean rel error = 8.132493
-   Difference between means = 0.132655
-
- Testing results for Linear SVR:
-   RMSE = 0.471928
-   R^2 = 0.689746
-   Mean abs error = 39563.785953
-   Mean rel error = 1.189220
-   Difference between means = -0.062676
-
- Testing results for Polynomial SVR (2):
-   RMSE = 0.521782
-   R^2 = 0.833457
-   Mean abs error = 39509.564475
-   Mean rel error = 0.582448
-   Difference between means = 0.191103
-
- Testing results for Polynomial SVR (3):
-   RMSE = 0.481533
-   R^2 = 0.745606
-   Mean abs error = 39434.263891
-   Mean rel error = 0.702801
-   Difference between means = -0.158253
-
- Testing results for Polynomial SVR (4):
-   RMSE = 2.189136
-   R^2 = 0.654924
-   Mean abs error = 41612.462523
-   Mean rel error = 0.848956
-   Difference between means = 0.765853
-
- Testing results for Polynomial SVR (6):
-   RMSE = 9.068587
-   R^2 = 0.542059
-   Mean abs error = 49794.172232
-   Mean rel error = 0.805227
-   Difference between means = 3.057474
-
- Testing results for Gaussian SVR:
-   RMSE = 0.340095
-   R^2 = 0.841784
-   Mean abs error = 39082.534255
-   Mean rel error = 0.694361
-   Difference between means = 0.057181
-
 
 
 ========================
@@ -70,5 +21,5 @@ NORMALIZE_FEATURE: 1
 CLEAR_OUTLIERS: 1
 CHOOSE_FEATURES: 1
 FEATURES: [3 4 5 6 7 8 13] --> Map time avg   Map time max   Reduce time avg   Reduce time max   Shuffle time avg   Shuffle time max   N core   
-TEST_ON_CORES: 1
+TEST_ON_CORES: 0
 SHUFFLE_DATA: 1
