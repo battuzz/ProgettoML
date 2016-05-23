@@ -1,0 +1,67 @@
+TRAIN DATA:
+Q4/Datasize/50
+
+
+TEST DATA:
+
+
+
+
+ Testing results for linear regression:
+   RMSE = 0.099030
+   R^2 = 0.988120
+   Mean abs error = 4688.100500
+   Mean rel error = 0.015401
+
+ Testing results for Linear SVR:
+   RMSE = 0.185334
+   R^2 = 0.960225
+   Mean abs error = 11230.700789
+   Mean rel error = 0.036380
+
+ Testing results for Polynomial SVR (2):
+   RMSE = 0.660883
+   R^2 = 0.563963
+   Mean abs error = 41416.223524
+   Mean rel error = 0.132745
+
+ Testing results for Polynomial SVR (3):
+   RMSE = 0.397155
+   R^2 = 0.813506
+   Mean abs error = 23263.086122
+   Mean rel error = 0.077601
+
+ Testing results for Polynomial SVR (4):
+   RMSE = 0.489067
+   R^2 = 0.738280
+   Mean abs error = 28158.485981
+   Mean rel error = 0.091472
+
+ Testing results for Polynomial SVR (6):
+   RMSE = 0.642102
+   R^2 = 0.601307
+   Mean abs error = 39270.408449
+   Mean rel error = 0.120913
+
+ Testing results for Gaussian SVR:
+   RMSE = 0.212845
+   R^2 = 0.946334
+   Mean abs error = 12909.653014
+   Mean rel error = 0.045101
+
+
+
+========================
+
+
+ENABLE_FEATURE_FILTERING: 0
+COMPLETION_TIME_THRESHOLD: 32000
+TRAIN_FRAC_WO_TEST: 0.600000
+TEST_FRAC_WO_TEST: 0.200000
+TRAIN_FRAC_W_TEST: 0.700000
+NORMALIZE_FEATURE: 1
+CLEAR_OUTLIERS: 1
+CHOOSE_FEATURES: 1
+FEATURES: [1 2 3 4 5 6 7 8 9 10 12 14 16 20] --> N map 1   M1avg   M1max   nR2   R2avg   R2max   S2avg   S2max   S2Bavg   S2Bmax   R3avg   S3avg   S3Bavg   nCores   
+TEST_ON_CORES: 0
+SHUFFLE_DATA: 1

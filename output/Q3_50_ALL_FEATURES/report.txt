@@ -1,0 +1,67 @@
+TRAIN DATA:
+Q3/Datasize/50
+
+
+TEST DATA:
+
+
+
+
+ Testing results for linear regression:
+   RMSE = 0.182114
+   R^2 = 0.938470
+   Mean abs error = 5146.506876
+   Mean rel error = 0.023827
+
+ Testing results for Linear SVR:
+   RMSE = 0.358864
+   R^2 = 0.879370
+   Mean abs error = 10757.637398
+   Mean rel error = 0.050234
+
+ Testing results for Polynomial SVR (2):
+   RMSE = 0.719378
+   R^2 = 0.086671
+   Mean abs error = 23497.146488
+   Mean rel error = 0.117313
+
+ Testing results for Polynomial SVR (3):
+   RMSE = 0.407640
+   R^2 = 0.791160
+   Mean abs error = 11213.847901
+   Mean rel error = 0.051393
+
+ Testing results for Polynomial SVR (4):
+   RMSE = 0.570814
+   R^2 = 0.524870
+   Mean abs error = 14384.588052
+   Mean rel error = 0.068301
+
+ Testing results for Polynomial SVR (6):
+   RMSE = 0.618510
+   R^2 = 0.444371
+   Mean abs error = 17185.559840
+   Mean rel error = 0.081722
+
+ Testing results for Gaussian SVR:
+   RMSE = 0.195192
+   R^2 = 0.950152
+   Mean abs error = 5696.702638
+   Mean rel error = 0.026862
+
+
+
+========================
+
+
+ENABLE_FEATURE_FILTERING: 0
+COMPLETION_TIME_THRESHOLD: 32000
+TRAIN_FRAC_WO_TEST: 0.600000
+TEST_FRAC_WO_TEST: 0.200000
+TRAIN_FRAC_W_TEST: 0.700000
+NORMALIZE_FEATURE: 1
+CLEAR_OUTLIERS: 1
+CHOOSE_FEATURES: 1
+FEATURES: [1 2 3 4 5 7 9 13] --> nM   nR   Mavg   Mmax   Ravg   SHavg   Bavg   nCores   
+TEST_ON_CORES: 0
+SHUFFLE_DATA: 1
