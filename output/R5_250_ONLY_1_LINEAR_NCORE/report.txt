@@ -7,55 +7,6 @@ TEST DATA:
 
 
 
- Testing results for linear regression:
-   RMSE = 0.732823
-   R^2 = 0.195189
-   Mean abs error = 25784.035725
-   Mean rel error = 7.479868
-   Difference between means = 0.135478
-
- Testing results for Linear SVR:
-   RMSE = 0.799895
-   R^2 = 0.243155
-   Mean abs error = 25845.758497
-   Mean rel error = 11.851864
-   Difference between means = -0.147483
-
- Testing results for Polynomial SVR (2):
-   RMSE = 0.829291
-   R^2 = 0.001103
-   Mean abs error = 25888.422866
-   Mean rel error = 15.131155
-   Difference between means = -0.135042
-
- Testing results for Polynomial SVR (3):
-   RMSE = 0.839858
-   R^2 = 0.203874
-   Mean abs error = 25887.649025
-   Mean rel error = 12.932623
-   Difference between means = -0.105932
-
- Testing results for Polynomial SVR (4):
-   RMSE = 0.830460
-   R^2 = 0.000355
-   Mean abs error = 25890.169600
-   Mean rel error = 16.263994
-   Difference between means = -0.134463
-
- Testing results for Polynomial SVR (6):
-   RMSE = 0.832189
-   R^2 = 0.000001
-   Mean abs error = 25891.549382
-   Mean rel error = 14.700415
-   Difference between means = -0.137270
-
- Testing results for Gaussian SVR:
-   RMSE = 0.798561
-   R^2 = 0.054679
-   Mean abs error = 25849.321244
-   Mean rel error = 16.203041
-   Difference between means = -0.024110
-
 
 
 ========================
@@ -70,5 +21,5 @@ NORMALIZE_FEATURE: 1
 CLEAR_OUTLIERS: 1
 CHOOSE_FEATURES: 1
 FEATURES: 13 --> N core   
-TEST_ON_CORES: 1
+TEST_ON_CORES: 0
 SHUFFLE_DATA: 1

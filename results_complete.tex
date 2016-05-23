@@ -1,0 +1,39 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage[labelfont=bf]{caption}
+\usepackage{adjustbox}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{array}
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+\hypersetup{
+	colorlinks,
+	citecolor=black,
+	filecolor=black,
+	linkcolor=black,
+	urlcolor=black
+}
+
+\author{A.~Battistello\and P.~Ferretti}
+\title{Machine Learning techniques to Model Data Intensive Application Performance}
+\date{}
+\begin{document}
+\maketitle
+\tableofcontents
+
+\input{latex_output/fixed_datasize_all_features}
+\input{latex_output/fixed_datasize_only_linear_ncores}
+\input{latex_output/fixed_datasize_all_features_inverse_ncores}
+\input{latex_output/fixed_datasize_only_inverse_ncores}
+
+\input{latex_output/query_comparison}
+
+\input{latex_output/query_Q_all_features}
+\input{latex_output/query_Q_only_ncores}
+\input{latex_output/query_Q_all_with_1_over_ncores}
+\input{latex_output/query_Q_only_1_over_ncores}
+
+\end{document}

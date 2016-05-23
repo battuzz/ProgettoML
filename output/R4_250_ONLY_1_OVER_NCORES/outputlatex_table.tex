@@ -1,0 +1,19 @@
+\begin{table}[H]
+\centering
+\begin{adjustbox}{center}
+\begin{tabular}{c | c M{1.2cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+Model & RMSE & R\textsuperscript{2} & Mean absolute error & Mean relative error \tabularnewline
+\hline
+Linear regression & 0.8686 & 0.1477 &  36477 & 0.2638 \\
+Linear SVR & 0.8530 & 0.2189 &  36318 & 0.2718 \\
+Polynomial SVR (2) & 1.0554 & 0.0583 &  42311 & 0.3487 \\
+Polynomial SVR (3) & 0.9447 & 0.0901 &  37389 & 0.2771 \\
+Polynomial SVR (4) & 1.0542 & 0.0017 &  43480 & 0.3472 \\
+Polynomial SVR (6) & 1.0304 & 0.0023 &  42378 & 0.3295 \\
+Gaussian SVR & 0.8335 & 0.2617 &  35373 & 0.2615 \\
+\end{tabular}
+\end{adjustbox}
+\\
+\caption{Results for R4-250GB with the nonlinear 1/ncores feature, only ncores}
+\label{tab:all_nonlinear_R4_250}
+\end{table}

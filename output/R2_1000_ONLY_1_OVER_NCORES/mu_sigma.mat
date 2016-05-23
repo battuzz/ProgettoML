@@ -1,15 +1,15 @@
-# Created by Octave 3.8.2, Wed May 18 18:00:15 2016 CEST <Andrea@Andreas-MacBook-Pro.local>
+# Created by Octave 4.0.0, Mon May 23 13:36:43 2016 CEST <peter@Independence>
 # name: mu
 # type: matrix
 # rows: 1
 # columns: 2
- 1126751.453333333 0.01181111111111111
+ 1122419.013157895 0.01182017543859649
 
 
 # name: sigma
 # type: matrix
 # rows: 1
 # columns: 2
- 515677.718777666 0.00313118257281563
+ 513618.9109903306 0.003111241643042776
 
 

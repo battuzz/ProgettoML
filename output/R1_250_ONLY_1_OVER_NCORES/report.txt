@@ -1,60 +1,11 @@
 TRAIN DATA:
-R1/Datasize/250_NO_72_90
+R1/Datasize/250
 
 
 TEST DATA:
 
 
 
-
- Testing results for linear regression:
-   RMSE = 1.243841
-   R^2 = 0.325900
-   Mean abs error = 69940.450375
-   Mean rel error = 4.159143
-   Difference between means = -0.306960
-
- Testing results for Linear SVR:
-   RMSE = 1.294615
-   R^2 = 0.379239
-   Mean abs error = 69617.482602
-   Mean rel error = 9.895212
-   Difference between means = -0.411546
-
- Testing results for Polynomial SVR (2):
-   RMSE = 1.567892
-   R^2 = 0.000925
-   Mean abs error = 78956.569146
-   Mean rel error = 23.373548
-   Difference between means = -0.276550
-
- Testing results for Polynomial SVR (3):
-   RMSE = 1.380003
-   R^2 = 0.270036
-   Mean abs error = 71045.938637
-   Mean rel error = 1.629111
-   Difference between means = -0.453967
-
- Testing results for Polynomial SVR (4):
-   RMSE = 1.542770
-   R^2 = 0.028349
-   Mean abs error = 77215.645131
-   Mean rel error = 3.252298
-   Difference between means = -0.383410
-
- Testing results for Polynomial SVR (6):
-   RMSE = 1.497688
-   R^2 = 0.070438
-   Mean abs error = 75624.239089
-   Mean rel error = 2.249364
-   Difference between means = -0.322204
-
- Testing results for Gaussian SVR:
-   RMSE = 1.291337
-   R^2 = 0.409152
-   Mean abs error = 69556.499350
-   Mean rel error = 69.714416
-   Difference between means = -0.435747
 
 
 
@@ -70,5 +21,5 @@ NORMALIZE_FEATURE: 1
 CLEAR_OUTLIERS: 1
 CHOOSE_FEATURES: 1
 FEATURES: 13 --> N core   
-TEST_ON_CORES: 1
+TEST_ON_CORES: 0
 SHUFFLE_DATA: 1

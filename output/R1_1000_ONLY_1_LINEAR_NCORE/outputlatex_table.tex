@@ -1,0 +1,19 @@
+\begin{table}[H]
+\centering
+\begin{adjustbox}{center}
+\begin{tabular}{c | c M{1.2cm} M{2.5cm} M{2.5cm} M{1.8cm}}
+Model & RMSE & R\textsuperscript{2} & Mean absolute error & Mean relative error \tabularnewline
+\hline
+Linear regression & 0.4444 & 0.8004 &  38407 & 0.0906 \\
+Linear SVR & 0.4607 & 0.8045 &  38550 & 0.0889 \\
+Polynomial SVR (2) & 0.9613 & 0.1422 &  78118 & 0.1746 \\
+Polynomial SVR (3) & 0.4834 & 0.7835 &  36629 & 0.0874 \\
+Polynomial SVR (4) & 0.9672 & 0.1294 &  78512 & 0.1755 \\
+Polynomial SVR (6) & 0.9746 & 0.1150 &  79059 & 0.1767 \\
+Gaussian SVR & 0.2943 & 0.9192 &  18751 & 0.0436 \\
+\end{tabular}
+\end{adjustbox}
+\\
+\caption{Results for R1-1000GB, only ncores}
+\label{tab:only_1_linear_R1_1000}
+\end{table}
