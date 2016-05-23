@@ -1,0 +1,51 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage[labelfont=bf]{caption}
+\usepackage{adjustbox}
+\usepackage{float}
+\usepackage{array}
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+
+\author{A.~Battistello\and P.~Ferretti}
+\title{Machine Learning techniques to Model Data Intensive Application Performance}
+\date{}
+\begin{document}
+\maketitle
+\tableofcontents
+
+%-----------------------------------------------
+
+
+
+\newpage
+\section{Fixed Datasize, only 1/nCores,}
+\subsection{Query Q2}
+\subsubsection{Query Q2 --- Datasize 40GB}
+\input{output/Q2_40_ONLY_1_OVER_NCORES/outputlatex_table.tex}
+\input{output/Q2_40_ONLY_1_OVER_NCORES/outputlatex_plot_bestmodels.tex}
+
+\newpage
+\subsubsection{Query Q2 --- Datasize 50GB}
+\input{output/Q2_50_ONLY_1_OVER_NCORES/outputlatex_table.tex}
+\input{output/Q2_50_ONLY_1_OVER_NCORES/outputlatex_plot_bestmodels.tex}
+
+\newpage
+
+\subsection{Query Q3}
+\subsubsection{Query Q3 --- Datasize 50GB}
+\input{output/Q3_50_ONLY_1_OVER_NCORES/outputlatex_table.tex}
+\input{output/Q3_50_ONLY_1_OVER_NCORES/outputlatex_plot_bestmodels.tex}
+
+\newpage
+
+\subsection{Query Q4}
+\subsubsection{Query Q4 --- Datasize 50GB}
+\input{output/Q4_50_ONLY_1_OVER_NCORES/outputlatex_table.tex}
+\input{output/Q4_50_ONLY_1_OVER_NCORES/outputlatex_plot_bestmodels.tex}
+
+\newpage
+
+\end{document}

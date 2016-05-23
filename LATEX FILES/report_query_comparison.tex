@@ -1,0 +1,180 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage[labelfont=bf]{caption}
+\usepackage{adjustbox}
+\usepackage{float}
+\usepackage{array}
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+
+\author{A.~Battistello\and P.~Ferretti}
+\title{Machine Learning techniques to Model Data Intensive Application Performance}
+\date{}
+\begin{document}
+\maketitle
+\tableofcontents
+
+%-----------------------------------------------
+\newpage
+\section{Query comparison}
+\subsection{R5 $\rightarrow$ R2 (Fast - Fast)}
+\subsubsection{R5 $\rightarrow$ R2 --- Datasize 250GB}
+\input{output/R5_R2_250_ALL_FEATURES/outputlatex_table.tex}
+\input{output/R5_R2_250_ALL_FEATURES/outputlatex_plot.tex}
+
+\newpage
+\subsubsection{R5 $\rightarrow$ R2 --- Datasize 500GB}
+\input{output/R5_R2_500_ALL_FEATURES/outputlatex_table.tex}
+\input{output/R5_R2_500_ALL_FEATURES/outputlatex_plot.tex}
+
+\newpage
+\subsubsection{R5 $\rightarrow$ R2 --- Datasize 750GB}
+\input{output/R5_R2_750_ALL_FEATURES/outputlatex_table.tex}
+\input{output/R5_R2_750_ALL_FEATURES/outputlatex_plot.tex}
+
+\newpage
+\subsubsection{R5 $\rightarrow$ R2 --- Datasize 1000GB}
+\input{output/R5_R2_1000_ALL_FEATURES/outputlatex_table.tex}
+\input{output/R5_R2_1000_ALL_FEATURES/outputlatex_plot.tex}
+
+\newpage
+
+
+\subsection{R2 $\rightarrow$ R5 (Fast - Fast)}
+\subsubsection{R2 $\rightarrow$ R5 --- Datasize 250GB}
+\input{output/R2_R5_250_ALL_FEATURES/outputlatex_table.tex}
+\input{output/R2_R5_250_ALL_FEATURES/outputlatex_plot.tex}
+
+\newpage
+\subsubsection{R2 $\rightarrow$ R5 --- Datasize 500GB}
+\input{output/R2_R5_500_ALL_FEATURES/outputlatex_table.tex}
+\input{output/R2_R5_500_ALL_FEATURES/outputlatex_plot.tex}
+
+\newpage
+\subsubsection{R2 $\rightarrow$ R5 --- Datasize 750GB}
+\input{output/R2_R5_750_ALL_FEATURES/outputlatex_table.tex}
+\input{output/R2_R5_750_ALL_FEATURES/outputlatex_plot.tex}
+
+\newpage
+\subsubsection{R2 $\rightarrow$ R5 --- Datasize 1000GB}
+\input{output/R2_R5_1000_ALL_FEATURES/outputlatex_table.tex}
+\input{output/R2_R5_1000_ALL_FEATURES/outputlatex_plot.tex}
+
+\newpage
+
+
+\subsection{R3 $\rightarrow$ R4 (Slow - Slow)}
+\subsubsection{R3 $\rightarrow$ R4 --- Datasize 250GB}
+\input{output/R3_R4_250_ALL_FEATURES/outputlatex_table.tex}
+\input{output/R3_R4_250_ALL_FEATURES/outputlatex_plot.tex}
+
+\newpage
+\subsubsection{R3 $\rightarrow$ R4 --- Datasize 500GB}
+\input{output/R3_R4_500_ALL_FEATURES/outputlatex_table.tex}
+\input{output/R3_R4_500_ALL_FEATURES/outputlatex_plot.tex}
+
+\newpage
+\subsubsection{R3 $\rightarrow$ R4 --- Datasize 750GB}
+\input{output/R3_R4_750_ALL_FEATURES/outputlatex_table.tex}
+\input{output/R3_R4_750_ALL_FEATURES/outputlatex_plot.tex}
+
+\newpage
+\subsubsection{R3 $\rightarrow$ R4 --- Datasize 1000GB}
+\input{output/R3_R4_1000_ALL_FEATURES/outputlatex_table.tex}
+\input{output/R3_R4_1000_ALL_FEATURES/outputlatex_plot.tex}
+
+\newpage
+
+\subsection{R4 $\rightarrow$ R3 (Slow - Slow)}
+\subsubsection{R4 $\rightarrow$ R3 --- Datasize 250GB}
+\input{output/R4_R3_250_ALL_FEATURES/outputlatex_table.tex}
+\input{output/R4_R3_250_ALL_FEATURES/outputlatex_plot.tex}
+
+\newpage
+\subsubsection{R4 $\rightarrow$ R3 --- Datasize 500GB}
+\input{output/R4_R3_500_ALL_FEATURES/outputlatex_table.tex}
+\input{output/R4_R3_500_ALL_FEATURES/outputlatex_plot.tex}
+
+\newpage
+\subsubsection{R4 $\rightarrow$ R3 --- Datasize 750GB}
+\input{output/R4_R3_750_ALL_FEATURES/outputlatex_table.tex}
+\input{output/R4_R3_750_ALL_FEATURES/outputlatex_plot.tex}
+
+\newpage
+\subsubsection{R4 $\rightarrow$ R3 --- Datasize 1000GB}
+\input{output/R4_R3_1000_ALL_FEATURES/outputlatex_table.tex}
+\input{output/R4_R3_1000_ALL_FEATURES/outputlatex_plot.tex}
+
+
+\subsection{R1, R2, R4 $\rightarrow$ R3 (Fast and Slow - Average)}
+\subsubsection{R1,R2,R4 $\rightarrow$ R3 --- Datasize 250GB}
+\input{output/R1,R2,R4_R3_250_ALL_FEATURES/outputlatex_table.tex}
+\input{output/R1,R2,R4_R3_250_ALL_FEATURES/outputlatex_plot.tex}
+
+\newpage
+\subsubsection{R1,R2,R4 $\rightarrow$ R3 --- Datasize 500GB}
+\input{output/R1,R2,R4_R3_500_ALL_FEATURES/outputlatex_table.tex}
+\input{output/R1,R2,R4_R3_500_ALL_FEATURES/outputlatex_plot.tex}
+
+\newpage
+\subsubsection{R1,R2,R4 $\rightarrow$ R3 --- Datasize 750GB}
+\input{output/R1,R2,R4_R3_750_ALL_FEATURES/outputlatex_table.tex}
+\input{output/R1,R2,R4_R3_750_ALL_FEATURES/outputlatex_plot.tex}
+
+\newpage
+\subsubsection{R1,R2,R4 $\rightarrow$ R3 --- Datasize 1000GB}
+\input{output/R1,R2,R4_R3_1000_ALL_FEATURES/outputlatex_table.tex}
+\input{output/R1,R2,R4_R3_1000_ALL_FEATURES/outputlatex_plot.tex}
+
+\newpage
+
+\subsection{R2, R5 $\rightarrow$ R3 (Fast - Slow)}
+\subsubsection{R2,R5 $\rightarrow$ R3 --- Datasize 250GB}
+\input{output/R2_R5_VS_R3_250_ALL_FEATURES/outputlatex_table.tex}
+\input{output/R2_R5_VS_R3_250_ALL_FEATURES/outputlatex_plot.tex}
+
+\newpage
+\subsubsection{R2,R5 $\rightarrow$ R3 --- Datasize 500GB}
+\input{output/R2_R5_VS_R3_500_ALL_FEATURES/outputlatex_table.tex}
+\input{output/R2_R5_VS_R3_500_ALL_FEATURES/outputlatex_plot.tex}
+
+\newpage
+\subsubsection{R2,R5 $\rightarrow$ R3 --- Datasize 750GB}
+\input{output/R2_R5_VS_R3_750_ALL_FEATURES/outputlatex_table.tex}
+\input{output/R2_R5_VS_R3_750_ALL_FEATURES/outputlatex_plot.tex}
+
+\newpage
+\subsubsection{R2,R5 $\rightarrow$ R3 --- Datasize 1000GB}
+\input{output/R2_R5_VS_R3_1000_ALL_FEATURES/outputlatex_table.tex}
+\input{output/R2_R5_VS_R3_1000_ALL_FEATURES/outputlatex_plot.tex}
+
+\newpage
+
+
+\subsection{R3, R4 $\rightarrow$ R2 (Fast - Slow)}
+\subsubsection{R3,R4 $\rightarrow$ R2 --- Datasize 250GB}
+\input{output/R3_R4_VS_R2_250_ALL_FEATURES/outputlatex_table.tex}
+\input{output/R3_R4_VS_R2_250_ALL_FEATURES/outputlatex_plot.tex}
+
+\newpage
+\subsubsection{R3,R4 $\rightarrow$ R2 --- Datasize 500GB}
+\input{output/R3_R4_VS_R2_500_ALL_FEATURES/outputlatex_table.tex}
+\input{output/R3_R4_VS_R2_500_ALL_FEATURES/outputlatex_plot.tex}
+
+\newpage
+\subsubsection{R3,R4 $\rightarrow$ R2 --- Datasize 750GB}
+\input{output/R3_R4_VS_R2_750_ALL_FEATURES/outputlatex_table.tex}
+\input{output/R3_R4_VS_R2_750_ALL_FEATURES/outputlatex_plot.tex}
+
+\newpage
+\subsubsection{R3,R4 $\rightarrow$ R2 --- Datasize 1000GB}
+\input{output/R3_R4_VS_R2_1000_ALL_FEATURES/outputlatex_table.tex}
+\input{output/R3_R4_VS_R2_1000_ALL_FEATURES/outputlatex_plot.tex}
+
+\newpage
+
+
+
+\end{document}
