@@ -12,8 +12,8 @@ addpath('./utility/');
 
 BASE_DIR = './dati query Q/';
 
-QUERIES = {'Q2'};
-DATASIZES = {'40', '50'};
+QUERIES = {'Q3'};
+DATASIZES = {'50'};
 
 
 
@@ -60,70 +60,37 @@ LEARNING_CURVES = false;
 ALL_THE_PLOTS = false;
 
 %% FEATURE DESCRIPTION:
-% 1 -> N map 1
-% 2 -> M1avg
-% 3 -> M1max
-% 4 -> nR2
-% 5 -> R2avg
-% 6 -> R2max
-% 7 -> S2avg
-% 8 -> S2max
-% 9 -> S2Bavg
-% 10 -> S2Bmax
-% 11 -> nR3
-% 12 -> R3avg
-% 13 -> R3max
-% 14 -> S3avg
-% 15 -> S3max
-% 16 -> S3Bavg
-% 17 -> S3Bmax
-% 18 -> nM4
-% 19 -> M4avg
-% 20 -> M4max
-% 21 -> nR5
-% 22 -> R5avg
-% 23 -> R5max
-% 24 -> S5avg
-% 25 -> S5max
-% 26 -> S5Bavg
-% 27 -> S5Bmax
-% 28 -> users
-% 29 -> dataSize
-% 30 -> nCores
+% 1 -> nM
+% 2 -> nR
+% 3 -> Mavg
+% 4 -> Mmax
+% 5 -> Ravg
+% 6 -> Rmax
+% 7 -> SHavg
+% 8 -> SHmax
+% 9 -> Bavg
+% 10 -> Bmax
+% 11 -> users
+% 12 -> dataSize
+% 13 -> nCores
+
 CHOOSE_FEATURES = true;
 
-FEATURES = [1:3, 5:8, 12:15, 19, 20, 22:25, 30];
-% FEATURES = [30];
-CORE_IDX = 30;
+FEATURES = [1:5, 7, 9, 13];
+% FEATURES = [13];
+CORE_IDX = 13;
 
 ALL_FEATURES_DESCRIPTIONS = {			% These will be used to describe the plot axis
-	'N map 1',
-	'M1avg',
-	'M1max',
-	'nR2',
-	'R2avg',
-	'R2max',
-	'S2avg',
-	'S2max',
-	'S2Bavg',
-	'S2Bmax',
-	'nR3',
-	'R3avg',
-	'R3max',
-	'S3avg',
-	'S3max',
-	'S3Bavg',
-	'S3Bmax',
-	'nM4',
-	'M4avg',
-	'M4max',
-	'nR5',
-	'R5avg',
-	'R5max',
-	'S5avg',
-	'S5max',
-	'S5Bavg',
-	'S5Bmax',
+	'nM',
+	'nR',
+	'Mavg',
+	'Mmax',
+	'Ravg',
+	'Rmax',
+	'SHavg',
+	'SHmax',
+	'Bavg',
+	'Bmax',
 	'users',
 	'dataSize',
 	'nCores'

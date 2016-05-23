@@ -10,24 +10,34 @@ close all hidden;
 
 addpath('./utility/');
 
-BASE_DIR = './dati query Q/';
+BASE_DIR = './dati/Query R/';
 
-QUERIES = {'Q2'};
-DATASIZES = {'40', '50'};
+QUERY = 'R2';
+DATASIZE = '250';
 
+%% List of all directories with train data
+TRAIN_DATA_LOCATION = {strcat(QUERY, '/Datasize/', DATASIZE)};
+% TRAIN_DATA_LOCATION = {strcat('')};
+% TRAIN_DATA_LOCATION = {'Core/60', 'Core/80', 'Core/100', 'Core/120', 'Core/72'};
+% TRAIN_DATA_LOCATION = {'Query R/R1/Datasize/750'};
 
-
+%% List of all directories with test data (leave {} if test data equals train data)
+% TEST_DATA_LOCATION = {'Query R/R1/Core/120'};
+TEST_DATA_LOCATION = {};
 
 OUTPUT_LATEX = true;
-LATEX_TABLE = true;
-LATEX_PLOT = false;
-LATEX_PLOT_BESTMODELS = true;
-FILENAME = "report.tex";
-CAPTION = 'Fixed Datasize, all features with 1/nCores';
+LATEX_SINGLE_FILE_LOCATION = 'report_all.tex';
+LATEX_SUBSUBSECTION_TITLE = cstrcat('Query ', QUERY, ' - Only ncores');
 
+TABLE_CAPTION = cstrcat('Results for ', QUERY, '-', DATASIZE);
+PLOT_CAPTION = cstrcat('Completion time vs ncores for query ', QUERY, ' with datasize ', DATASIZE);
+TABLE_LABEL = cstrcat('tab:', 'coreonly_linear_', QUERY, '_', DATASIZE);
+PLOT_LABEL = cstrcat('fig:', 'coreonly_linear_', QUERY, '_', DATASIZE);
 
-SAVE_DATA = true;
+SAVE_DATA = false;
 
+% OUTPUT_FOLDER = strcat('output/', QUERY, '_ALL_FEATURES/');
+OUTPUT_FOLDER = strcat('output/', QUERY, '_', DATASIZE, '_ONLY_1_LINEAR_NCORE/');
 
 OUTPUT_FORMATS = {	{'-deps', '.eps'},					% generates only one .eps file black and white
 					{'-depslatex', '.eps'},				% generates one .eps file containing only the plot and a .tex file that includes the plot and fill the legend with plain text
@@ -36,8 +46,6 @@ OUTPUT_FORMATS = {	{'-deps', '.eps'},					% generates only one .eps file black a
 					{'-dpdf', '.pdf'}					% generates one complete .pdf file A4
 				};
 PLOT_SAVE_FORMAT = 3;
-
-
 
 ENABLE_FEATURE_FILTERING = false;
 COMPLETION_TIME_THRESHOLD = 32000;
@@ -51,82 +59,47 @@ TEST_FRAC_WO_TEST = 0.2;
 TRAIN_FRAC_W_TEST = 0.7;
 
 
-N_CORES_INVERSE = true;		%% ncores^(-1)
+N_CORES_INVERSE = false;		%% ncores^(-1)
 NORMALIZE_FEATURE = true;
 CLEAR_OUTLIERS = true;
 
 
 LEARNING_CURVES = false;
-ALL_THE_PLOTS = false;
 
 %% FEATURE DESCRIPTION:
-% 1 -> N map 1
-% 2 -> M1avg
-% 3 -> M1max
-% 4 -> nR2
-% 5 -> R2avg
-% 6 -> R2max
-% 7 -> S2avg
-% 8 -> S2max
-% 9 -> S2Bavg
-% 10 -> S2Bmax
-% 11 -> nR3
-% 12 -> R3avg
-% 13 -> R3max
-% 14 -> S3avg
-% 15 -> S3max
-% 16 -> S3Bavg
-% 17 -> S3Bmax
-% 18 -> nM4
-% 19 -> M4avg
-% 20 -> M4max
-% 21 -> nR5
-% 22 -> R5avg
-% 23 -> R5max
-% 24 -> S5avg
-% 25 -> S5max
-% 26 -> S5Bavg
-% 27 -> S5Bmax
-% 28 -> users
-% 29 -> dataSize
-% 30 -> nCores
+% 1 -> N map
+% 2 -> N reduce
+% 3 -> Map time avg
+% 4 -> Map time max
+% 5 -> Reduce time avg
+% 6 -> Reduce time max
+% 7 -> Shuffle time avg
+% 8 -> Shuffle time max
+% 9 -> Bandwidth avg
+% 10 -> Bandwidth max
+% 11 -> N Users
+% 12 -> Datasize
+% 13 -> N Core
 CHOOSE_FEATURES = true;
 
-FEATURES = [1:3, 5:8, 12:15, 19, 20, 22:25, 30];
-% FEATURES = [30];
-CORE_IDX = 30;
+% FEATURES = [3:8,13];
+FEATURES = [13];
 
-ALL_FEATURES_DESCRIPTIONS = {			% These will be used to describe the plot axis
-	'N map 1',
-	'M1avg',
-	'M1max',
-	'nR2',
-	'R2avg',
-	'R2max',
-	'S2avg',
-	'S2max',
-	'S2Bavg',
-	'S2Bmax',
-	'nR3',
-	'R3avg',
-	'R3max',
-	'S3avg',
-	'S3max',
-	'S3Bavg',
-	'S3Bmax',
-	'nM4',
-	'M4avg',
-	'M4max',
-	'nR5',
-	'R5avg',
-	'R5max',
-	'S5avg',
-	'S5max',
-	'S5Bavg',
-	'S5Bmax',
-	'users',
-	'dataSize',
-	'nCores'
+
+FEATURES_DESCRIPTIONS = {			% These will be used to describe the plot axis
+	'N map',
+	'N reduce',
+	'Map time avg',
+	'Map time max',
+	'Reduce time avg',
+	'Reduce time max',
+	'Shuffle time avg',
+	'Shuffle time max',
+	'Bandwidth avg',
+	'Bandwidth max',
+	'N Users',
+	'Datasize',
+	'N core'
 };
 
 %% Choose which SVR models to use
@@ -143,7 +116,7 @@ LINEAR_REGRESSION = true;
 
 BEST_MODELS = true;
 
-TEST_ON_CORES = false;	% To add the 'difference between means' metric
+TEST_ON_CORES = true;	% To add the 'difference between means' metric
 
 rand('seed', 18);
 SHUFFLE_DATA = true;
@@ -152,48 +125,11 @@ C_range = linspace (0.1, 5, 20);
 E_range = linspace (0.1, 5, 20);
 
 
-% Create output folder
-%% Create a latex file with all the results, already formatted
-if OUTPUT_LATEX
-	flatex = fopen(cstrcat('output/', FILENAME), 'w');
-	fprintf(flatex, cstrcat('\\newpage\n', ...
-							'\\section{', CAPTION,',}\n'));
-end
-
-
-
-for query_id = 1:length(QUERIES)
-
-QUERY = QUERIES{query_id};
-fprintf(flatex, cstrcat('\\subsection{Query ', QUERY, '}\n'));
-
-for datasize_id = 1:length(DATASIZES)
-
-DATASIZE = DATASIZES{datasize_id};
-fprintf(flatex, cstrcat('\\subsubsection{Query ', QUERY, ' --- Datasize ', DATASIZE, 'GB}\n'));
-close all hidden;
-
-
-TRAIN_DATA_LOCATION = {strcat(QUERY, '/Datasize/', DATASIZE)};
-
-TEST_DATA_LOCATION = {};
-
-TABLE_CAPTION = cstrcat('Results for ', QUERY, '-', DATASIZE, 'GB');
-PLOT_CAPTION = cstrcat('Completion time vs ncores for query ', QUERY, ' with datasize ', DATASIZE);
-TABLE_LABEL = cstrcat('tab:', 'all_linear_', QUERY, '_', DATASIZE);
-PLOT_LABEL = cstrcat('fig:', 'all_linear_', QUERY, '_', DATASIZE);
-
-
-OUTPUT_FOLDER = strcat('output/', QUERY, '_', DATASIZE, '_ALL_WITH_1_OVER_NCORES/');
-
-
-
 
 % --------------------------------------------------------------------------------------------------
 % |									       DO NOT  MODIFY 								           |
 % |										   UNDER THIS BOX 								           |
 % --------------------------------------------------------------------------------------------------
-
 
 % Create output folder
 if ~ exist(OUTPUT_FOLDER)		%% Checks if the folder exists
@@ -214,7 +150,7 @@ train_data = get_all_data_from_dirs(BASE_DIR, TRAIN_DATA_LOCATION);
 if CHOOSE_FEATURES
 	tmp = train_data(:, 2:end);
 	train_data = [train_data(:, 1) , tmp(:, FEATURES)];
-	FEATURES_DESCRIPTIONS = ALL_FEATURES_DESCRIPTIONS(FEATURES);
+	FEATURES_DESCRIPTIONS = FEATURES_DESCRIPTIONS(FEATURES);
 end
 
 test_data = [];
@@ -247,7 +183,9 @@ complete_data = [train_data ; test_data];
 
 
 if CLEAR_OUTLIERS
-	[clean, indices] = clear_outliers(complete_data);
+	% [clean, indices] = clear_outliers(complete_data);
+
+	[clean,indices] = clear_outliers_ncores(complete_data);
 
 	train_data = clean(indices <= N_train, :);
 	test_data = clean(indices > N_train, :);
@@ -532,7 +470,6 @@ end
 
 
 %% Linear Regression
-
 if LINEAR_REGRESSION
 	fprintf('\nTraining Linear regression.\n');
 
@@ -575,33 +512,56 @@ if SAVE_DATA
 		fprintf(fd, '%s\n', TEST_DATA_LOCATION{index});
 	end
 
-	fprintf(fd, '\n\n\n');
+	fclose(fd);
+
+
 end
 
 if OUTPUT_LATEX
+	% if ~ exist(OUTPUT_FOLDER)		%% Checks if the folder exists
+	% 	if ~ mkdir(OUTPUT_FOLDER)		%% Try with the mkdir function
+	% 		if system(cstrcat('mkdir -p ', OUTPUT_FOLDER))		%% This creates subfolders
+	% 			fprintf('[ERROR] Could not create output folder\nCreate the output folder first and then restart this script\n');
+	% 			quit;
+	% 		end
+	% 	end
+	% end
+	latex_filename = strcat(OUTPUT_FOLDER, 'outputlatex.tex');
 	
-	latex_filename_table = strcat(OUTPUT_FOLDER, 'outputlatex_table.tex');
-	flatex_table = fopen(latex_filename_table, 'w');
+	fd2 = fopen(LATEX_SINGLE_FILE_LOCATION, 'a');
+	fprintf(fd2, "\\subsubsection{%s}\n", LATEX_SUBSUBSECTION_TITLE);
+	fprintf(fd2, "\\input{%s}\n\n\n", latex_filename);
+	fclose(fd2);
 
-	latex_filename_plot = strcat(OUTPUT_FOLDER, 'outputlatex_plot.tex');
-	flatex_plot = fopen(latex_filename_plot, 'w');
 
-	if BEST_MODELS
-		latex_filename_plot_bestmodels = strcat(OUTPUT_FOLDER, 'outputlatex_plot_bestmodels.tex');
-		flatex_plot_bestmodels = fopen(latex_filename_plot_bestmodels, 'w');
-	end
 
-	fprintf(flatex_table, cstrcat('\\begin{table}[H]\n', ...
+	flatex = fopen(latex_filename, 'w');
+
+	% fprintf(flatex, 'TRAIN DATA:\n');
+	% for index = 1:length(TRAIN_DATA_LOCATION)
+	% 	fprintf(flatex, '%s\n', TRAIN_DATA_LOCATION{index});
+	% end
+
+	% if ~isempty(TEST_DATA_LOCATION)
+	% 	fprintf(flatex, '\n\nTEST DATA:\n');
+	% 	for index = 1:length(TEST_DATA_LOCATION)
+	% 		fprintf(flatex, '%s\n', TRAIN_DATA_LOCATION{index});
+	% 	end
+	% end
+
+	fprintf(flatex, '\n');
+
+	fprintf(flatex, cstrcat('\\begin{table}[H]\n', ...
 					'\\centering\n', ...
 					'\\begin{adjustbox}{center}\n', ...
 					'\\begin{tabular}{c | c M{1.2cm} M{2.5cm} M{2.5cm} M{1.8cm}}\n'));
 	if TEST_ON_CORES
-		fprintf(flatex_table, 'Model & RMSE & R\\textsuperscript{2} & Mean absolute error & Mean relative error & Mean difference \\tabularnewline\n');
+		fprintf(flatex, 'Model & RMSE & R\\textsuperscript{2} & Mean absolute error & Mean relative error & Mean difference \\tabularnewline\n');
 	else
-		fprintf(flatex_table, 'Model & RMSE & R\\textsuperscript{2} & Mean absolute error & Mean relative error \\tabularnewline\n');
+		fprintf(flatex, 'Model & RMSE & R\\textsuperscript{2} & Mean absolute error & Mean relative error \\tabularnewline\n');
 	end
 
-	fprintf(flatex_table, '\\hline\n');
+	fprintf(flatex, '\\hline\n');
 
 end	
 
@@ -622,8 +582,14 @@ if LINEAR_REGRESSION
 	lin_mean_abs = mean(abs_err);
 	lin_mean_rel = mean(rel_err);
 
+
+	% sum_abs = sum(abs(y_test - predictions(:, end)));
+	% sum_rel = sum(sigma_y * abs((y_test - predictions(:, end)) ./ (sigma_y * predictions(:, end)) + mu_y);
+
 	lin_RMSE = sqrt(sum_residual / N_test);			% Root Mean Squared Error
 	lin_R2 = 1 - (sum_residual / sum_total);		% R^2
+	% lin_mean_abs = ((sum_abs / N_test));
+	% lin_mean_rel = sum_rel / N_test;
 
 	fprintf('\n Testing results for linear regression:\n');
 	fprintf('   RMSE = %f\n', lin_RMSE);
@@ -654,11 +620,11 @@ if LINEAR_REGRESSION
 
 
 	if (OUTPUT_LATEX & ~TEST_ON_CORES)
-		fprintf(flatex_table, 'Linear regression & %5.4f & %5.4f & %6.0f & %5.4f \\\\\n', lin_RMSE, lin_R2, lin_mean_abs, lin_mean_rel);
+		fprintf(flatex, 'Linear regression & %5.4f & %5.4f & %6.0f & %5.4f \\\\\n', lin_RMSE, lin_R2, lin_mean_abs, lin_mean_rel);
 	end
 
 	if (OUTPUT_LATEX & TEST_ON_CORES)
-		fprintf(flatex_table, 'Linear regression & %5.4f & %5.4f & %6.0f & %5.4f & %5.4f \\\\\n', lin_RMSE, lin_R2, lin_mean_abs, lin_mean_rel, diff_means);
+		fprintf(flatex, 'Linear regression & %5.4f & %5.4f & %6.0f & %5.4f & %5.4f \\\\\n', lin_RMSE, lin_R2, lin_mean_abs, lin_mean_rel, diff_means);
 	end
 
 	fprintf('\n');
@@ -675,7 +641,11 @@ for index = 1:length(MODELS_CHOSEN)
 	mean_abs = mean(abs_err);
 	mean_rel = mean(rel_err);
 
+	% sum_abs = sum(abs(y_test - predictions(:, index)));
+	% sum_rel = sum(sigma_y * abs((y_test - predictions(:, index)) ./ (sigma_y * predictions(:, index)) + mu_y);
 
+	% mean_abs = ((sum_abs / N_test) * sigma_y);
+	% mean_rel = sum_rel / N_test;
 	fprintf('\n Testing results for %s:\n', SVR_DESCRIPTIONS{index});
 	fprintf('   RMSE = %f\n', RMSEs(index));
 	fprintf('   R^2 = %f\n', R_2(index));
@@ -702,42 +672,31 @@ for index = 1:length(MODELS_CHOSEN)
 	end
 
 	if (OUTPUT_LATEX & ~TEST_ON_CORES)
-		fprintf(flatex_table, '%s & %5.4f & %5.4f & %6.0f & %5.4f \\\\\n', SVR_DESCRIPTIONS{index}, RMSEs(index), R_2(index), mean_abs, mean_rel);
+		fprintf(flatex, '%s & %5.4f & %5.4f & %6.0f & %5.4f \\\\\n', SVR_DESCRIPTIONS{index}, RMSEs(index), R_2(index), mean_abs, mean_rel);
 	end
 
 	if (OUTPUT_LATEX & TEST_ON_CORES)
-		fprintf(flatex_table, '%s & %5.4f & %5.4f & %6.0f & %5.4f & %5.4f \\\\\n', SVR_DESCRIPTIONS{index}, RMSEs(index), R_2(index), mean_abs, mean_rel, diff_means);
+		fprintf(flatex, '%s & %5.4f & %5.4f & %6.0f & %5.4f & %5.4f \\\\\n', SVR_DESCRIPTIONS{index}, RMSEs(index), R_2(index), mean_abs, mean_rel, diff_means);
 	end
 
 	fprintf('\n');
 end
 
 if OUTPUT_LATEX
-	fprintf(flatex_table, cstrcat('\\end{tabular}\n', ...
-								'\\end{adjustbox}\n', ...
-								'\\\\\n', ...
-								'\\caption{', TABLE_CAPTION, '}\n', ...
-								'\\label{', TABLE_LABEL, '}\n', ...
-								'\\end{table}\n'));
-	fclose(flatex_table);
+	fprintf(flatex, cstrcat('\\end{tabular}\n', ...
+					'\\end{adjustbox}\n', ...
+					'\\\\\n', ...
+					'\\caption{', TABLE_CAPTION, '}\n', ...
+					'\\label{', TABLE_LABEL, '}\n', ...
+					'\\end{table}\n'));
 
-	fprintf(flatex_plot, cstrcat('\n\\begin {figure}[hbtp]\n', ...
-								'\\centering\n', ...
-								'\\includegraphics[width=\\textwidth]{', OUTPUT_FOLDER, 'plot_', QUERY, '_', DATASIZE, OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{2}, '}\n', ...
-								'\\caption{', PLOT_CAPTION, '}\n', ...
-								'\\label{', PLOT_LABEL, '}\n', ...
-								'\\end {figure}\n'));	
-	fclose(flatex_plot);
-
-	if BEST_MODELS
-		fprintf(flatex_plot_bestmodels, cstrcat('\n\\begin {figure}[hbtp]\n', ...
-												'\\centering\n', ...
-												'\\includegraphics[width=\\textwidth]{', OUTPUT_FOLDER, 'plot_', QUERY, '_', DATASIZE, '_bestmodels', OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{2}, '}\n', ...
-												'\\caption{', PLOT_CAPTION, '}\n', ...
-												'\\label{', PLOT_LABEL, '}\n', ...
-												'\\end {figure}\n'));	
-		fclose(flatex_plot_bestmodels);
-	end
+	fprintf(flatex, cstrcat('\n\\begin {figure}[hbtp]\n', ...
+							'\\centering\n', ...
+							'\\includegraphics[width=\\textwidth]{', OUTPUT_FOLDER, 'plot_', QUERY, '_', DATASIZE, '_bestmodels', OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{2}, '}\n', ...
+							'\\caption{', PLOT_CAPTION, '}\n', ...
+							'\\label{', PLOT_LABEL, '}\n', ...
+							'\\end {figure}\n'));	
+	fclose(flatex);
 end
 
 %% Stores the context and closes the file descriptor
@@ -799,120 +758,10 @@ if BEST_MODELS
 	[~, best_models_idx(end+1)] = max(tempR_2);
 end
 
-%% PLOTTING SVR vs LR
-
-if ALL_THE_PLOTS
-	for col = 1:M
-
-		figure;
-		hold on;
-
-		% scatter(X_tr_denorm(:, col), y_tr_denorm, 'r', 'x');
-		% scatter(X_test_denorm(:, col), y_test_denorm, 'b');
-		X_tr_denorm_col = X_tr_denorm(:, col);
-		X_test_denorm_col = X_test_denorm(:, col);
-		
-		if (N_CORES_INVERSE & ismember(CORE_IDX, FEATURES) & (col == M))
-			X_tr_denorm_col = 1./X_tr_denorm_col;
-			X_test_denorm_col = 1./X_test_denorm_col;
-		end
-
-		my_scatter(X_tr_denorm_col, y_tr_denorm, 'r', 'x');
-		my_scatter(X_test_denorm_col, y_test_denorm, 'b');
-
-
-		% x = linspace(min(X_test(:, col)), max(X_test(:, col)));		% Normalized, we need this for the predictions
-		x = linspace(min(min(X_test(:, col)), min(X_tr(:, col))), max(max(X_test(:, col)), max(X_tr(:, col))));  %% fill all the plot
-		x_denorm = (x * sigma_X(col)) + mu_X(col);
-
-		xsvr = zeros(length(x), M);			% xsvr is a matrix of zeros, except for the column we're plotting currently
-		xsvr(:, col) = x;					% It must be normalized to use svmpredict with the SVR models we found
-
-
-		if LINEAR_REGRESSION
-			ylin = x * theta(col+1);
-
-			% Denormalize y
-			if NORMALIZE_FEATURE
-				ylin = (ylin * sigma_y) + mu_y;
-			end
-
-			x_plot = x_denorm;
-			if (N_CORES_INVERSE & ismember(CORE_IDX, FEATURES) & (col == M))
-				x_plot = 1./x_plot;  
-			end
-
-			plot(x_plot, ylin, 'color', [0.5, 0, 1], 'linewidth', 1);
-
-			x = x_denorm;
-			y = ylin;
-			save(cstrcat(OUTPUT_FOLDER, 'Linear Regression.mat'), 'x', 'y', 'QUERY', 'DATASIZE');
-			
-
-		end
-
-		for index = 1:length(MODELS_CHOSEN)
-			[ysvr, ~, ~] = svmpredict(zeros(length(x), 1), xsvr, models{index}, '-q');	%% quiet
-
-			% Denormalize
-			if NORMALIZE_FEATURE
-				ysvr = (ysvr * sigma_y) + mu_y;
-			end 
-
-			x_plot = x_denorm;
-			if (N_CORES_INVERSE & ismember(CORE_IDX, FEATURES) & (col == M))
-				x_plot = 1./x_plot;  
-			end
-
-			plot(x_plot, ysvr, 'color', COLORS{index}, 'linewidth', 1);
-
-			x = x_denorm;
-			y = ysvr;
-			save(cstrcat(OUTPUT_FOLDER, SVR_DESCRIPTIONS{index}, '.mat'), 'x', 'y', 'QUERY', 'DATASIZE');
-
-		end
-
-		% Plot the mean of the test values (for nCores)
-		% if (TEST_ON_CORES & ismember(13, FEATURES) & (col == M))
-		% 	scatter(X_test_denorm(1, col), mean(y_test_denorm), 10, 'k', '.');		
-		% end
-		
-		labels = {'Training set', 'Testing set'};
-		if LINEAR_REGRESSION
-			labels{end+1} = 'Linear Regression';
-		end
-		labels(end+1:end+length(SVR_DESCRIPTIONS)) = SVR_DESCRIPTIONS;
-		legend(labels, 'location', 'northeastoutside');
-
-		
-
-		% Labels the axes
-		xlabel(FEATURES_DESCRIPTIONS{col});
-		ylabel('Completion Time');
-		% title(cstrcat('Linear regression vs ', SVR_DESCRIPTIONS{svr_index})); 
-		if SAVE_DATA
-			% NOTE: the file location shouldn't have any spaces
-			file_location = strrep(strcat(OUTPUT_FOLDER, 'plot_', FEATURES_DESCRIPTIONS{col}, OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{2}), ' ', '');
-			% file_location = strrep(strcat(OUTPUT_FOLDER, 'plot_', QUERY, '_', DATASIZE, FEATURES_DESCRIPTIONS{col}, OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{2}), ' ', '');
-			print(OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{1}, file_location);
-		end
-
-		if SAVE_DATA & ismember(CORE_IDX, FEATURES) & (col == M)
-			file_location = strrep(strcat(OUTPUT_FOLDER, 'plot_', QUERY, '_', DATASIZE, OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{2}), ' ', '');
-			print(OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{1}, file_location);
-		end
-
-		hold off;
-		
-		% pause;
-
-	end
-
-else
 
 %% PLOTTING SVR vs LR
 
-	col = M;
+for col = 1:M
 
 	figure;
 	hold on;
@@ -922,13 +771,14 @@ else
 	X_tr_denorm_col = X_tr_denorm(:, col);
 	X_test_denorm_col = X_test_denorm(:, col);
 	
-	if (N_CORES_INVERSE & ismember(CORE_IDX, FEATURES) & (col == M))
+	if (N_CORES_INVERSE & ismember(13, FEATURES) & (col == M))
 		X_tr_denorm_col = 1./X_tr_denorm_col;
 		X_test_denorm_col = 1./X_test_denorm_col;
 	end
 
 	my_scatter(X_tr_denorm_col, y_tr_denorm, 'r', 'x');
 	my_scatter(X_test_denorm_col, y_test_denorm, 'b');
+
 
 	% x = linspace(min(X_test(:, col)), max(X_test(:, col)));		% Normalized, we need this for the predictions
 	x = linspace(min(min(X_test(:, col)), min(X_tr(:, col))), max(max(X_test(:, col)), max(X_tr(:, col))));  %% fill all the plot
@@ -947,7 +797,7 @@ else
 		end
 
 		x_plot = x_denorm;
-		if (N_CORES_INVERSE & ismember(CORE_IDX, FEATURES) & (col == M))
+		if (N_CORES_INVERSE & ismember(13, FEATURES) & (col == M))
 			x_plot = 1./x_plot;  
 		end
 
@@ -969,7 +819,7 @@ else
 		end 
 
 		x_plot = x_denorm;
-		if (N_CORES_INVERSE & ismember(CORE_IDX, FEATURES) & (col == M))
+		if (N_CORES_INVERSE & ismember(13, FEATURES) & (col == M))
 			x_plot = 1./x_plot;  
 		end
 
@@ -1006,7 +856,7 @@ else
 		print(OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{1}, file_location);
 	end
 
-	if SAVE_DATA & ismember(CORE_IDX, FEATURES) & (col == M)
+	if SAVE_DATA & ismember(13, FEATURES) & (col == M)
 		file_location = strrep(strcat(OUTPUT_FOLDER, 'plot_', QUERY, '_', DATASIZE, OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{2}), ' ', '');
 		print(OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{1}, file_location);
 	end
@@ -1021,113 +871,7 @@ end
 %% Plot and save (only the best models)
 
 if BEST_MODELS
-
-	if ALL_THE_PLOTS
-		for col = 1:M
-
-			figure;
-			hold on;
-
-			% scatter(X_tr_denorm(:, col), y_tr_denorm, 'r', 'x');
-			% scatter(X_test_denorm(:, col), y_test_denorm, 'b');
-			X_tr_denorm_col = X_tr_denorm(:, col);
-			X_test_denorm_col = X_test_denorm(:, col);
-			
-			if (N_CORES_INVERSE & ismember(CORE_IDX, FEATURES) & (col == M))
-				X_tr_denorm_col = 1./X_tr_denorm_col;
-				X_test_denorm_col = 1./X_test_denorm_col;
-			end
-
-			my_scatter(X_tr_denorm_col, y_tr_denorm, 'r', 'x');
-			my_scatter(X_test_denorm_col, y_test_denorm, 'b');
-
-
-			% x = linspace(min(X_test(:, col)), max(X_test(:, col)));		% Normalized, we need this for the predictions
-			x = linspace(min(min(X_test(:, col)), min(X_tr(:, col))), max(max(X_test(:, col)), max(X_tr(:, col))));  %% fill all the plot
-			x_denorm = (x * sigma_X(col)) + mu_X(col);
-
-			xsvr = zeros(length(x), M);			% xsvr is a matrix of zeros, except for the column we're plotting currently
-			xsvr(:, col) = x;					% It must be normalized to use svmpredict with the SVR models we found
-
-
-			if (LINEAR_REGRESSION && ismember(length(MODELS_CHOSEN)+1, best_models_idx))	% if linear regression is one of the best models
-				ylin = x * theta(col+1);
-
-				% Denormalize y
-				if NORMALIZE_FEATURE
-					ylin = (ylin * sigma_y) + mu_y;
-				end
-
-				x_plot = x_denorm;
-				if (N_CORES_INVERSE & ismember(CORE_IDX, FEATURES) & (col == M))
-					x_plot = 1./x_plot;  
-				end
-
-				plot(x_plot, ylin, 'color', [0.5, 0, 1], 'linewidth', 1);		
-
-			end
-
-			for index = 1:length(MODELS_CHOSEN)
-				if ismember(index, best_models_idx)
-					[ysvr, ~, ~] = svmpredict(zeros(length(x), 1), xsvr, models{index}, '-q');	%% quiet
-
-					% Denormalize
-					if NORMALIZE_FEATURE
-						ysvr = (ysvr * sigma_y) + mu_y;
-					end 
-
-					x_plot = x_denorm;
-					if (N_CORES_INVERSE & ismember(CORE_IDX, FEATURES) & (col == M))
-						x_plot = 1./x_plot;  
-					end
-
-					plot(x_plot, ysvr, 'color', COLORS{index}, 'linewidth', 1);
-				end
-			end
-
-			% Plot the mean of the test values (for nCores)
-			% if (TEST_ON_CORES & ismember(13, FEATURES) & (col == M))
-			% 	scatter(X_test_denorm(1, col), mean(y_test_denorm), 10, 'k', '.');		
-			% end
-			
-			labels = {'Training set', 'Testing set'};
-			if (LINEAR_REGRESSION && ismember(length(MODELS_CHOSEN)+1, best_models_idx))
-				labels{end+1} = 'Linear Regression';
-			end
-			for index = 1:length(SVR_DESCRIPTIONS)
-				if ismember(index, best_models_idx)
-					labels(end+1) = SVR_DESCRIPTIONS{index};
-				end
-			end
-			legend(labels, 'location', 'northeastoutside');
-
-			
-
-			% Labels the axes
-			xlabel(FEATURES_DESCRIPTIONS{col});
-			ylabel('Completion Time');
-			% title(cstrcat('Linear regression vs ', SVR_DESCRIPTIONS{svr_index})); 
-			if SAVE_DATA
-				% NOTE: the file location shouldn't have any spaces
-				file_location = strrep(strcat(OUTPUT_FOLDER, 'plot_', FEATURES_DESCRIPTIONS{col}, '_bestmodels', OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{2}), ' ', '');
-				% file_location = strrep(strcat(OUTPUT_FOLDER, 'plot_', QUERY, '_', DATASIZE, FEATURES_DESCRIPTIONS{col}, OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{2}), ' ', '');
-				print(OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{1}, file_location);
-			end
-
-			if SAVE_DATA & ismember(CORE_IDX, FEATURES) & (col == M)
-				file_location = strrep(strcat(OUTPUT_FOLDER, 'plot_', QUERY, '_', DATASIZE, '_bestmodels', OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{2}), ' ', '');
-				print(OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{1}, file_location);
-			end
-
-			hold off;
-			
-			% pause;
-
-		end
-	
-	else
-
-		col = M;
+	for col = 1:M
 
 		figure;
 		hold on;
@@ -1137,7 +881,7 @@ if BEST_MODELS
 		X_tr_denorm_col = X_tr_denorm(:, col);
 		X_test_denorm_col = X_test_denorm(:, col);
 		
-		if (N_CORES_INVERSE & ismember(CORE_IDX, FEATURES) & (col == M))
+		if (N_CORES_INVERSE & ismember(13, FEATURES) & (col == M))
 			X_tr_denorm_col = 1./X_tr_denorm_col;
 			X_test_denorm_col = 1./X_test_denorm_col;
 		end
@@ -1163,7 +907,7 @@ if BEST_MODELS
 			end
 
 			x_plot = x_denorm;
-			if (N_CORES_INVERSE & ismember(CORE_IDX, FEATURES) & (col == M))
+			if (N_CORES_INVERSE & ismember(13, FEATURES) & (col == M))
 				x_plot = 1./x_plot;  
 			end
 
@@ -1181,7 +925,7 @@ if BEST_MODELS
 				end 
 
 				x_plot = x_denorm;
-				if (N_CORES_INVERSE & ismember(CORE_IDX, FEATURES) & (col == M))
+				if (N_CORES_INVERSE & ismember(13, FEATURES) & (col == M))
 					x_plot = 1./x_plot;  
 				end
 
@@ -1218,7 +962,7 @@ if BEST_MODELS
 			print(OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{1}, file_location);
 		end
 
-		if SAVE_DATA & ismember(CORE_IDX, FEATURES) & (col == M)
+		if SAVE_DATA & ismember(13, FEATURES) & (col == M)
 			file_location = strrep(strcat(OUTPUT_FOLDER, 'plot_', QUERY, '_', DATASIZE, '_bestmodels', OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{2}), ' ', '');
 			print(OUTPUT_FORMATS{PLOT_SAVE_FORMAT}{1}, file_location);
 		end
@@ -1229,31 +973,3 @@ if BEST_MODELS
 
 	end
 end
-
-if OUTPUT_LATEX 
-	if LATEX_TABLE
-		fprintf(flatex, cstrcat('\\input{', latex_filename_table, '}\n'));
-	end
-
-	if LATEX_PLOT
-		fprintf(flatex, cstrcat('\\input{', latex_filename_plot, '}\n'));
-	end
-
-	if LATEX_PLOT_BESTMODELS
-		fprintf(flatex, cstrcat('\\input{', latex_filename_plot_bestmodels, '}\n'));
-	end
-
-fprintf(flatex, '\n\\newpage\n');
-end
-
-end
-end
-
-if OUTPUT_LATEX
-	fclose(flatex);
-end
-
-
-
-
-
