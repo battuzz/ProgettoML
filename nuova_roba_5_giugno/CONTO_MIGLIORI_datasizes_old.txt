@@ -1,0 +1,53 @@
+# Count - Query R1 #
+Linear Regression -> 6
+Linear SVR -> 6
+Polynomial SVR (2) -> 0
+Polynomial SVR (3) -> 0
+Polynomial SVR (4) -> 0
+Polynomial SVR (6) -> 0
+Gaussian SVR -> 0
+
+# Count - Query R2 #
+Linear Regression -> 7
+Linear SVR -> 4
+Polynomial SVR (2) -> 0
+Polynomial SVR (3) -> 0
+Polynomial SVR (4) -> 0
+Polynomial SVR (6) -> 0
+Gaussian SVR -> 1
+
+# Count - Query R3 #
+Linear Regression -> 10
+Linear SVR -> 2
+Polynomial SVR (2) -> 0
+Polynomial SVR (3) -> 0
+Polynomial SVR (4) -> 0
+Polynomial SVR (6) -> 0
+Gaussian SVR -> 0
+
+# Count - Query R4 #
+Linear Regression -> 8
+Linear SVR -> 3
+Polynomial SVR (2) -> 0
+Polynomial SVR (3) -> 0
+Polynomial SVR (4) -> 0
+Polynomial SVR (6) -> 0
+Gaussian SVR -> 1
+
+# Count - Query R5 #
+Linear Regression -> 4
+Linear SVR -> 5
+Polynomial SVR (2) -> 1
+Polynomial SVR (3) -> 0
+Polynomial SVR (4) -> 0
+Polynomial SVR (6) -> 0
+Gaussian SVR -> 2
+
+# Count - Total #
+Linear Regression -> 35
+Linear SVR -> 20
+Polynomial SVR (2) -> 1
+Polynomial SVR (3) -> 0
+Polynomial SVR (4) -> 0
+Polynomial SVR (6) -> 0
+Gaussian SVR -> 4
